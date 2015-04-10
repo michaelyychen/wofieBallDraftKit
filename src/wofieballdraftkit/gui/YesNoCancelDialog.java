@@ -83,7 +83,7 @@ public class YesNoCancelDialog extends Stage {
 
         // AND PUT IT IN THE WINDOW
         messageScene = new Scene(messagePane);
-        this.setScene(messageScene);
+        this.setScene(messageScene); 
     }
 
     /**
