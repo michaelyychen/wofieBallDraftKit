@@ -5,13 +5,10 @@
  */
 package wofieballdraftkit.data;
 
-import java.util.ArrayList;
-
 /**
  *
- * @author MiChAeL
+ * @author MC
  */
-public class DraftDataManager {
-    ArrayList<Player> playerList;
-    ArrayList<>
+public class Draft {
+    
 }
