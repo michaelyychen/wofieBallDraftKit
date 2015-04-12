@@ -5,10 +5,18 @@
  */
 package wofieballdraftkit.file;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import wofieballdraftkit.data.Draft;
+import wofieballdraftkit.data.Player;
+
 /**
  *
  * @author MiChAeL
  */
-public class DraftFileManager {
-    
+public interface DraftFileManager {
+ 
+    public void                 loadPlayer(Player playerToLoad, String coursePath) throws IOException;
+
 }

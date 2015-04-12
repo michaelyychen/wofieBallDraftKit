@@ -11,11 +11,15 @@ package wofieballdraftkit.data;
  */
 public class Player {
     String position;
-    String name;
+    String firstname;
+    String lastname;
     String team;
     String contract;
+    String nation;
+
+
     int salary;
-    int age;
+    int birth;
     
     public Player(){
     }
@@ -28,13 +32,23 @@ public class Player {
         this.position = position;
     }
 
-    public String getName() {
-        return name;
+    public String getFirstName() {
+        return firstname;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFirstName(String firstname) {
+        this.firstname = firstname;
     }
+    
+    public String getLastName() {
+        return firstname;
+    }
+
+    public void setLastName(String lastname) {
+        this.lastname = lastname;
+    }
+
+    
 
     public String getTeam() {
         return team;
@@ -60,11 +74,23 @@ public class Player {
         this.salary = salary;
     }
 
-    public int getAge() {
-        return age;
+    public int getBirth() {
+        return birth;
     }
 
-    public void setAge(int age) {
-        this.age = age;
+    public void setBirth(int birth) {
+        this.birth = birth;
     }
+    
+    public String getNation() {
+        return nation;
+    }
+
+    public void setNation(String nation) {
+        this.nation = nation;
+    }
+    
+    
+    
+    
 }

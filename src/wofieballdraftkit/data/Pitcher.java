@@ -13,6 +13,9 @@ public class Pitcher extends Player {
    int w;
    int k;
    int sv;
+   double IP;
+
+
    double ERA;
    double WHIP;
    
@@ -20,6 +23,16 @@ public class Pitcher extends Player {
    super();
    
    }
+   
+    public double getIP() {
+        return IP;
+    }
+
+    public void setIP(double IP) {
+        this.IP = IP;
+    }
+   
+   
    
     public int getW() {
         return w;
