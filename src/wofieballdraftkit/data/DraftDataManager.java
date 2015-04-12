@@ -11,7 +11,43 @@ import java.util.ArrayList;
  *
  * @author MiChAeL
  */
-public class DraftDataManager {
+public class DraftDataManager {    
+    
+    
     ArrayList<Player> playerList;
-    ArrayList<>
+    ArrayList<Team> teamList;
+    ArrayList<Player> eligibleList;
+    
+    
+    
+    
+    
+    
+    
+
+    public ArrayList<Player> getPlayerList() {
+        return playerList;
+    }
+
+    public void setPlayerList(ArrayList<Player> playerList) {
+        this.playerList = playerList;
+    }
+
+    public ArrayList<Team> getTeamList() {
+        return teamList;
+    }
+
+    public void setTeamList(ArrayList<Team> teamList) {
+        this.teamList = teamList;
+    }
+
+    public ArrayList<Player> getEligibleList() {
+        return eligibleList;
+    }
+
+    public void setEligibleList(ArrayList<Player> eligibleList) {
+        this.eligibleList = eligibleList;
+    }
+
+    
 }

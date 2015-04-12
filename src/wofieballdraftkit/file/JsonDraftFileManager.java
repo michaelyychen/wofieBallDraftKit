@@ -9,6 +9,6 @@ package wofieballdraftkit.file;
  *
  * @author MiChAeL
  */
-public class JsonCourseFileManager {
+public class JsonDraftFileManager {
     
 }
