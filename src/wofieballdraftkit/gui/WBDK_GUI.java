@@ -249,7 +249,7 @@ public class WBDK_GUI {
         initWorkspace();
 
         // NOW SETUP THE EVENT HANDLERS
-//        initEventHandlers();
+        initEventHandlers();
 
         // AND FINALLY START UP THE WINDOW (WITHOUT THE WORKSPACE)
         initWindow(windowTitle);
@@ -595,138 +595,138 @@ public class WBDK_GUI {
     }
 
     // INIT ALL THE EVENT HANDLERS
-//    private void initEventHandlers() throws IOException {
-//        // FIRST THE FILE CONTROLS
-//        fileController = new FileController(messageDialog, yesNoCancelDialog, progressDialog, courseFileManager, siteExporter);
-//        newCourseButton.setOnAction(e -> {
-//            fileController.handleNewCourseRequest(this);
-//        });
-//        loadCourseButton.setOnAction(e -> {
-//            fileController.handleLoadCourseRequest(this);
-//        });
-//        saveCourseButton.setOnAction(e -> {
-//            fileController.handleSaveCourseRequest(this, dataManager.getCourse());
-//        });
-//        exportSiteButton.setOnAction(e -> {
-//            fileController.handleExportCourseRequest(this);
-//        });
-//        exitButton.setOnAction(e -> {
-//            fileController.handleExitRequest(this);
-//        });
-//
-//        // THEN THE COURSE EDITING CONTROLS
-//        courseController = new CourseEditController();
-//        courseSubjectComboBox.setOnAction(e -> {
-//            courseController.handleCourseChangeRequest(this);
-//        });
-//        courseSemesterComboBox.setOnAction(e -> {
-//            courseController.handleCourseChangeRequest(this);
-//        });
-//        courseYearComboBox.setOnAction(e -> {
-//            courseController.handleCourseChangeRequest(this);
-//        });
-//        indexPageCheckBox.setOnAction(e -> {
-//            courseController.handleCourseChangeRequest(this);
-//        });
-//        syllabusPageCheckBox.setOnAction(e -> {
-//            courseController.handleCourseChangeRequest(this);
-//        });
-//        schedulePageCheckBox.setOnAction(e -> {
-//            courseController.handleCourseChangeRequest(this);
-//        });
-//        hwsPageCheckBox.setOnAction(e -> {
-//            courseController.handleCourseChangeRequest(this);
-//        });
-//        projectsPageCheckBox.setOnAction(e -> {
-//            courseController.handleCourseChangeRequest(this);
-//        });
-//
-//        // TEXT FIELDS HAVE A DIFFERENT WAY OF LISTENING FOR TEXT CHANGES
-//        registerTextFieldController(courseNumberTextField);
-//        registerTextFieldController(courseTitleTextField);
-//        registerTextFieldController(instructorNameTextField);
-//        registerTextFieldController(instructorURLTextField);
-//
-//        // THE DATE SELECTION ONES HAVE PARTICULAR CONCERNS, AND SO
-//        // GO THROUGH A DIFFERENT METHOD
-//        startDatePicker.setOnAction(e -> {
-//            courseController.handleDateSelectionRequest(this, startDatePicker, endDatePicker);
-//        });
-//        endDatePicker.setOnAction(e -> {
-//            courseController.handleDateSelectionRequest(this, startDatePicker, endDatePicker);
-//        });
-//
-//        // AND THE LECTURE DAYS CHECKBOXES
-//        mondayCheckBox.setOnAction(e -> {
-//            courseController.handleCourseChangeRequest(this);
-//        });
-//        tuesdayCheckBox.setOnAction(e -> {
-//            courseController.handleCourseChangeRequest(this);
-//        });
-//        wednesdayCheckBox.setOnAction(e -> {
-//            courseController.handleCourseChangeRequest(this);
-//        });
-//        thursdayCheckBox.setOnAction(e -> {
-//            courseController.handleCourseChangeRequest(this);
-//        });
-//        fridayCheckBox.setOnAction(e -> {
-//            courseController.handleCourseChangeRequest(this);
-//        });
-//        
-//        // AND NOW THE SCHEDULE ITEM ADDING AND EDITING CONTROLS
-//        scheduleController = new ScheduleEditController(primaryStage, dataManager.getCourse(), messageDialog, yesNoCancelDialog);
-//        addScheduleItemButton.setOnAction(e -> {
-//            scheduleController.handleAddScheduleItemRequest(this);
-//        });
-//        removeScheduleItemButton.setOnAction(e -> {
-//            scheduleController.handleRemoveScheduleItemRequest(this, scheduleItemsTable.getSelectionModel().getSelectedItem());
-//        });
-//        addLectureButton.setOnAction(e -> {
-//            scheduleController.handleAddLectureRequest(this);
-//        });
-//        removeLectureButton.setOnAction(e-> {
-//            scheduleController.handleRemoveLectureRequest(this, lecturesTable.getSelectionModel().getSelectedItem());
-//        });
-//        moveUpLectureButton.setOnAction(e -> {
-//            scheduleController.handleMoveUpLectureRequest(this, lecturesTable.getSelectionModel().getSelectedItem());
-//        });
-//        moveDownLectureButton.setOnAction(e -> {
-//            scheduleController.handleMoveDownLectureRequest(this, lecturesTable.getSelectionModel().getSelectedItem());
-//        });
-//        addHWButton.setOnAction(e -> {
-//            scheduleController.handleAddAssignmentRequest(this);
-//        });
-//        removeHWButton.setOnAction(e -> {
-//            scheduleController.handleRemoveAssignmentRequest(this, hwsTable.getSelectionModel().getSelectedItem());
-//        });
-//        
-//        // AND NOW THE SCHEDULE ITEMS TABLE
-//        scheduleItemsTable.setOnMouseClicked(e -> {
-//            if (e.getClickCount() == 2) {
-//                // OPEN UP THE SCHEDULE ITEM EDITOR
-//                ScheduleItem si = scheduleItemsTable.getSelectionModel().getSelectedItem();
-//                scheduleController.handleEditScheduleItemRequest(this, si);
-//            }
-//        });
-//        
-//        // AND THE LECTURES TABLE
-//        lecturesTable.setOnMouseClicked(e -> {
-//            if (e.getClickCount() == 2) {
-//                // OPEN UP THE LECTURE EDITOR
-//                Lecture l = lecturesTable.getSelectionModel().getSelectedItem();
-//                scheduleController.handleEditLectureRequest(this, l);
-//            }
-//        });
-//        
-//        // AND THE HWS TABLE
-//        hwsTable.setOnMouseClicked(e -> {
-//            if (e.getClickCount() == 2) {
-//                // OPEN UP THE HWS EDITOR
-//                Assignment a = hwsTable.getSelectionModel().getSelectedItem();
-//                scheduleController.handleEditAssignmentRequest(this, a);
-//            }
-//        });
-//    }
+    private void initEventHandlers() throws IOException {
+        // FIRST THE FILE CONTROLS
+        fileController = new FileController(messageDialog, yesNoCancelDialog, progressDialog, draftFileManager, siteExporter);
+        newCourseButton.setOnAction(e -> {
+            fileController.handleNewRequest(this);
+        });
+        loadCourseButton.setOnAction(e -> {
+            fileController.handleLoadCourseRequest(this);
+        });
+        saveCourseButton.setOnAction(e -> {
+            fileController.handleSaveCourseRequest(this, dataManager.getCourse());
+        });
+        exportSiteButton.setOnAction(e -> {
+            fileController.handleExportCourseRequest(this);
+        });
+        exitButton.setOnAction(e -> {
+            fileController.handleExitRequest(this);
+        });
+
+        // THEN THE COURSE EDITING CONTROLS
+        courseController = new CourseEditController();
+        courseSubjectComboBox.setOnAction(e -> {
+            courseController.handleCourseChangeRequest(this);
+        });
+        courseSemesterComboBox.setOnAction(e -> {
+            courseController.handleCourseChangeRequest(this);
+        });
+        courseYearComboBox.setOnAction(e -> {
+            courseController.handleCourseChangeRequest(this);
+        });
+        indexPageCheckBox.setOnAction(e -> {
+            courseController.handleCourseChangeRequest(this);
+        });
+        syllabusPageCheckBox.setOnAction(e -> {
+            courseController.handleCourseChangeRequest(this);
+        });
+        schedulePageCheckBox.setOnAction(e -> {
+            courseController.handleCourseChangeRequest(this);
+        });
+        hwsPageCheckBox.setOnAction(e -> {
+            courseController.handleCourseChangeRequest(this);
+        });
+        projectsPageCheckBox.setOnAction(e -> {
+            courseController.handleCourseChangeRequest(this);
+        });
+
+        // TEXT FIELDS HAVE A DIFFERENT WAY OF LISTENING FOR TEXT CHANGES
+        registerTextFieldController(courseNumberTextField);
+        registerTextFieldController(courseTitleTextField);
+        registerTextFieldController(instructorNameTextField);
+        registerTextFieldController(instructorURLTextField);
+
+        // THE DATE SELECTION ONES HAVE PARTICULAR CONCERNS, AND SO
+        // GO THROUGH A DIFFERENT METHOD
+        startDatePicker.setOnAction(e -> {
+            courseController.handleDateSelectionRequest(this, startDatePicker, endDatePicker);
+        });
+        endDatePicker.setOnAction(e -> {
+            courseController.handleDateSelectionRequest(this, startDatePicker, endDatePicker);
+        });
+
+        // AND THE LECTURE DAYS CHECKBOXES
+        mondayCheckBox.setOnAction(e -> {
+            courseController.handleCourseChangeRequest(this);
+        });
+        tuesdayCheckBox.setOnAction(e -> {
+            courseController.handleCourseChangeRequest(this);
+        });
+        wednesdayCheckBox.setOnAction(e -> {
+            courseController.handleCourseChangeRequest(this);
+        });
+        thursdayCheckBox.setOnAction(e -> {
+            courseController.handleCourseChangeRequest(this);
+        });
+        fridayCheckBox.setOnAction(e -> {
+            courseController.handleCourseChangeRequest(this);
+        });
+        
+        // AND NOW THE SCHEDULE ITEM ADDING AND EDITING CONTROLS
+        scheduleController = new ScheduleEditController(primaryStage, dataManager.getCourse(), messageDialog, yesNoCancelDialog);
+        addScheduleItemButton.setOnAction(e -> {
+            scheduleController.handleAddScheduleItemRequest(this);
+        });
+        removeScheduleItemButton.setOnAction(e -> {
+            scheduleController.handleRemoveScheduleItemRequest(this, scheduleItemsTable.getSelectionModel().getSelectedItem());
+        });
+        addLectureButton.setOnAction(e -> {
+            scheduleController.handleAddLectureRequest(this);
+        });
+        removeLectureButton.setOnAction(e-> {
+            scheduleController.handleRemoveLectureRequest(this, lecturesTable.getSelectionModel().getSelectedItem());
+        });
+        moveUpLectureButton.setOnAction(e -> {
+            scheduleController.handleMoveUpLectureRequest(this, lecturesTable.getSelectionModel().getSelectedItem());
+        });
+        moveDownLectureButton.setOnAction(e -> {
+            scheduleController.handleMoveDownLectureRequest(this, lecturesTable.getSelectionModel().getSelectedItem());
+        });
+        addHWButton.setOnAction(e -> {
+            scheduleController.handleAddAssignmentRequest(this);
+        });
+        removeHWButton.setOnAction(e -> {
+            scheduleController.handleRemoveAssignmentRequest(this, hwsTable.getSelectionModel().getSelectedItem());
+        });
+        
+        // AND NOW THE SCHEDULE ITEMS TABLE
+        scheduleItemsTable.setOnMouseClicked(e -> {
+            if (e.getClickCount() == 2) {
+                // OPEN UP THE SCHEDULE ITEM EDITOR
+                ScheduleItem si = scheduleItemsTable.getSelectionModel().getSelectedItem();
+                scheduleController.handleEditScheduleItemRequest(this, si);
+            }
+        });
+        
+        // AND THE LECTURES TABLE
+        lecturesTable.setOnMouseClicked(e -> {
+            if (e.getClickCount() == 2) {
+                // OPEN UP THE LECTURE EDITOR
+                Lecture l = lecturesTable.getSelectionModel().getSelectedItem();
+                scheduleController.handleEditLectureRequest(this, l);
+            }
+        });
+        
+        // AND THE HWS TABLE
+        hwsTable.setOnMouseClicked(e -> {
+            if (e.getClickCount() == 2) {
+                // OPEN UP THE HWS EDITOR
+                Assignment a = hwsTable.getSelectionModel().getSelectedItem();
+                scheduleController.handleEditAssignmentRequest(this, a);
+            }
+        });
+    }
 
     // REGISTER THE EVENT LISTENER FOR A TEXT FIELD
     private void registerTextFieldController(TextField textField) {
