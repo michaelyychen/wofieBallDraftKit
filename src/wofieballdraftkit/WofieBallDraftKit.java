@@ -7,6 +7,8 @@ package wofieballdraftkit;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -19,6 +21,7 @@ import static wofieballdraftkit.WBDK_PropertyType.PROP_APP_TITLE;
 import static wofieballdraftkit.WBDK_StartUpConstants.PATH_DATA;
 import static wofieballdraftkit.WBDK_StartUpConstants.PROPERTIES_FILE_NAME;
 import static wofieballdraftkit.WBDK_StartUpConstants.PROPERTIES_SCHEMA_FILE_NAME;
+import wofieballdraftkit.data.DraftDataManager;
 import wofieballdraftkit.error.ErrorHandler;
 import wofieballdraftkit.file.JsonDraftFileManager;
 import wofieballdraftkit.gui.WBDK_GUI;
@@ -41,11 +44,25 @@ public class WofieBallDraftKit extends Application {
         // LOAD APP SETTINGS INTO THE GUI AND START IT UP
         boolean success = loadProperties();
         if (success) {
-            PropertiesManager props = PropertiesManager.getPropertiesManager();
-            String appTitle = props.getProperty(PROP_APP_TITLE);
-            JsonDraftFileManager jsonFileManager = new JsonDraftFileManager();
-            gui = new WBDK_GUI(primaryStage);
-            gui.setCourseFileManager(jsonFileManager);
+            try {
+                PropertiesManager props = PropertiesManager.getPropertiesManager();
+                String appTitle = props.getProperty(PROP_APP_TITLE);
+                JsonDraftFileManager jsonFileManager = new JsonDraftFileManager();
+                gui = new WBDK_GUI(primaryStage);
+                gui.setDraftFileManager(jsonFileManager);
+                
+              
+             //   gui.setSiteExporter(exporter);
+                
+                // CONSTRUCT THE DATA MANAGER AND GIVE IT TO THE GUI
+               // DraftDataManager dataManager = new DraftDataManager(gui); 
+              //  gui.setDataManager(dataManager);
+                
+                gui.initGUI(appTitle);
+            } catch (IOException ex) {
+                Logger.getLogger(WofieBallDraftKit.class.getName()).log(Level.SEVERE, null, ex);
+            }
+                
         }
     }
     

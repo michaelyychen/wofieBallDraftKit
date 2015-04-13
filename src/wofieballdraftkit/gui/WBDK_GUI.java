@@ -41,6 +41,7 @@ import properties_manager.PropertiesManager;
 import wofieballdraftkit.WBDK_PropertyType;
 import wofieballdraftkit.controller.DraftEditController;
 import wofieballdraftkit.controller.FileController;
+import wofieballdraftkit.data.Draft;
 import wofieballdraftkit.data.DraftDataManager;
 import wofieballdraftkit.file.DraftFileManager;
 import wofieballdraftkit.file.DraftSiteExporter;
@@ -65,7 +66,7 @@ public class WBDK_GUI {
     DraftDataManager dataManager;
 
     // THIS MANAGES COURSE FILE I/O
-    DraftFileManager courseFileManager;
+    DraftFileManager draftFileManager;
 
     // THIS MANAGES EXPORTING OUR SITE PAGES
     DraftSiteExporter siteExporter;
@@ -74,18 +75,18 @@ public class WBDK_GUI {
     FileController fileController;
 
     // THIS HANDLES INTERACTIONS WITH COURSE INFO CONTROLS
-    DraftEditController courseController;
+    DraftEditController draftController;
     
 
     // THIS IS THE APPLICATION WINDOW
     Stage primaryStage;
-
+    Scene primaryScene;
     // THIS IS THE STAGE'S SCENE GRAPH
-    Scene fantasyScene;
-    Scene playerScene;
-    Scene standingScene;
-    Scene draftScene;
-    Scene MLBScene;
+    Pane fantasyPane;
+    Pane playerPane;
+    Pane standingPane;
+    Pane draftPane;
+    Pane MLBPane;
     
 
     // THIS PANE ORGANIZES THE BIG PICTURE CONTAINERS FOR THE
@@ -173,7 +174,7 @@ public class WBDK_GUI {
      * @return The CourseFileManager used by this UI.
      */
     public DraftFileManager getCourseFileManager() {
-        return courseFileManager;
+        return draftFileManager;
     }
 
     /**
@@ -216,8 +217,8 @@ public class WBDK_GUI {
      *
      * @param initCourseFileManager The CourseFileManager to be used by this UI.
      */
-    public void setCourseFileManager(DraftFileManager initCourseFileManager) {
-        courseFileManager = initCourseFileManager;
+    public void setDraftFileManager(DraftFileManager initDraftFileManager) {
+        draftFileManager = initDraftFileManager;
     }
 
     /**
@@ -245,10 +246,10 @@ public class WBDK_GUI {
 
         // INIT THE CENTER WORKSPACE CONTROLS BUT DON'T ADD THEM
         // TO THE WINDOW YET
-        initWorkspace(subjects);
+        initWorkspace();
 
         // NOW SETUP THE EVENT HANDLERS
-        initEventHandlers();
+//        initEventHandlers();
 
         // AND FINALLY START UP THE WINDOW (WITHOUT THE WORKSPACE)
         initWindow(windowTitle);
@@ -266,45 +267,6 @@ public class WBDK_GUI {
         }
     }
     
-    /**
-     * This function takes all of the data out of the courseToReload 
-     * argument and loads its values into the user interface controls.
-     * 
-     * @param courseToReload The Course whose data we'll load into the GUI.
-     */
-   
-    public void reloadCourse(Draft courseToReload) {
-        // FIRST ACTIVATE THE WORKSPACE IF NECESSARY
-        if (!workspaceActivated) {
-            activateWorkspace();
-        }
-
-        // WE DON'T WANT TO RESPOND TO EVENTS FORCED BY
-        // OUR INITIALIZATION SELECTIONS
-//        courseController.enable(false);
-
-        // FIRST LOAD ALL THE BASIC COURSE INFO
-//        courseSubjectComboBox.setValue(courseToReload.getSubject());
-//        courseNumberTextField.setText("" + courseToReload.getNumber());
-//        courseSemesterComboBox.setValue(courseToReload.getSemester());
-//        courseYearComboBox.setValue(courseToReload.getYear());
-//        courseTitleTextField.setText(courseToReload.getTitle());
-//        instructorNameTextField.setText(courseToReload.getInstructor().getName());
-//        instructorURLTextField.setText(courseToReload.getInstructor().getHomepageURL());
-//        indexPageCheckBox.setSelected(courseToReload.hasCoursePage(CoursePage.INDEX));
-//        syllabusPageCheckBox.setSelected(courseToReload.hasCoursePage(CoursePage.SYLLABUS));
-//        schedulePageCheckBox.setSelected(courseToReload.hasCoursePage(CoursePage.SCHEDULE));
-//        hwsPageCheckBox.setSelected(courseToReload.hasCoursePage(CoursePage.HWS));
-//        projectsPageCheckBox.setSelected(courseToReload.hasCoursePage(CoursePage.PROJECTS));
-
-
-
-
-        
-
-        courseController.enable(true);
-    }
-
     /**
      * This method is used to activate/deactivate toolbar buttons when
      * they can and cannot be used so as to provide foolproof design.
@@ -380,13 +342,11 @@ public class WBDK_GUI {
     
 
     // CREATES AND SETS UP ALL THE CONTROLS TO GO IN THE APP WORKSPACE
-    private void initWorkspace(ArrayList<String> subjects) throws IOException {
+    private void initWorkspace() throws IOException {
         // THE WORKSPACE HAS A FEW REGIONS, THIS 
         // IS FOR BASIC COURSE EDITING CONTROLS
-        initBasicCourseInfoControls(subjects);
+     //   initBasicCourseInfoControls();
 
-        // THIS IS FOR SELECTING PAGE LINKS TO INCLUDE
-        initPageSelectionControls();
 
         // THE TOP WORKSPACE HOLDS BOTH THE BASIC COURSE INFO
         // CONTROLS AS WELL AS THE PAGE SELECTION CONTROLS
@@ -399,7 +359,7 @@ public class WBDK_GUI {
         // ADD THE COMPONENTS WE'VE JUST INITIALIZED
         workspacePane = new BorderPane();
         workspacePane.setTop(topWorkspacePane);
-        workspacePane.setCenter(schedulePane);
+        workspacePane.setCenter(fantasyPane);
         workspacePane.getStyleClass().add(CLASS_BORDERED_PANE);
         
         // AND NOW PUT IT IN THE WORKSPACE
@@ -417,8 +377,8 @@ public class WBDK_GUI {
     private void initTopWorkspace() {
         // HERE'S THE SPLIT PANE, ADD THE TWO GROUPS OF CONTROLS
         topWorkspaceSplitPane = new SplitPane();
-        topWorkspaceSplitPane.getItems().add(courseInfoPane);
-        topWorkspaceSplitPane.getItems().add(pagesSelectionPane);
+//        topWorkspaceSplitPane.getItems().add();
+//        topWorkspaceSplitPane.getItems().add();
 
         // THE TOP WORKSPACE PANE WILL ONLY DIRECTLY HOLD 2 THINGS, A LABEL
         // AND A SPLIT PANE, WHICH WILL HOLD 2 ADDITIONAL GROUPS OF CONTROLS
@@ -426,7 +386,7 @@ public class WBDK_GUI {
         topWorkspacePane.getStyleClass().add(CLASS_BORDERED_PANE);
 
         // HERE'S THE LABEL
-        courseHeadingLabel = initChildLabel(topWorkspacePane, CSB_PropertyType.COURSE_HEADING_LABEL, CLASS_HEADING_LABEL);
+      //  courseHeadingLabel = initChildLabel(topWorkspacePane, CSB_PropertyType.COURSE_HEADING_LABEL, CLASS_HEADING_LABEL);
 
         // AND NOW ADD THE SPLIT PANE
         topWorkspacePane.getChildren().add(topWorkspaceSplitPane);
@@ -436,184 +396,171 @@ public class WBDK_GUI {
     private void initBasicCourseInfoControls(ArrayList<String> subjects) throws IOException {
         // THESE ARE THE CONTROLS FOR THE BASIC SCHEDULE PAGE HEADER INFO
         // WE'LL ARRANGE THEM IN THE LEFT SIDE IN A VBox
-        courseInfoPane = new GridPane();
-
-        // FIRST THE HEADING LABEL
-        courseInfoLabel = initGridLabel(courseInfoPane, CSB_PropertyType.COURSE_INFO_LABEL, CLASS_SUBHEADING_LABEL, 0, 0, 4, 1);
-
-        // THEN CONTROLS FOR CHOOSING THE SUBJECT
-        courseSubjectLabel = initGridLabel(courseInfoPane, CSB_PropertyType.COURSE_SUBJECT_LABEL, CLASS_PROMPT_LABEL, 0, 1, 1, 1);
-        courseSubjectComboBox = initGridComboBox(courseInfoPane, 1, 1, 1, 1);
-        loadSubjectComboBox(subjects);
-
-        // THEN CONTROLS FOR UPDATING THE COURSE NUMBER
-        courseNumberLabel = initGridLabel(courseInfoPane, CSB_PropertyType.COURSE_NUMBER_LABEL, CLASS_PROMPT_LABEL, 2, 1, 1, 1);
-        courseNumberTextField = initGridTextField(courseInfoPane, SMALL_TEXT_FIELD_LENGTH, EMPTY_TEXT, true, 3, 1, 1, 1);
-
-        // THEN THE COURSE SEMESTER
-        courseSemesterLabel = initGridLabel(courseInfoPane, CSB_PropertyType.COURSE_SEMESTER_LABEL, CLASS_PROMPT_LABEL, 0, 2, 1, 1);
-        courseSemesterComboBox = initGridComboBox(courseInfoPane, 1, 2, 1, 1);
-        ObservableList<String> semesterChoices = FXCollections.observableArrayList();
-        for (Semester s : Semester.values()) {
-            semesterChoices.add(s.toString());
-        }
-        courseSemesterComboBox.setItems(semesterChoices);
-
-        // THEN THE COURSE YEAR
-        courseYearLabel = initGridLabel(courseInfoPane, CSB_PropertyType.COURSE_YEAR_LABEL, CLASS_PROMPT_LABEL, 2, 2, 1, 1);
-        courseYearComboBox = initGridComboBox(courseInfoPane, 3, 2, 1, 1);
-        ObservableList<Integer> yearChoices = FXCollections.observableArrayList();
-        for (int i = LocalDate.now().getYear(); i <= LocalDate.now().getYear() + 1; i++) {
-            yearChoices.add(i);
-        }
-        courseYearComboBox.setItems(yearChoices);
-
-        // THEN THE COURSE TITLE
-        courseTitleLabel = initGridLabel(courseInfoPane, CSB_PropertyType.COURSE_TITLE_LABEL, CLASS_PROMPT_LABEL, 0, 3, 1, 1);
-        courseTitleTextField = initGridTextField(courseInfoPane, LARGE_TEXT_FIELD_LENGTH, EMPTY_TEXT, true, 1, 3, 3, 1);
-
-        // THEN THE INSTRUCTOR NAME
-        instructorNameLabel = initGridLabel(courseInfoPane, CSB_PropertyType.INSTRUCTOR_NAME_LABEL, CLASS_PROMPT_LABEL, 0, 4, 1, 1);
-        instructorNameTextField = initGridTextField(courseInfoPane, LARGE_TEXT_FIELD_LENGTH, EMPTY_TEXT, true, 1, 4, 3, 1);
-
-        // AND THE INSTRUCTOR HOMEPAGE
-        instructorURLLabel = initGridLabel(courseInfoPane, CSB_PropertyType.INSTRUCTOR_URL_LABEL, CLASS_PROMPT_LABEL, 0, 5, 1, 1);
-        instructorURLTextField = initGridTextField(courseInfoPane, LARGE_TEXT_FIELD_LENGTH, EMPTY_TEXT, true, 1, 5, 3, 1);
+//        courseInfoPane = new GridPane();
+//
+//        // FIRST THE HEADING LABEL
+//        courseInfoLabel = initGridLabel(courseInfoPane, CSB_PropertyType.COURSE_INFO_LABEL, CLASS_SUBHEADING_LABEL, 0, 0, 4, 1);
+//
+//        // THEN CONTROLS FOR CHOOSING THE SUBJECT
+//        courseSubjectLabel = initGridLabel(courseInfoPane, CSB_PropertyType.COURSE_SUBJECT_LABEL, CLASS_PROMPT_LABEL, 0, 1, 1, 1);
+//        courseSubjectComboBox = initGridComboBox(courseInfoPane, 1, 1, 1, 1);
+//        loadSubjectComboBox(subjects);
+//
+//        // THEN CONTROLS FOR UPDATING THE COURSE NUMBER
+//        courseNumberLabel = initGridLabel(courseInfoPane, CSB_PropertyType.COURSE_NUMBER_LABEL, CLASS_PROMPT_LABEL, 2, 1, 1, 1);
+//        courseNumberTextField = initGridTextField(courseInfoPane, SMALL_TEXT_FIELD_LENGTH, EMPTY_TEXT, true, 3, 1, 1, 1);
+//
+//        // THEN THE COURSE SEMESTER
+//        courseSemesterLabel = initGridLabel(courseInfoPane, CSB_PropertyType.COURSE_SEMESTER_LABEL, CLASS_PROMPT_LABEL, 0, 2, 1, 1);
+//        courseSemesterComboBox = initGridComboBox(courseInfoPane, 1, 2, 1, 1);
+//        ObservableList<String> semesterChoices = FXCollections.observableArrayList();
+//        for (Semester s : Semester.values()) {
+//            semesterChoices.add(s.toString());
+//        }
+//        courseSemesterComboBox.setItems(semesterChoices);
+//
+//        // THEN THE COURSE YEAR
+//        courseYearLabel = initGridLabel(courseInfoPane, CSB_PropertyType.COURSE_YEAR_LABEL, CLASS_PROMPT_LABEL, 2, 2, 1, 1);
+//        courseYearComboBox = initGridComboBox(courseInfoPane, 3, 2, 1, 1);
+//        ObservableList<Integer> yearChoices = FXCollections.observableArrayList();
+//        for (int i = LocalDate.now().getYear(); i <= LocalDate.now().getYear() + 1; i++) {
+//            yearChoices.add(i);
+//        }
+//        courseYearComboBox.setItems(yearChoices);
+//
+//        // THEN THE COURSE TITLE
+//        courseTitleLabel = initGridLabel(courseInfoPane, CSB_PropertyType.COURSE_TITLE_LABEL, CLASS_PROMPT_LABEL, 0, 3, 1, 1);
+//        courseTitleTextField = initGridTextField(courseInfoPane, LARGE_TEXT_FIELD_LENGTH, EMPTY_TEXT, true, 1, 3, 3, 1);
+//
+//        // THEN THE INSTRUCTOR NAME
+//        instructorNameLabel = initGridLabel(courseInfoPane, CSB_PropertyType.INSTRUCTOR_NAME_LABEL, CLASS_PROMPT_LABEL, 0, 4, 1, 1);
+//        instructorNameTextField = initGridTextField(courseInfoPane, LARGE_TEXT_FIELD_LENGTH, EMPTY_TEXT, true, 1, 4, 3, 1);
+//
+//        // AND THE INSTRUCTOR HOMEPAGE
+//        instructorURLLabel = initGridLabel(courseInfoPane, CSB_PropertyType.INSTRUCTOR_URL_LABEL, CLASS_PROMPT_LABEL, 0, 5, 1, 1);
+//        instructorURLTextField = initGridTextField(courseInfoPane, LARGE_TEXT_FIELD_LENGTH, EMPTY_TEXT, true, 1, 5, 3, 1);
     }
 
-    // INITIALIZES THE CONTROLS IN THE RIGHT HALF OF THE TOP WORKSPACE
-    private void initPageSelectionControls() {
-        // THESE ARE THE CONTROLS FOR SELECTING WHICH PAGES THE SCHEDULE
-        // PAGE WILL HAVE TO LINK TO
-        pagesSelectionPane = new VBox();
-        pagesSelectionPane.getStyleClass().add(CLASS_SUBJECT_PANE);
-        pagesSelectionLabel = initChildLabel(pagesSelectionPane, CSB_PropertyType.PAGES_SELECTION_HEADING_LABEL, CLASS_SUBHEADING_LABEL);
-        indexPageCheckBox = initChildCheckBox(pagesSelectionPane, CourseSiteExporter.INDEX_PAGE);
-        syllabusPageCheckBox = initChildCheckBox(pagesSelectionPane, CourseSiteExporter.SYLLABUS_PAGE);
-        schedulePageCheckBox = initChildCheckBox(pagesSelectionPane, CourseSiteExporter.SCHEDULE_PAGE);
-        hwsPageCheckBox = initChildCheckBox(pagesSelectionPane, CourseSiteExporter.HWS_PAGE);
-        projectsPageCheckBox = initChildCheckBox(pagesSelectionPane, CourseSiteExporter.PROJECTS_PAGE);
-    }
     
     // INITIALIZE THE SCHEDULE ITEMS CONTROLS
     private void initScheduleItemsControls() {
-        // FOR THE LEFT
-        dateBoundariesPane = new GridPane();
-        dateBoundariesLabel = initGridLabel(dateBoundariesPane, CSB_PropertyType.DATE_BOUNDARIES_LABEL, CLASS_SUBHEADING_LABEL, 0, 0, 1, 1);
-        startDateLabel = initGridLabel(dateBoundariesPane, CSB_PropertyType.STARTING_MONDAY_LABEL, CLASS_PROMPT_LABEL, 0, 1, 1, 1);
-        startDatePicker = initGridDatePicker(dateBoundariesPane, 1, 1, 1, 1);
-        endDateLabel = initGridLabel(dateBoundariesPane, CSB_PropertyType.ENDING_FRIDAY_LABEL, CLASS_PROMPT_LABEL, 0, 2, 1, 1);
-        endDatePicker = initGridDatePicker(dateBoundariesPane, 1, 2, 1, 1);
-
-        // THIS ONE IS ON THE RIGHT
-        lectureDaySelectorPane = new VBox();
-        lectureDaySelectLabel = initChildLabel(lectureDaySelectorPane, CSB_PropertyType.LECTURE_DAY_SELECT_LABEL, CLASS_SUBHEADING_LABEL);
-        mondayCheckBox = initChildCheckBox(lectureDaySelectorPane, CourseSiteExporter.MONDAY_HEADER);
-        tuesdayCheckBox = initChildCheckBox(lectureDaySelectorPane, CourseSiteExporter.TUESDAY_HEADER);
-        wednesdayCheckBox = initChildCheckBox(lectureDaySelectorPane, CourseSiteExporter.WEDNESDAY_HEADER);
-        thursdayCheckBox = initChildCheckBox(lectureDaySelectorPane, CourseSiteExporter.THURSDAY_HEADER);
-        fridayCheckBox = initChildCheckBox(lectureDaySelectorPane, CourseSiteExporter.FRIDAY_HEADER);
-
-        // THIS SPLITS THE TOP
-        splitScheduleInfoPane = new SplitPane();
-        splitScheduleInfoPane.getItems().add(dateBoundariesPane);
-        splitScheduleInfoPane.getItems().add(lectureDaySelectorPane);
-        
-        // NOW THE CONTROLS FOR ADDING SCHEDULE ITEMS
-        scheduleItemsBox = new VBox();
-        scheduleItemsToolbar = new HBox();
-        scheduleItemsLabel = initLabel(CSB_PropertyType.SCHEDULE_ITEMS_HEADING_LABEL, CLASS_SUBHEADING_LABEL);
-        addScheduleItemButton = initChildButton(scheduleItemsToolbar, CSB_PropertyType.ADD_ICON, CSB_PropertyType.ADD_ITEM_TOOLTIP, false);
-        removeScheduleItemButton = initChildButton(scheduleItemsToolbar, CSB_PropertyType.MINUS_ICON, CSB_PropertyType.REMOVE_ITEM_TOOLTIP, false);
-        scheduleItemsTable = new TableView();
-        scheduleItemsBox.getChildren().add(scheduleItemsLabel);
-        scheduleItemsBox.getChildren().add(scheduleItemsToolbar);
-        scheduleItemsBox.getChildren().add(scheduleItemsTable);
-        scheduleItemsBox.getStyleClass().add(CLASS_BORDERED_PANE);
-        
-        // NOW SETUP THE TABLE COLUMNS
-        itemDescriptionsColumn = new TableColumn(COL_DESCRIPTION);
-        itemDatesColumn = new TableColumn(COL_DATE);
-        linkColumn = new TableColumn(COL_LINK);
-        
-        // AND LINK THE COLUMNS TO THE DATA
-        itemDescriptionsColumn.setCellValueFactory(new PropertyValueFactory<String, String>("description"));
-        itemDatesColumn.setCellValueFactory(new PropertyValueFactory<LocalDate, String>("date"));
-        linkColumn.setCellValueFactory(new PropertyValueFactory<URL, String>("link"));
-        scheduleItemsTable.getColumns().add(itemDescriptionsColumn);
-        scheduleItemsTable.getColumns().add(itemDatesColumn);
-        scheduleItemsTable.getColumns().add(linkColumn);
-        scheduleItemsTable.setItems(dataManager.getCourse().getScheduleItems());
-        
-        // NOW THE CONTROLS FOR ADDING LECTURES
-        lecturesBox = new VBox();
-        lecturesToolbar = new HBox();
-        addLectureButton = initChildButton(lecturesToolbar, CSB_PropertyType.ADD_ICON, CSB_PropertyType.ADD_LECTURE_TOOLTIP, false);
-        removeLectureButton = initChildButton(lecturesToolbar, CSB_PropertyType.MINUS_ICON, CSB_PropertyType.REMOVE_LECTURE_TOOLTIP, false);
-        moveUpLectureButton = initChildButton(lecturesToolbar, CSB_PropertyType.MOVE_UP_ICON, CSB_PropertyType.MOVE_UP_LECTURE_TOOLTIP, false);
-        moveDownLectureButton = initChildButton(lecturesToolbar, CSB_PropertyType.MOVE_DOWN_ICON, CSB_PropertyType.MOVE_DOWN_LECTURE_TOOLTIP, false);
-        lecturesLabel = initLabel(CSB_PropertyType.LECTURES_HEADING_LABEL, CLASS_SUBHEADING_LABEL);
-        lecturesTable = new TableView();
-        lecturesBox.getChildren().add(lecturesLabel);
-        lecturesBox.getChildren().add(lecturesToolbar);
-        lecturesBox.getChildren().add(lecturesTable);
-        lecturesBox.getStyleClass().add(CLASS_BORDERED_PANE);
-        
-        // NOW SETUP THE TABLE COLUMNS
-        lectureTopicsColumn = new TableColumn(COL_TOPIC);
-        lectureSessionsColumn = new TableColumn(COL_SESSIONS);
-        
-        // AND LINK THE COLUMNS TO THE DATA
-        lectureTopicsColumn.setCellValueFactory(new PropertyValueFactory<String, String>("topic"));
-        lectureSessionsColumn.setCellValueFactory(new PropertyValueFactory<Integer, String>("sessions"));
-        lecturesTable.getColumns().add(lectureTopicsColumn);
-        lecturesTable.getColumns().add(lectureSessionsColumn);
-        lecturesTable.setItems(dataManager.getCourse().getLectures());
-        
-        // AND NOW THE CONTROLS FOR ADDING HWS
-        hwsBox = new VBox();
-        hwsToolbar = new HBox();
-        addHWButton = initChildButton(hwsToolbar, CSB_PropertyType.ADD_ICON, CSB_PropertyType.ADD_HW_TOOLTIP, false);
-        removeHWButton = initChildButton(hwsToolbar, CSB_PropertyType.MINUS_ICON, CSB_PropertyType.REMOVE_HW_TOOLTIP, false);
-        hwsLabel = initLabel(CSB_PropertyType.HWS_HEADING_LABEL, CLASS_SUBHEADING_LABEL);
-        hwsTable = new TableView();
-        hwsBox.getChildren().add(hwsLabel);
-        hwsBox.getChildren().add(hwsToolbar);
-        hwsBox.getChildren().add(hwsTable);
-        hwsBox.getStyleClass().add(CLASS_BORDERED_PANE);
-        
-        // NOW SETUP THE TABLE COLUMNS
-        hwNamesColumn = new TableColumn(COL_NAME);
-        hwTopicsColumn = new TableColumn(COL_TOPICS);
-        hwDatesColumn = new TableColumn(COL_DATE);
-        
-        // AND LINK THE COLUMNS TO THE DATA
-        hwNamesColumn.setCellValueFactory(new PropertyValueFactory<String, String>("name"));
-        hwTopicsColumn.setCellValueFactory(new PropertyValueFactory<String, String>("topics"));
-        hwDatesColumn.setCellValueFactory(new PropertyValueFactory<LocalDate, String>("date"));
-        hwsTable.getColumns().add(hwNamesColumn);
-        hwsTable.getColumns().add(hwTopicsColumn);
-        hwsTable.getColumns().add(hwDatesColumn);
-        hwsTable.setItems(dataManager.getCourse().getAssignments());
-        
-        // NOW LET'S ASSEMBLE ALL THE CONTAINERS TOGETHER
-
-        // THIS IS FOR STUFF IN THE TOP OF THE SCHEDULE PANE, WE NEED TO PUT TWO THINGS INSIDE
-        scheduleInfoPane = new VBox();
-
-        // FIRST OUR SCHEDULE HEADER
-        scheduleInfoHeadingLabel = initChildLabel(scheduleInfoPane, CSB_PropertyType.SCHEDULE_HEADING_LABEL, CLASS_HEADING_LABEL);
-
-        // AND THEN THE SPLIT PANE
-        scheduleInfoPane.getChildren().add(splitScheduleInfoPane);
-
-        // FINALLY, EVERYTHING IN THIS REGION ULTIMATELY GOES INTO schedulePane
-        schedulePane = new VBox();
-        schedulePane.getChildren().add(scheduleInfoPane);
-        schedulePane.getChildren().add(scheduleItemsBox);
-        schedulePane.getChildren().add(lecturesBox);
-        schedulePane.getChildren().add(hwsBox);
-        schedulePane.getStyleClass().add(CLASS_BORDERED_PANE);
+//        // FOR THE LEFT
+//        dateBoundariesPane = new GridPane();
+//        dateBoundariesLabel = initGridLabel(dateBoundariesPane, CSB_PropertyType.DATE_BOUNDARIES_LABEL, CLASS_SUBHEADING_LABEL, 0, 0, 1, 1);
+//        startDateLabel = initGridLabel(dateBoundariesPane, CSB_PropertyType.STARTING_MONDAY_LABEL, CLASS_PROMPT_LABEL, 0, 1, 1, 1);
+//        startDatePicker = initGridDatePicker(dateBoundariesPane, 1, 1, 1, 1);
+//        endDateLabel = initGridLabel(dateBoundariesPane, CSB_PropertyType.ENDING_FRIDAY_LABEL, CLASS_PROMPT_LABEL, 0, 2, 1, 1);
+//        endDatePicker = initGridDatePicker(dateBoundariesPane, 1, 2, 1, 1);
+//
+//        // THIS ONE IS ON THE RIGHT
+//        lectureDaySelectorPane = new VBox();
+//        lectureDaySelectLabel = initChildLabel(lectureDaySelectorPane, CSB_PropertyType.LECTURE_DAY_SELECT_LABEL, CLASS_SUBHEADING_LABEL);
+//        mondayCheckBox = initChildCheckBox(lectureDaySelectorPane, CourseSiteExporter.MONDAY_HEADER);
+//        tuesdayCheckBox = initChildCheckBox(lectureDaySelectorPane, CourseSiteExporter.TUESDAY_HEADER);
+//        wednesdayCheckBox = initChildCheckBox(lectureDaySelectorPane, CourseSiteExporter.WEDNESDAY_HEADER);
+//        thursdayCheckBox = initChildCheckBox(lectureDaySelectorPane, CourseSiteExporter.THURSDAY_HEADER);
+//        fridayCheckBox = initChildCheckBox(lectureDaySelectorPane, CourseSiteExporter.FRIDAY_HEADER);
+//
+//        // THIS SPLITS THE TOP
+//        splitScheduleInfoPane = new SplitPane();
+//        splitScheduleInfoPane.getItems().add(dateBoundariesPane);
+//        splitScheduleInfoPane.getItems().add(lectureDaySelectorPane);
+//        
+//        // NOW THE CONTROLS FOR ADDING SCHEDULE ITEMS
+//        scheduleItemsBox = new VBox();
+//        scheduleItemsToolbar = new HBox();
+//        scheduleItemsLabel = initLabel(CSB_PropertyType.SCHEDULE_ITEMS_HEADING_LABEL, CLASS_SUBHEADING_LABEL);
+//        addScheduleItemButton = initChildButton(scheduleItemsToolbar, CSB_PropertyType.ADD_ICON, CSB_PropertyType.ADD_ITEM_TOOLTIP, false);
+//        removeScheduleItemButton = initChildButton(scheduleItemsToolbar, CSB_PropertyType.MINUS_ICON, CSB_PropertyType.REMOVE_ITEM_TOOLTIP, false);
+//        scheduleItemsTable = new TableView();
+//        scheduleItemsBox.getChildren().add(scheduleItemsLabel);
+//        scheduleItemsBox.getChildren().add(scheduleItemsToolbar);
+//        scheduleItemsBox.getChildren().add(scheduleItemsTable);
+//        scheduleItemsBox.getStyleClass().add(CLASS_BORDERED_PANE);
+//        
+//        // NOW SETUP THE TABLE COLUMNS
+//        itemDescriptionsColumn = new TableColumn(COL_DESCRIPTION);
+//        itemDatesColumn = new TableColumn(COL_DATE);
+//        linkColumn = new TableColumn(COL_LINK);
+//        
+//        // AND LINK THE COLUMNS TO THE DATA
+//        itemDescriptionsColumn.setCellValueFactory(new PropertyValueFactory<String, String>("description"));
+//        itemDatesColumn.setCellValueFactory(new PropertyValueFactory<LocalDate, String>("date"));
+//        linkColumn.setCellValueFactory(new PropertyValueFactory<URL, String>("link"));
+//        scheduleItemsTable.getColumns().add(itemDescriptionsColumn);
+//        scheduleItemsTable.getColumns().add(itemDatesColumn);
+//        scheduleItemsTable.getColumns().add(linkColumn);
+//        scheduleItemsTable.setItems(dataManager.getCourse().getScheduleItems());
+//        
+//        // NOW THE CONTROLS FOR ADDING LECTURES
+//        lecturesBox = new VBox();
+//        lecturesToolbar = new HBox();
+//        addLectureButton = initChildButton(lecturesToolbar, CSB_PropertyType.ADD_ICON, CSB_PropertyType.ADD_LECTURE_TOOLTIP, false);
+//        removeLectureButton = initChildButton(lecturesToolbar, CSB_PropertyType.MINUS_ICON, CSB_PropertyType.REMOVE_LECTURE_TOOLTIP, false);
+//        moveUpLectureButton = initChildButton(lecturesToolbar, CSB_PropertyType.MOVE_UP_ICON, CSB_PropertyType.MOVE_UP_LECTURE_TOOLTIP, false);
+//        moveDownLectureButton = initChildButton(lecturesToolbar, CSB_PropertyType.MOVE_DOWN_ICON, CSB_PropertyType.MOVE_DOWN_LECTURE_TOOLTIP, false);
+//        lecturesLabel = initLabel(CSB_PropertyType.LECTURES_HEADING_LABEL, CLASS_SUBHEADING_LABEL);
+//        lecturesTable = new TableView();
+//        lecturesBox.getChildren().add(lecturesLabel);
+//        lecturesBox.getChildren().add(lecturesToolbar);
+//        lecturesBox.getChildren().add(lecturesTable);
+//        lecturesBox.getStyleClass().add(CLASS_BORDERED_PANE);
+//        
+//        // NOW SETUP THE TABLE COLUMNS
+//        lectureTopicsColumn = new TableColumn(COL_TOPIC);
+//        lectureSessionsColumn = new TableColumn(COL_SESSIONS);
+//        
+//        // AND LINK THE COLUMNS TO THE DATA
+//        lectureTopicsColumn.setCellValueFactory(new PropertyValueFactory<String, String>("topic"));
+//        lectureSessionsColumn.setCellValueFactory(new PropertyValueFactory<Integer, String>("sessions"));
+//        lecturesTable.getColumns().add(lectureTopicsColumn);
+//        lecturesTable.getColumns().add(lectureSessionsColumn);
+//        lecturesTable.setItems(dataManager.getCourse().getLectures());
+//        
+//        // AND NOW THE CONTROLS FOR ADDING HWS
+//        hwsBox = new VBox();
+//        hwsToolbar = new HBox();
+//        addHWButton = initChildButton(hwsToolbar, CSB_PropertyType.ADD_ICON, CSB_PropertyType.ADD_HW_TOOLTIP, false);
+//        removeHWButton = initChildButton(hwsToolbar, CSB_PropertyType.MINUS_ICON, CSB_PropertyType.REMOVE_HW_TOOLTIP, false);
+//        hwsLabel = initLabel(CSB_PropertyType.HWS_HEADING_LABEL, CLASS_SUBHEADING_LABEL);
+//        hwsTable = new TableView();
+//        hwsBox.getChildren().add(hwsLabel);
+//        hwsBox.getChildren().add(hwsToolbar);
+//        hwsBox.getChildren().add(hwsTable);
+//        hwsBox.getStyleClass().add(CLASS_BORDERED_PANE);
+//        
+//        // NOW SETUP THE TABLE COLUMNS
+//        hwNamesColumn = new TableColumn(COL_NAME);
+//        hwTopicsColumn = new TableColumn(COL_TOPICS);
+//        hwDatesColumn = new TableColumn(COL_DATE);
+//        
+//        // AND LINK THE COLUMNS TO THE DATA
+//        hwNamesColumn.setCellValueFactory(new PropertyValueFactory<String, String>("name"));
+//        hwTopicsColumn.setCellValueFactory(new PropertyValueFactory<String, String>("topics"));
+//        hwDatesColumn.setCellValueFactory(new PropertyValueFactory<LocalDate, String>("date"));
+//        hwsTable.getColumns().add(hwNamesColumn);
+//        hwsTable.getColumns().add(hwTopicsColumn);
+//        hwsTable.getColumns().add(hwDatesColumn);
+//        hwsTable.setItems(dataManager.getCourse().getAssignments());
+//        
+//        // NOW LET'S ASSEMBLE ALL THE CONTAINERS TOGETHER
+//
+//        // THIS IS FOR STUFF IN THE TOP OF THE SCHEDULE PANE, WE NEED TO PUT TWO THINGS INSIDE
+//        scheduleInfoPane = new VBox();
+//
+//        // FIRST OUR SCHEDULE HEADER
+//        scheduleInfoHeadingLabel = initChildLabel(scheduleInfoPane, CSB_PropertyType.SCHEDULE_HEADING_LABEL, CLASS_HEADING_LABEL);
+//
+//        // AND THEN THE SPLIT PANE
+//        scheduleInfoPane.getChildren().add(splitScheduleInfoPane);
+//
+//        // FINALLY, EVERYTHING IN THIS REGION ULTIMATELY GOES INTO schedulePane
+//        schedulePane = new VBox();
+//        schedulePane.getChildren().add(scheduleInfoPane);
+//        schedulePane.getChildren().add(scheduleItemsBox);
+//        schedulePane.getChildren().add(lecturesBox);
+//        schedulePane.getChildren().add(hwsBox);
+//        schedulePane.getStyleClass().add(CLASS_BORDERED_PANE);
     }
 
     // INITIALIZE THE WINDOW (i.e. STAGE) PUTTING ALL THE CONTROLS
@@ -636,9 +583,9 @@ public class WBDK_GUI {
         // ADD THE TOOLBAR ONLY, NOTE THAT THE WORKSPACE
         // HAS BEEN CONSTRUCTED, BUT WON'T BE ADDED UNTIL
         // THE USER STARTS EDITING A COURSE
-        csbPane = new BorderPane();
-        csbPane.setTop(fileToolbarPane);
-        primaryScene = new Scene(csbPane);
+        wbdkPane = new BorderPane();
+        wbdkPane.setTop(fileToolbarPane);
+        primaryScene = new Scene(wbdkPane);
 
         // NOW TIE THE SCENE TO THE WINDOW, SELECT THE STYLESHEET
         // WE'LL USE TO STYLIZE OUR GUI CONTROLS, AND OPEN THE WINDOW
@@ -648,148 +595,148 @@ public class WBDK_GUI {
     }
 
     // INIT ALL THE EVENT HANDLERS
-    private void initEventHandlers() throws IOException {
-        // FIRST THE FILE CONTROLS
-        fileController = new FileController(messageDialog, yesNoCancelDialog, progressDialog, courseFileManager, siteExporter);
-        newCourseButton.setOnAction(e -> {
-            fileController.handleNewCourseRequest(this);
-        });
-        loadCourseButton.setOnAction(e -> {
-            fileController.handleLoadCourseRequest(this);
-        });
-        saveCourseButton.setOnAction(e -> {
-            fileController.handleSaveCourseRequest(this, dataManager.getCourse());
-        });
-        exportSiteButton.setOnAction(e -> {
-            fileController.handleExportCourseRequest(this);
-        });
-        exitButton.setOnAction(e -> {
-            fileController.handleExitRequest(this);
-        });
-
-        // THEN THE COURSE EDITING CONTROLS
-        courseController = new CourseEditController();
-        courseSubjectComboBox.setOnAction(e -> {
-            courseController.handleCourseChangeRequest(this);
-        });
-        courseSemesterComboBox.setOnAction(e -> {
-            courseController.handleCourseChangeRequest(this);
-        });
-        courseYearComboBox.setOnAction(e -> {
-            courseController.handleCourseChangeRequest(this);
-        });
-        indexPageCheckBox.setOnAction(e -> {
-            courseController.handleCourseChangeRequest(this);
-        });
-        syllabusPageCheckBox.setOnAction(e -> {
-            courseController.handleCourseChangeRequest(this);
-        });
-        schedulePageCheckBox.setOnAction(e -> {
-            courseController.handleCourseChangeRequest(this);
-        });
-        hwsPageCheckBox.setOnAction(e -> {
-            courseController.handleCourseChangeRequest(this);
-        });
-        projectsPageCheckBox.setOnAction(e -> {
-            courseController.handleCourseChangeRequest(this);
-        });
-
-        // TEXT FIELDS HAVE A DIFFERENT WAY OF LISTENING FOR TEXT CHANGES
-        registerTextFieldController(courseNumberTextField);
-        registerTextFieldController(courseTitleTextField);
-        registerTextFieldController(instructorNameTextField);
-        registerTextFieldController(instructorURLTextField);
-
-        // THE DATE SELECTION ONES HAVE PARTICULAR CONCERNS, AND SO
-        // GO THROUGH A DIFFERENT METHOD
-        startDatePicker.setOnAction(e -> {
-            courseController.handleDateSelectionRequest(this, startDatePicker, endDatePicker);
-        });
-        endDatePicker.setOnAction(e -> {
-            courseController.handleDateSelectionRequest(this, startDatePicker, endDatePicker);
-        });
-
-        // AND THE LECTURE DAYS CHECKBOXES
-        mondayCheckBox.setOnAction(e -> {
-            courseController.handleCourseChangeRequest(this);
-        });
-        tuesdayCheckBox.setOnAction(e -> {
-            courseController.handleCourseChangeRequest(this);
-        });
-        wednesdayCheckBox.setOnAction(e -> {
-            courseController.handleCourseChangeRequest(this);
-        });
-        thursdayCheckBox.setOnAction(e -> {
-            courseController.handleCourseChangeRequest(this);
-        });
-        fridayCheckBox.setOnAction(e -> {
-            courseController.handleCourseChangeRequest(this);
-        });
-        
-        // AND NOW THE SCHEDULE ITEM ADDING AND EDITING CONTROLS
-        scheduleController = new ScheduleEditController(primaryStage, dataManager.getCourse(), messageDialog, yesNoCancelDialog);
-        addScheduleItemButton.setOnAction(e -> {
-            scheduleController.handleAddScheduleItemRequest(this);
-        });
-        removeScheduleItemButton.setOnAction(e -> {
-            scheduleController.handleRemoveScheduleItemRequest(this, scheduleItemsTable.getSelectionModel().getSelectedItem());
-        });
-        addLectureButton.setOnAction(e -> {
-            scheduleController.handleAddLectureRequest(this);
-        });
-        removeLectureButton.setOnAction(e-> {
-            scheduleController.handleRemoveLectureRequest(this, lecturesTable.getSelectionModel().getSelectedItem());
-        });
-        moveUpLectureButton.setOnAction(e -> {
-            scheduleController.handleMoveUpLectureRequest(this, lecturesTable.getSelectionModel().getSelectedItem());
-        });
-        moveDownLectureButton.setOnAction(e -> {
-            scheduleController.handleMoveDownLectureRequest(this, lecturesTable.getSelectionModel().getSelectedItem());
-        });
-        addHWButton.setOnAction(e -> {
-            scheduleController.handleAddAssignmentRequest(this);
-        });
-        removeHWButton.setOnAction(e -> {
-            scheduleController.handleRemoveAssignmentRequest(this, hwsTable.getSelectionModel().getSelectedItem());
-        });
-        
-        // AND NOW THE SCHEDULE ITEMS TABLE
-        scheduleItemsTable.setOnMouseClicked(e -> {
-            if (e.getClickCount() == 2) {
-                // OPEN UP THE SCHEDULE ITEM EDITOR
-                ScheduleItem si = scheduleItemsTable.getSelectionModel().getSelectedItem();
-                scheduleController.handleEditScheduleItemRequest(this, si);
-            }
-        });
-        
-        // AND THE LECTURES TABLE
-        lecturesTable.setOnMouseClicked(e -> {
-            if (e.getClickCount() == 2) {
-                // OPEN UP THE LECTURE EDITOR
-                Lecture l = lecturesTable.getSelectionModel().getSelectedItem();
-                scheduleController.handleEditLectureRequest(this, l);
-            }
-        });
-        
-        // AND THE HWS TABLE
-        hwsTable.setOnMouseClicked(e -> {
-            if (e.getClickCount() == 2) {
-                // OPEN UP THE HWS EDITOR
-                Assignment a = hwsTable.getSelectionModel().getSelectedItem();
-                scheduleController.handleEditAssignmentRequest(this, a);
-            }
-        });
-    }
+//    private void initEventHandlers() throws IOException {
+//        // FIRST THE FILE CONTROLS
+//        fileController = new FileController(messageDialog, yesNoCancelDialog, progressDialog, courseFileManager, siteExporter);
+//        newCourseButton.setOnAction(e -> {
+//            fileController.handleNewCourseRequest(this);
+//        });
+//        loadCourseButton.setOnAction(e -> {
+//            fileController.handleLoadCourseRequest(this);
+//        });
+//        saveCourseButton.setOnAction(e -> {
+//            fileController.handleSaveCourseRequest(this, dataManager.getCourse());
+//        });
+//        exportSiteButton.setOnAction(e -> {
+//            fileController.handleExportCourseRequest(this);
+//        });
+//        exitButton.setOnAction(e -> {
+//            fileController.handleExitRequest(this);
+//        });
+//
+//        // THEN THE COURSE EDITING CONTROLS
+//        courseController = new CourseEditController();
+//        courseSubjectComboBox.setOnAction(e -> {
+//            courseController.handleCourseChangeRequest(this);
+//        });
+//        courseSemesterComboBox.setOnAction(e -> {
+//            courseController.handleCourseChangeRequest(this);
+//        });
+//        courseYearComboBox.setOnAction(e -> {
+//            courseController.handleCourseChangeRequest(this);
+//        });
+//        indexPageCheckBox.setOnAction(e -> {
+//            courseController.handleCourseChangeRequest(this);
+//        });
+//        syllabusPageCheckBox.setOnAction(e -> {
+//            courseController.handleCourseChangeRequest(this);
+//        });
+//        schedulePageCheckBox.setOnAction(e -> {
+//            courseController.handleCourseChangeRequest(this);
+//        });
+//        hwsPageCheckBox.setOnAction(e -> {
+//            courseController.handleCourseChangeRequest(this);
+//        });
+//        projectsPageCheckBox.setOnAction(e -> {
+//            courseController.handleCourseChangeRequest(this);
+//        });
+//
+//        // TEXT FIELDS HAVE A DIFFERENT WAY OF LISTENING FOR TEXT CHANGES
+//        registerTextFieldController(courseNumberTextField);
+//        registerTextFieldController(courseTitleTextField);
+//        registerTextFieldController(instructorNameTextField);
+//        registerTextFieldController(instructorURLTextField);
+//
+//        // THE DATE SELECTION ONES HAVE PARTICULAR CONCERNS, AND SO
+//        // GO THROUGH A DIFFERENT METHOD
+//        startDatePicker.setOnAction(e -> {
+//            courseController.handleDateSelectionRequest(this, startDatePicker, endDatePicker);
+//        });
+//        endDatePicker.setOnAction(e -> {
+//            courseController.handleDateSelectionRequest(this, startDatePicker, endDatePicker);
+//        });
+//
+//        // AND THE LECTURE DAYS CHECKBOXES
+//        mondayCheckBox.setOnAction(e -> {
+//            courseController.handleCourseChangeRequest(this);
+//        });
+//        tuesdayCheckBox.setOnAction(e -> {
+//            courseController.handleCourseChangeRequest(this);
+//        });
+//        wednesdayCheckBox.setOnAction(e -> {
+//            courseController.handleCourseChangeRequest(this);
+//        });
+//        thursdayCheckBox.setOnAction(e -> {
+//            courseController.handleCourseChangeRequest(this);
+//        });
+//        fridayCheckBox.setOnAction(e -> {
+//            courseController.handleCourseChangeRequest(this);
+//        });
+//        
+//        // AND NOW THE SCHEDULE ITEM ADDING AND EDITING CONTROLS
+//        scheduleController = new ScheduleEditController(primaryStage, dataManager.getCourse(), messageDialog, yesNoCancelDialog);
+//        addScheduleItemButton.setOnAction(e -> {
+//            scheduleController.handleAddScheduleItemRequest(this);
+//        });
+//        removeScheduleItemButton.setOnAction(e -> {
+//            scheduleController.handleRemoveScheduleItemRequest(this, scheduleItemsTable.getSelectionModel().getSelectedItem());
+//        });
+//        addLectureButton.setOnAction(e -> {
+//            scheduleController.handleAddLectureRequest(this);
+//        });
+//        removeLectureButton.setOnAction(e-> {
+//            scheduleController.handleRemoveLectureRequest(this, lecturesTable.getSelectionModel().getSelectedItem());
+//        });
+//        moveUpLectureButton.setOnAction(e -> {
+//            scheduleController.handleMoveUpLectureRequest(this, lecturesTable.getSelectionModel().getSelectedItem());
+//        });
+//        moveDownLectureButton.setOnAction(e -> {
+//            scheduleController.handleMoveDownLectureRequest(this, lecturesTable.getSelectionModel().getSelectedItem());
+//        });
+//        addHWButton.setOnAction(e -> {
+//            scheduleController.handleAddAssignmentRequest(this);
+//        });
+//        removeHWButton.setOnAction(e -> {
+//            scheduleController.handleRemoveAssignmentRequest(this, hwsTable.getSelectionModel().getSelectedItem());
+//        });
+//        
+//        // AND NOW THE SCHEDULE ITEMS TABLE
+//        scheduleItemsTable.setOnMouseClicked(e -> {
+//            if (e.getClickCount() == 2) {
+//                // OPEN UP THE SCHEDULE ITEM EDITOR
+//                ScheduleItem si = scheduleItemsTable.getSelectionModel().getSelectedItem();
+//                scheduleController.handleEditScheduleItemRequest(this, si);
+//            }
+//        });
+//        
+//        // AND THE LECTURES TABLE
+//        lecturesTable.setOnMouseClicked(e -> {
+//            if (e.getClickCount() == 2) {
+//                // OPEN UP THE LECTURE EDITOR
+//                Lecture l = lecturesTable.getSelectionModel().getSelectedItem();
+//                scheduleController.handleEditLectureRequest(this, l);
+//            }
+//        });
+//        
+//        // AND THE HWS TABLE
+//        hwsTable.setOnMouseClicked(e -> {
+//            if (e.getClickCount() == 2) {
+//                // OPEN UP THE HWS EDITOR
+//                Assignment a = hwsTable.getSelectionModel().getSelectedItem();
+//                scheduleController.handleEditAssignmentRequest(this, a);
+//            }
+//        });
+//    }
 
     // REGISTER THE EVENT LISTENER FOR A TEXT FIELD
     private void registerTextFieldController(TextField textField) {
         textField.textProperty().addListener((observable, oldValue, newValue) -> {
-            courseController.handleCourseChangeRequest(this);
+//            courseController.handleCourseChangeRequest(this);
         });
     }
     
     // INIT A BUTTON AND ADD IT TO A CONTAINER IN A TOOLBAR
-    private Button initChildButton(Pane toolbar, CSB_PropertyType icon, CSB_PropertyType tooltip, boolean disabled) {
+    private Button initChildButton(Pane toolbar, WBDK_PropertyType icon, WBDK_PropertyType tooltip, boolean disabled) {
         PropertiesManager props = PropertiesManager.getPropertiesManager();
         String imagePath = "file:" + PATH_IMAGES + props.getProperty(icon.toString());
         Image buttonImage = new Image(imagePath);
@@ -803,7 +750,7 @@ public class WBDK_GUI {
     }
     
     // INIT A LABEL AND SET IT'S STYLESHEET CLASS
-    private Label initLabel(CSB_PropertyType labelProperty, String styleClass) {
+    private Label initLabel(WBDK_PropertyType labelProperty, String styleClass) {
         PropertiesManager props = PropertiesManager.getPropertiesManager();
         String labelText = props.getProperty(labelProperty);
         Label label = new Label(labelText);
@@ -812,14 +759,14 @@ public class WBDK_GUI {
     }
 
     // INIT A LABEL AND PLACE IT IN A GridPane INIT ITS PROPER PLACE
-    private Label initGridLabel(GridPane container, CSB_PropertyType labelProperty, String styleClass, int col, int row, int colSpan, int rowSpan) {
+    private Label initGridLabel(GridPane container, WBDK_PropertyType labelProperty, String styleClass, int col, int row, int colSpan, int rowSpan) {
         Label label = initLabel(labelProperty, styleClass);
         container.add(label, col, row, colSpan, rowSpan);
         return label;
     }
 
     // INIT A LABEL AND PUT IT IN A TOOLBAR
-    private Label initChildLabel(Pane container, CSB_PropertyType labelProperty, String styleClass) {
+    private Label initChildLabel(Pane container, WBDK_PropertyType labelProperty, String styleClass) {
         Label label = initLabel(labelProperty, styleClass);
         container.getChildren().add(label);
         return label;
@@ -833,11 +780,11 @@ public class WBDK_GUI {
     }
 
     // LOAD THE COMBO BOX TO HOLD Course SUBJECTS
-    private void loadSubjectComboBox(ArrayList<String> subjects) {
-        for (String s : subjects) {
-            courseSubjectComboBox.getItems().add(s);
-        }
-    }
+//    private void loadSubjectComboBox(ArrayList<String> subjects) {
+//        for (String s : subjects) {
+//            courseSubjectComboBox.getItems().add(s);
+//        }
+//    }
 
     // INIT A TEXT FIELD AND PUT IT IN A GridPane
     private TextField initGridTextField(GridPane container, int size, String initText, boolean editable, int col, int row, int colSpan, int rowSpan) {
