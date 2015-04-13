@@ -38,6 +38,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import properties_manager.PropertiesManager;
+import wofieballdraftkit.WBDK_PropertyType;
 import wofieballdraftkit.controller.DraftEditController;
 import wofieballdraftkit.controller.FileController;
 import wofieballdraftkit.data.DraftDataManager;
@@ -101,9 +102,9 @@ public class WBDK_GUI {
     
     
     //BOTTOM TOOLBAR AND ITS BUTTON
-    Button fantasyButton;
+    Button homeButton;
     Button playerButton;
-    Button standingButotn;
+    Button standingButton;
     Button draftButton;
     Button MLBButton;
     
@@ -330,7 +331,7 @@ public class WBDK_GUI {
      * 
      * @param course The course to be updated using the data from the UI controls.
      */
-    public void updateCourseInfo( course) {
+    public void updateCourseInfo( ) {
 
     }
 
@@ -353,12 +354,30 @@ public class WBDK_GUI {
 
         // HERE ARE OUR FILE TOOLBAR BUTTONS, NOTE THAT SOME WILL
         // START AS ENABLED (false), WHILE OTHERS DISABLED (true)
-        newButton = initChildButton(fileToolbarPane, CSB_PropertyType.NEW_COURSE_ICON, CSB_PropertyType.NEW_COURSE_TOOLTIP, false);
-        loadButton = initChildButton(fileToolbarPane, CSB_PropertyType.LOAD_COURSE_ICON, CSB_PropertyType.LOAD_COURSE_TOOLTIP, false);
-        saveButton = initChildButton(fileToolbarPane, CSB_PropertyType.SAVE_COURSE_ICON, CSB_PropertyType.SAVE_COURSE_TOOLTIP, true);
-        exportButton = initChildButton(fileToolbarPane, CSB_PropertyType.EXPORT_PAGE_ICON, CSB_PropertyType.EXPORT_PAGE_TOOLTIP, true);
-        exitButton = initChildButton(fileToolbarPane, CSB_PropertyType.EXIT_ICON, CSB_PropertyType.EXIT_TOOLTIP, false);
+        newButton = initChildButton(fileToolbarPane, WBDK_PropertyType.NEW_ICON, WBDK_PropertyType.NEW_TOOLTIP, false);
+        loadButton = initChildButton(fileToolbarPane, WBDK_PropertyType.LOAD_ICON, WBDK_PropertyType.LOAD_TOOLTIP, false);
+        saveButton = initChildButton(fileToolbarPane, WBDK_PropertyType.SAVE_ICON, WBDK_PropertyType.SAVE_TOOLTIP, true);
+        exportButton = initChildButton(fileToolbarPane, WBDK_PropertyType.EXPORT_ICON, WBDK_PropertyType.EXPORT_TOOLTIP, true);
+        exitButton = initChildButton(fileToolbarPane, WBDK_PropertyType.EXIT_ICON, WBDK_PropertyType.EXIT_TOOLTIP, false);
     }
+    
+    private void initScreenToolbar() {
+        fileToolbarPane = new FlowPane();
+
+        // HERE ARE OUR FILE TOOLBAR BUTTONS, NOTE THAT SOME WILL
+        // START AS ENABLED (false), WHILE OTHERS DISABLED (true)
+        homeButton = initChildButton(fileToolbarPane, WBDK_PropertyType.HOME_ICON, WBDK_PropertyType.HOME_TOOLTIP, false);
+        playerButton = initChildButton(fileToolbarPane, WBDK_PropertyType.PLAYER_ICON, WBDK_PropertyType.PLAYER_TOOLTIP, false);
+        draftButton = initChildButton(fileToolbarPane, WBDK_PropertyType.DRAFT_ICON, WBDK_PropertyType.DRAFT_TOOLTIP, true);
+        standingButton = initChildButton(fileToolbarPane, WBDK_PropertyType.STANDING_ICON, WBDK_PropertyType.STANDING_TOOLTIP, true);
+        MLBButton = initChildButton(fileToolbarPane, WBDK_PropertyType.MLB_ICON, WBDK_PropertyType.MLB_TOOLTIP, false);
+    }
+    
+    
+    
+    
+    
+    
 
     // CREATES AND SETS UP ALL THE CONTROLS TO GO IN THE APP WORKSPACE
     private void initWorkspace(ArrayList<String> subjects) throws IOException {
@@ -851,12 +870,12 @@ public class WBDK_GUI {
         return dp;
     }
     
-    // LOADS CHECKBOX DATA INTO A Course OBJECT REPRESENTING A CoursePage
-    private void updatePageUsingCheckBox(CheckBox cB, Course course, CoursePage cP) {
-        if (cB.isSelected()) {
-            course.selectPage(cP);
-        } else {
-            course.unselectPage(cP);
-        }
-    }    
+//    // LOADS CHECKBOX DATA INTO A Course OBJECT REPRESENTING A CoursePage
+//    private void updatePageUsingCheckBox(CheckBox cB, Course course, CoursePage cP) {
+//        if (cB.isSelected()) {
+//            course.selectPage(cP);
+//        } else {
+//            course.unselectPage(cP);
+//        }
+//    }    
 }

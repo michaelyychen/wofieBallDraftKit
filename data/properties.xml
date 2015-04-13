@@ -53,7 +53,7 @@
         
         <!-- ERROR MESSAGES -->
 
-        <property name="ILLEGAL_DATE_MESSAGE"                       value="Illegal Date Selection"></property>
+        <property name="ILLEGAL_SELECTION"                       value="Illegal Selection"></property>
         <property name="CLOSE_BUTTON_TEXT"                          value="Close"></property>
 
         <!-- VERIFICATION MESSAGES -->
