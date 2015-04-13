@@ -9,6 +9,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import wofieballdraftkit.data.Draft;
+import wofieballdraftkit.data.Hitter;
+import wofieballdraftkit.data.Pitcher;
 import wofieballdraftkit.data.Player;
 
 /**
@@ -17,6 +19,7 @@ import wofieballdraftkit.data.Player;
  */
 public interface DraftFileManager {
  
-    public void                 loadPlayer(Player playerToLoad, String coursePath) throws IOException;
+    public void                 loadPitcher(Pitcher playerToLoad, String coursePath) throws IOException;
+    public void                 loadHitter(Hitter playerToLoad, String coursePath) throws IOException;
 
 }

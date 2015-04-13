@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    This XML file allows us to easily customize the look and language used
+    in our program's user interface. Note that this is for customizing settings
+    for the Course Schedule Builder interface, NOT the Web page that we're building. 
+-->
+<properties>
+    <property_list>    
+        <property name="PROP_APP_TITLE"   value="Wofie Ball Draft Kit"></property>  
+        
+        <!-- PROGRAM ICON FILES -->
+        <property name="NEW_ICON"           value="New.png"></property>
+        <property name="LOAD_ICON"          value="Load.png"></property>
+        <property name="SAVE_ICON"          value="Save.png"></property>
+        <property name="EXPORT_ICON"        value="Export.png"></property>
+        <property name="DELETE_ICON"        value="Delete.png"></property>
+        <property name="EXIT_ICON"          value="Exit.png"></property>        
+        <property name="ADD_ICON"           value="Add.png"></property>
+        <property name="MINUS_ICON"         value="Minus.png"></property>
+        <property name="MOVE_UP_ICON"       value="MoveUp.png"></property>
+        <property name="MOVE_DOWN_ICON"     value="MoveDown.png"></property>
+        <property name="HOME_ICON"          value="Home.png"></property>
+        <property name="PLAYER_ICON"        value="Player.png"></property>
+        <property name="STANDING_ICON"      value="Standing.png"></property>
+        <property name="DRAFT_ICON"         value="Draft.png"></property>
+        <property name="MLB_ICON"           value="MLB.png"></property>
+        
+        <!-- TOOLTIPS FOR BUTTONS -->
+        <property name="NEW_TOOLTIP"                value="Create a New Draft"></property>
+        <property name="LOAD_TOOLTIP"               value="Load and Existing Draft"></property>
+        <property name="SAVE_TOOLTIP"               value="Save this Draft"></property>
+        <property name="EXPORT_TOOLTIP"             value="Export the Draft Page"></property>
+        <property name="DELETE_TOOLTIP"             value="Delete this Draft"></property>
+        <property name="EXIT_TOOLTIP"               value="Exit the Application"></property>
+        <property name="HOME_TOOLTIP"               value="Fantasy Teams Screen"></property>
+        <property name="PLAYER_TOOLTIP"               value="Player Screen"></property>
+        <property name="STANDING_TOOLTIP"             value="Fantasy Standing Screen"></property>
+        <property name="DRAFT_TOOLTIP"             value="Draft Screen"></property>
+        <property name="MLB_TOOLTIP"               value="MLB Screen"></property>
+        <property name="ADD_PLAYER_TOOLTIP"           value="Add Player Item"></property>
+        <property name="REMOVE_PLAYER_TOOLTIP"        value="Remove Player Item"></property>
+        <property name="MOVE_UP_TOOLTIP"            value="Move Up Lecture"></property>
+        <property name="MOVE_DOWN_TOOLTIP"          value="Move Down Lecture"></property>
+
+        
+        <!-- GUI LABELS -->
+        <property name="FANTASY_TEAMS_LABEL"             value="Fantasy Teams"></property>
+        <property name="PLAYERS_LABEL"                   value="Avaliable Players"></property>
+        <property name="STANDING_LABEL"                  value="Fantasy Standing"></property>
+        <property name="DRAFT_LABEL"                     value="Draft Summary"></property>
+        <property name="MLB_LABEL"                       value="MLB Teams"></property>
+
+        
+        <!-- ERROR MESSAGES -->
+
+        <property name="ILLEGAL_DATE_MESSAGE"                       value="Illegal Date Selection"></property>
+        <property name="CLOSE_BUTTON_TEXT"                          value="Close"></property>
+
+        <!-- VERIFICATION MESSAGES -->
+        <property name="NEW_DRAFT_CREATED_MESSAGE"     value="New Draft Created but not yet Saved"></property>
+        <property name="DRAFT_LOADED_MESSAGE"          value="The Draft has been Loaded"></property>
+        <property name="DRAFT_SAVED_MESSAGE"           value="The Draft has been Saved"></property>
+        <property name="SITE_EXPORTED_MESSAGE"          value="The Draft Site has been Exported"></property>
+        <property name="SAVE_UNSAVED_WORK_MESSAGE"      value="Do you want to save your unsaved work first?"></property>
+        <property name="REMOVE_ITEM_MESSAGE"            value="Are you sure you wish to remove the item?"></property>
+    </property_list>
+    <property_options_list>
+    </property_options_list>
+</properties>

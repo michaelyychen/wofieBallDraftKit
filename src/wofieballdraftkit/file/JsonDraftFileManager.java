@@ -23,6 +23,7 @@ import javax.json.JsonReader;
 import javax.json.JsonValue;
 import javax.json.JsonWriter;
 import wofieballdraftkit.data.Draft;
+import wofieballdraftkit.data.Hitter;
 import wofieballdraftkit.data.Pitcher;
 import wofieballdraftkit.data.Player;
 
@@ -63,59 +64,59 @@ public class JsonDraftFileManager implements DraftFileManager {
      * 
      * @throws IOException Thrown when there are issues writing
      * to the JSON file.
-     */
-    @Override
-    public void saveDraft(Draft draftToSave) throws IOException {
-        // BUILD THE FILE PATH
-        String courseListing = "" + courseToSave.getSubject() + courseToSave.getNumber();
-        String jsonFilePath = PATH_COURSES + SLASH + courseListing + JSON_EXT;
-        
-        // INIT THE WRITER
-        OutputStream os = new FileOutputStream(jsonFilePath);
-        JsonWriter jsonWriter = Json.createWriter(os);  
-        
-        // MAKE A JSON ARRAY FOR THE PAGES ARRAY
-        JsonArray pagesJsonArray = makePagesJsonArray(courseToSave.getPages());
-        
-        // AND AN OBJECT FOR THE INSTRUCTOR
-        JsonObject instructorJsonObject = makeInstructorJsonObject(courseToSave.getInstructor());
-        
-        // ONE FOR EACH OF OUR DATES
-        JsonObject startingMondayJsonObject = makeLocalDateJsonObject(courseToSave.getStartingMonday());
-        JsonObject endingFridayJsonObject = makeLocalDateJsonObject(courseToSave.getEndingFriday());
-        
-        // THE LECTURE DAYS ARRAY
-        JsonArray lectureDaysJsonArray = makeLectureDaysJsonArray(courseToSave.getLectureDays());
-        
-        // THE SCHEDULE ITEMS ARRAY
-        JsonArray scheduleItemsJsonArray = makeScheduleItemsJsonArray(courseToSave.getScheduleItems());
-        
-        // THE LECTURES ARRAY
-        JsonArray lecturesJsonArray = makeLecturesJsonArray(courseToSave.getLectures());
-        
-        // THE HWS ARRAY
-        JsonArray hwsJsonArray = makeHWsJsonArray(courseToSave.getAssignments());
-        
-        // NOW BUILD THE COURSE USING EVERYTHING WE'VE ALREADY MADE
-        JsonObject courseJsonObject = Json.createObjectBuilder()
-                                    .add(JSON_SUBJECT, courseToSave.getSubject().toString())
-                                    .add(JSON_NUMBER, courseToSave.getNumber())
-                                    .add(JSON_TITLE, courseToSave.getTitle())
-                                    .add(JSON_SEMESTER, courseToSave.getSemester().toString())
-                                    .add(JSON_YEAR, courseToSave.getYear())
-                                    .add(JSON_PAGES, pagesJsonArray)
-                                    .add(JSON_INSTRUCTOR, instructorJsonObject)
-                                    .add(JSON_STARTING_MONDAY, startingMondayJsonObject)
-                                    .add(JSON_ENDING_FRIDAY, endingFridayJsonObject)
-                                    .add(JSON_LECTURE_DAYS, lectureDaysJsonArray)
-                                    .add(JSON_SCHEDULE_ITEMS, scheduleItemsJsonArray)
-                                    .add(JSON_LECTURES, lecturesJsonArray)
-                                    .add(JSON_HWS, hwsJsonArray)
-                .build();
-        
-        // AND SAVE EVERYTHING AT ONCE
-        jsonWriter.writeObject(courseJsonObject);
-    }
+//     */
+//    @Override
+//    public void saveDraft(Draft draftToSave) throws IOException {
+//        // BUILD THE FILE PATH
+//        String courseListing = "" + courseToSave.getSubject() + courseToSave.getNumber();
+//        String jsonFilePath = PATH_COURSES + SLASH + courseListing + JSON_EXT;
+//        
+//        // INIT THE WRITER
+//        OutputStream os = new FileOutputStream(jsonFilePath);
+//        JsonWriter jsonWriter = Json.createWriter(os);  
+//        
+//        // MAKE A JSON ARRAY FOR THE PAGES ARRAY
+//        JsonArray pagesJsonArray = makePagesJsonArray(courseToSave.getPages());
+//        
+//        // AND AN OBJECT FOR THE INSTRUCTOR
+//        JsonObject instructorJsonObject = makeInstructorJsonObject(courseToSave.getInstructor());
+//        
+//        // ONE FOR EACH OF OUR DATES
+//        JsonObject startingMondayJsonObject = makeLocalDateJsonObject(courseToSave.getStartingMonday());
+//        JsonObject endingFridayJsonObject = makeLocalDateJsonObject(courseToSave.getEndingFriday());
+//        
+//        // THE LECTURE DAYS ARRAY
+//        JsonArray lectureDaysJsonArray = makeLectureDaysJsonArray(courseToSave.getLectureDays());
+//        
+//        // THE SCHEDULE ITEMS ARRAY
+//        JsonArray scheduleItemsJsonArray = makeScheduleItemsJsonArray(courseToSave.getScheduleItems());
+//        
+//        // THE LECTURES ARRAY
+//        JsonArray lecturesJsonArray = makeLecturesJsonArray(courseToSave.getLectures());
+//        
+//        // THE HWS ARRAY
+//        JsonArray hwsJsonArray = makeHWsJsonArray(courseToSave.getAssignments());
+//        
+//        // NOW BUILD THE COURSE USING EVERYTHING WE'VE ALREADY MADE
+//        JsonObject courseJsonObject = Json.createObjectBuilder()
+//                                    .add(JSON_SUBJECT, courseToSave.getSubject().toString())
+//                                    .add(JSON_NUMBER, courseToSave.getNumber())
+//                                    .add(JSON_TITLE, courseToSave.getTitle())
+//                                    .add(JSON_SEMESTER, courseToSave.getSemester().toString())
+//                                    .add(JSON_YEAR, courseToSave.getYear())
+//                                    .add(JSON_PAGES, pagesJsonArray)
+//                                    .add(JSON_INSTRUCTOR, instructorJsonObject)
+//                                    .add(JSON_STARTING_MONDAY, startingMondayJsonObject)
+//                                    .add(JSON_ENDING_FRIDAY, endingFridayJsonObject)
+//                                    .add(JSON_LECTURE_DAYS, lectureDaysJsonArray)
+//                                    .add(JSON_SCHEDULE_ITEMS, scheduleItemsJsonArray)
+//                                    .add(JSON_LECTURES, lecturesJsonArray)
+//                                    .add(JSON_HWS, hwsJsonArray)
+//                .build();
+//        
+//        // AND SAVE EVERYTHING AT ONCE
+//        jsonWriter.writeObject(courseJsonObject);
+//    }
     
     /**
      * Loads the courseToLoad argument using the data found in the json file.
@@ -148,73 +149,46 @@ public class JsonDraftFileManager implements DraftFileManager {
         playerToLoad.setSv(json.getInt(JSON_SV));
         playerToLoad.setBirth(json.getInt(JSON_BIRTH));
         playerToLoad.setNation(json.getString(JSON_NATION));
+        playerToLoad.setNotes(json.getString(JSON_NOTES));
         
 
     }
     
-    /**
-     * This function saves the last instructor to a json file. This provides 
-     * a convenience to the user, who is likely always the same instructor.
-     * @param lastInstructor Instructor to save.
-     * @param jsonFilePath File in which to put the data.
-     * @throws IOException Thrown when I/O fails.
-     */
-    @Override
-    public void saveLastInstructor(Instructor lastInstructor, String jsonFilePath) throws IOException {
-        OutputStream os = new FileOutputStream(jsonFilePath);
-        JsonWriter jsonWriter = Json.createWriter(os); 
-        JsonObject instructorJsonObject = makeInstructorJsonObject(lastInstructor);
-        jsonWriter.writeObject(instructorJsonObject);
+        @Override
+    public void loadHitter(Hitter playerToLoad, String jsonFilePath) throws IOException {
+        // LOAD THE JSON FILE WITH ALL THE DATA
+        JsonObject json = loadJSONFile(jsonFilePath);
+        
+        // NOW LOAD THE COURSE
+        
+        double BA = (json.getJsonNumber(JSON_H).doubleValue() / 
+                            json.getJsonNumber(JSON_AB).doubleValue());
+
+        
+        
+        playerToLoad.setTeam(json.getString(JSON_TEAM));
+        playerToLoad.setLastName(json.getString(JSON_LASTNAME));
+        playerToLoad.setFirstName(json.getString(JSON_FIRSTNAME));
+        playerToLoad.setR(json.getInt(JSON_R));
+        playerToLoad.setHr(json.getInt(JSON_HR));
+        playerToLoad.setRbi(json.getJsonNumber(JSON_RBI).doubleValue());
+        playerToLoad.setSb(json.getJsonNumber(JSON_SB).intValue());
+        playerToLoad.setBa(BA);
+        playerToLoad.setBirth(json.getInt(JSON_BIRTH));
+        playerToLoad.setNation(json.getString(JSON_NATION));
+        playerToLoad.setNotes(json.getString(JSON_NOTES));
+
     }
     
-    /**
-     * Loads an instructor from the provided file, returning a constructed
-     * object to represent it.
-     * @param filePath Path of json file containing instructor data.
-     * @return A constructed Instructor initialized with the data from the file
-     * @throws IOException Thrown when I/O fails.
-     */
-    @Override
-    public Instructor loadLastInstructor(String filePath) throws IOException {
-        JsonObject json = loadJSONFile(filePath);
-        return buildInstructorJsonObject(json);
-    }
     
-    /**
-     * Saves the subjects list to a json file.
-     * @param subjects List of Subjects to save.
-     * @param jsonFilePath Path of json file.
-     * @throws IOException Thrown when I/O fails.
-     */
-    @Override
-    public void saveSubjects(List<Object> subjects, String jsonFilePath) throws IOException {
-        JsonObject arrayObject = buildJsonArrayObject(subjects);
-        OutputStream os = new FileOutputStream(jsonFilePath);
-        JsonWriter jsonWriter = Json.createWriter(os);  
-        jsonWriter.writeObject(arrayObject);        
-    }
     
-    /**
-     * Loads subjects from the json file.
-     * @param jsonFilePath Json file containing the subjects.
-     * @return List full of Subjects loaded from the file.
-     * @throws IOException Thrown when I/O fails.
-     */
-    @Override
-    public ArrayList<String> loadSubjects(String jsonFilePath) throws IOException {
-        ArrayList<String> subjectsArray = loadArrayFromJSONFile(jsonFilePath, JSON_SUBJECTS);
-        ArrayList<String> cleanedArray = new ArrayList();
-        for (String s : subjectsArray) {
-            // GET RID OF ALL THE QUOTE CHARACTERS
-            s = s.replaceAll("\"", "");
-            cleanedArray.add(s);
-        }
-        return cleanedArray;
-    }
     
-    // AND HERE ARE THE PRIVATE HELPER METHODS TO HELP THE PUBLIC ONES
     
-    // LOADS A JSON FILE AS A SINGLE OBJECT AND RETURNS IT
+    
+    
+    
+   
+   
     private JsonObject loadJSONFile(String jsonFilePath) throws IOException {
         InputStream is = new FileInputStream(jsonFilePath);
         JsonReader jsonReader = Json.createReader(is);
@@ -235,108 +209,7 @@ public class JsonDraftFileManager implements DraftFileManager {
         }
         return items;
     }
-    
-    // MAKES AND RETURNS A JSON OBJECT FOR THE PROVIDED SCHEDULE ITEM
-    private JsonObject makeScheduleItemJsonObject(ScheduleItem scheduleItem) {
-        JsonObject date = makeLocalDateJsonObject(scheduleItem.getDate());
-        JsonObject jso = Json.createObjectBuilder().add(JSON_SCHEDULE_ITEM_DESCRIPTION, scheduleItem.getDescription())
-                                                    .add(JSON_SCHEDULE_ITEM_DATE, date)
-                                                    .add(JSON_SCHEDULE_ITEM_LINK, scheduleItem.getLink())
-                                                    .build();
-        return jso;
-    }
-    
-    // MAKES AND RETURNS A JSON OBJECT FOR THE PROVIDED LECTURE
-    private JsonObject makeLectureJsonObject(Lecture lecture) {
-        JsonObject jso = Json.createObjectBuilder().add(JSON_LECTURE_TOPIC, lecture.getTopic())
-                                                    .add(JSON_LECTURE_SESSIONS, lecture.getSessions())
-                                                    .build();
-        return jso;
-    }
-    
-    // MAKES AND RETURNS A JSON OBJECT FOR THE PROVIDED ASSIGNMENT
-    private JsonObject makeAssignmentJsonObject(Assignment assignment) {
-        JsonObject dateJSO = makeLocalDateJsonObject(assignment.getDate());
-        JsonObject jso = Json.createObjectBuilder().add(JSON_ASSIGNMENT_NAME, assignment.getName())
-                                                    .add(JSON_ASSIGNMENT_TOPICS, assignment.getTopics())
-                                                    .add(JSON_ASSIGNMENT_DATE, dateJSO)
-                                                    .build();
-        return jso;
-    }
-    
-    // MAKES AND RETURNS A JSON OBJECT FOR THE PROVIDED INSTRUCTOR
-    private JsonObject makeInstructorJsonObject(Instructor instructor) {
-        JsonObject jso = Json.createObjectBuilder().add(JSON_INSTRUCTOR_NAME, instructor.getName())
-                                                   .add(JSON_HOMEPAGE_URL, instructor.getHomepageURL())
-                                                   .build(); 
-        return jso;                
-    }
 
-    // MAKES AND RETURNS A JSON OBJECT FOR THE PROVIDED DATE
-    private JsonObject makeLocalDateJsonObject(LocalDate dateToSave) {
-        JsonObject jso = Json.createObjectBuilder().add(JSON_YEAR, dateToSave.getYear())
-                                                   .add(JSON_MONTH, dateToSave.getMonthValue())
-                                                   .add(JSON_DAY, dateToSave.getDayOfMonth())
-                                                   .build(); 
-        return jso;
-    }
-    
-    // BUILDS AND RETURNS THE INSTRUCTOR FOUND IN THE JSON OBJECT
-    public Instructor buildInstructorJsonObject(JsonObject json) {
-        Instructor instructor = new Instructor( json.getString(JSON_INSTRUCTOR_NAME),
-                                                    json.getString(JSON_HOMEPAGE_URL));
-        return instructor;
-    }
-
-    // BUILDS AND RETURNS A JsonArray CONTAINING ALL THE PAGES FOR THIS COURSE
-    public JsonArray makePagesJsonArray(List<CoursePage> data) {
-        JsonArrayBuilder jsb = Json.createArrayBuilder();
-        for (CoursePage cP : data) {
-           jsb.add(cP.toString());
-        }
-        JsonArray jA = jsb.build();
-        return jA;        
-    }
-
-    // BUILDS AND RETURNS A JsonArray CONTAINING ALL THE LECTURE DAYS FOR THIS COURSE
-    public JsonArray makeLectureDaysJsonArray(List<DayOfWeek> data) {
-        JsonArrayBuilder jsb = Json.createArrayBuilder();
-        for (DayOfWeek dow : data) {
-            jsb.add(dow.toString());
-        }
-        JsonArray jA = jsb.build();
-        return jA;
-    }
-    
-    // MAKE AN ARRAY OF SCHEDULE ITEMS
-    private JsonArray makeScheduleItemsJsonArray(ObservableList<ScheduleItem> data) {
-        JsonArrayBuilder jsb = Json.createArrayBuilder();
-        for (ScheduleItem si : data) {
-            jsb.add(makeScheduleItemJsonObject(si));
-        }
-        JsonArray jA = jsb.build();
-        return jA;
-    }
-    
-    // MAKE AN ARRAY OF LECTURE ITEMS
-    private JsonArray makeLecturesJsonArray(ObservableList<Lecture> data) {
-        JsonArrayBuilder jsb = Json.createArrayBuilder();
-        for (Lecture l : data) {
-            jsb.add(makeLectureJsonObject(l));
-        }
-        JsonArray jA = jsb.build();
-        return jA;
-    }
-    
-    // MAKE AN ARRAY OF ASSIGNMENTS
-    public JsonArray makeHWsJsonArray(ObservableList<Assignment> data) {
-        JsonArrayBuilder jsb = Json.createArrayBuilder();
-        for (Assignment a : data) {
-            jsb.add(this.makeAssignmentJsonObject(a));
-        }
-        JsonArray jA = jsb.build();
-        return jA;
-    }
 
     // BUILDS AND RETURNS A JsonArray CONTAINING THE PROVIDED DATA
     public JsonArray buildJsonArray(List<Object> data) {
@@ -347,12 +220,13 @@ public class JsonDraftFileManager implements DraftFileManager {
         JsonArray jA = jsb.build();
         return jA;
     }
+}
 
     // BUILDS AND RETURNS A JsonObject CONTAINING A JsonArray
     // THAT CONTAINS THE PROVIDED DATA
-    public JsonObject buildJsonArrayObject(List<Object> data) {
-        JsonArray jA = buildJsonArray(data);
-        JsonObject arrayObject = Json.createObjectBuilder().add(JSON_SUBJECTS, jA).build();
-        return arrayObject;
-    }
-}
+//    public JsonObject buildJsonArrayObject(List<Object> data) {
+//        JsonArray jA = buildJsonArray(data);
+//        JsonObject arrayObject = Json.createObjectBuilder().add(JSON_SUBJECTS, jA).build();
+//        return arrayObject;
+//    }
+//}

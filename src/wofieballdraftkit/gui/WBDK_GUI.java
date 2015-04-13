@@ -93,10 +93,10 @@ public class WBDK_GUI {
     
     // THIS IS THE TOP TOOLBAR AND ITS CONTROLS
     FlowPane fileToolbarPane;
-    Button newdraftButton;
-    Button loaddraftButton;
-    Button savedraftButton;
-    Button exportdraftButton;
+    Button newButton;
+    Button loadButton;
+    Button saveButton;
+    Button exportButton;
     Button exitButton;
     
     
@@ -235,7 +235,7 @@ public class WBDK_GUI {
      * @param subjects The list of subjects to choose from.
      * @throws IOException Thrown if any initialization files fail to load.
      */
-    public void initGUI(String windowTitle, ArrayList<String> subjects) throws IOException {
+    public void initGUI(String windowTitle) throws IOException {
         // INIT THE DIALOGS
         initDialogs();
         
@@ -271,8 +271,8 @@ public class WBDK_GUI {
      * 
      * @param courseToReload The Course whose data we'll load into the GUI.
      */
-    @Override
-    public void reloadCourse(Course courseToReload) {
+   
+    public void reloadCourse(Draft courseToReload) {
         // FIRST ACTIVATE THE WORKSPACE IF NECESSARY
         if (!workspaceActivated) {
             activateWorkspace();
@@ -280,42 +280,27 @@ public class WBDK_GUI {
 
         // WE DON'T WANT TO RESPOND TO EVENTS FORCED BY
         // OUR INITIALIZATION SELECTIONS
-        courseController.enable(false);
+//        courseController.enable(false);
 
         // FIRST LOAD ALL THE BASIC COURSE INFO
-        courseSubjectComboBox.setValue(courseToReload.getSubject());
-        courseNumberTextField.setText("" + courseToReload.getNumber());
-        courseSemesterComboBox.setValue(courseToReload.getSemester());
-        courseYearComboBox.setValue(courseToReload.getYear());
-        courseTitleTextField.setText(courseToReload.getTitle());
-        instructorNameTextField.setText(courseToReload.getInstructor().getName());
-        instructorURLTextField.setText(courseToReload.getInstructor().getHomepageURL());
-        indexPageCheckBox.setSelected(courseToReload.hasCoursePage(CoursePage.INDEX));
-        syllabusPageCheckBox.setSelected(courseToReload.hasCoursePage(CoursePage.SYLLABUS));
-        schedulePageCheckBox.setSelected(courseToReload.hasCoursePage(CoursePage.SCHEDULE));
-        hwsPageCheckBox.setSelected(courseToReload.hasCoursePage(CoursePage.HWS));
-        projectsPageCheckBox.setSelected(courseToReload.hasCoursePage(CoursePage.PROJECTS));
+//        courseSubjectComboBox.setValue(courseToReload.getSubject());
+//        courseNumberTextField.setText("" + courseToReload.getNumber());
+//        courseSemesterComboBox.setValue(courseToReload.getSemester());
+//        courseYearComboBox.setValue(courseToReload.getYear());
+//        courseTitleTextField.setText(courseToReload.getTitle());
+//        instructorNameTextField.setText(courseToReload.getInstructor().getName());
+//        instructorURLTextField.setText(courseToReload.getInstructor().getHomepageURL());
+//        indexPageCheckBox.setSelected(courseToReload.hasCoursePage(CoursePage.INDEX));
+//        syllabusPageCheckBox.setSelected(courseToReload.hasCoursePage(CoursePage.SYLLABUS));
+//        schedulePageCheckBox.setSelected(courseToReload.hasCoursePage(CoursePage.SCHEDULE));
+//        hwsPageCheckBox.setSelected(courseToReload.hasCoursePage(CoursePage.HWS));
+//        projectsPageCheckBox.setSelected(courseToReload.hasCoursePage(CoursePage.PROJECTS));
 
-        // THEN THE DATE PICKERS
-        LocalDate startDate = courseToReload.getStartingMonday();
-        startDatePicker.setValue(startDate);
-        LocalDate endDate = courseToReload.getEndingFriday();
-        endDatePicker.setValue(endDate);
 
-        // THE LECTURE DAY CHECK BOXES
-        mondayCheckBox.setSelected(courseToReload.hasLectureDay(DayOfWeek.MONDAY));
-        tuesdayCheckBox.setSelected(courseToReload.hasLectureDay(DayOfWeek.TUESDAY));
-        wednesdayCheckBox.setSelected(courseToReload.hasLectureDay(DayOfWeek.WEDNESDAY));
-        thursdayCheckBox.setSelected(courseToReload.hasLectureDay(DayOfWeek.THURSDAY));
-        fridayCheckBox.setSelected(courseToReload.hasLectureDay(DayOfWeek.FRIDAY));
+
+
         
-        // THE SCHEDULE ITEMS TABLE
-       
-        // THE LECTURES TABLE
-        
-        // THE HWS TABLE
 
-        // NOW WE DO WANT TO RESPOND WHEN THE USER INTERACTS WITH OUR CONTROLS
         courseController.enable(true);
     }
 
@@ -328,12 +313,12 @@ public class WBDK_GUI {
     public void updateToolbarControls(boolean saved) {
         // THIS TOGGLES WITH WHETHER THE CURRENT COURSE
         // HAS BEEN SAVED OR NOT
-        saveCourseButton.setDisable(saved);
+        saveButton.setDisable(saved);
 
         // ALL THE OTHER BUTTONS ARE ALWAYS ENABLED
         // ONCE EDITING THAT FIRST COURSE BEGINS
-        loadCourseButton.setDisable(false);
-        exportSiteButton.setDisable(false);
+        loadButton.setDisable(false);
+        exportButton.setDisable(false);
 
         // NOTE THAT THE NEW, LOAD, AND EXIT BUTTONS
         // ARE NEVER DISABLED SO WE NEVER HAVE TO TOUCH THEM
@@ -345,27 +330,8 @@ public class WBDK_GUI {
      * 
      * @param course The course to be updated using the data from the UI controls.
      */
-    public void updateCourseInfo(Course course) {
-        course.setSubject(Subject.valueOf(courseSubjectComboBox.getSelectionModel().getSelectedItem().toString()));
-        course.setNumber(Integer.parseInt(courseNumberTextField.getText()));
-        course.setSemester(Semester.valueOf(courseSemesterComboBox.getSelectionModel().getSelectedItem().toString()));
-        course.setYear((int) courseYearComboBox.getSelectionModel().getSelectedItem());
-        course.setTitle(courseTitleTextField.getText());
-        Instructor instructor = course.getInstructor();
-        instructor.setName(instructorNameTextField.getText());
-        instructor.setHomepageURL(instructorURLTextField.getText());
-        updatePageUsingCheckBox(indexPageCheckBox, course, CoursePage.INDEX);
-        updatePageUsingCheckBox(syllabusPageCheckBox, course, CoursePage.SYLLABUS);
-        updatePageUsingCheckBox(schedulePageCheckBox, course, CoursePage.SCHEDULE);
-        updatePageUsingCheckBox(hwsPageCheckBox, course, CoursePage.HWS);
-        updatePageUsingCheckBox(projectsPageCheckBox, course, CoursePage.PROJECTS);
-        course.setStartingMonday(startDatePicker.getValue());
-        course.setEndingFriday(endDatePicker.getValue());
-        course.selectLectureDay(DayOfWeek.MONDAY, mondayCheckBox.isSelected());
-        course.selectLectureDay(DayOfWeek.TUESDAY, tuesdayCheckBox.isSelected());
-        course.selectLectureDay(DayOfWeek.WEDNESDAY, wednesdayCheckBox.isSelected());
-        course.selectLectureDay(DayOfWeek.THURSDAY, thursdayCheckBox.isSelected());
-        course.selectLectureDay(DayOfWeek.FRIDAY, fridayCheckBox.isSelected());
+    public void updateCourseInfo( course) {
+
     }
 
     /****************************************************************************/
@@ -387,10 +353,10 @@ public class WBDK_GUI {
 
         // HERE ARE OUR FILE TOOLBAR BUTTONS, NOTE THAT SOME WILL
         // START AS ENABLED (false), WHILE OTHERS DISABLED (true)
-        newCourseButton = initChildButton(fileToolbarPane, CSB_PropertyType.NEW_COURSE_ICON, CSB_PropertyType.NEW_COURSE_TOOLTIP, false);
-        loadCourseButton = initChildButton(fileToolbarPane, CSB_PropertyType.LOAD_COURSE_ICON, CSB_PropertyType.LOAD_COURSE_TOOLTIP, false);
-        saveCourseButton = initChildButton(fileToolbarPane, CSB_PropertyType.SAVE_COURSE_ICON, CSB_PropertyType.SAVE_COURSE_TOOLTIP, true);
-        exportSiteButton = initChildButton(fileToolbarPane, CSB_PropertyType.EXPORT_PAGE_ICON, CSB_PropertyType.EXPORT_PAGE_TOOLTIP, true);
+        newButton = initChildButton(fileToolbarPane, CSB_PropertyType.NEW_COURSE_ICON, CSB_PropertyType.NEW_COURSE_TOOLTIP, false);
+        loadButton = initChildButton(fileToolbarPane, CSB_PropertyType.LOAD_COURSE_ICON, CSB_PropertyType.LOAD_COURSE_TOOLTIP, false);
+        saveButton = initChildButton(fileToolbarPane, CSB_PropertyType.SAVE_COURSE_ICON, CSB_PropertyType.SAVE_COURSE_TOOLTIP, true);
+        exportButton = initChildButton(fileToolbarPane, CSB_PropertyType.EXPORT_PAGE_ICON, CSB_PropertyType.EXPORT_PAGE_TOOLTIP, true);
         exitButton = initChildButton(fileToolbarPane, CSB_PropertyType.EXIT_ICON, CSB_PropertyType.EXIT_TOOLTIP, false);
     }
 

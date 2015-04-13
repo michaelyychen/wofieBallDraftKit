@@ -9,15 +9,22 @@ package wofieballdraftkit.data;
  *
  * @author MiChAeL
  */
-public class Catcher {
+public class Hitter extends Player{
     int op;
     int r;
     int hr;
     double rbit;
     int sb;
-    int ba;
+    double ba;
+    String qp;
+
+
+
+    public void setQp(String qp) {
+        this.qp = qp;
+    }
     
-    public Catcher(){
+    public Hitter(){
     super();
     
     }
@@ -46,11 +53,11 @@ public class Catcher {
         this.hr = hr;
     }
 
-    public double getRbit() {
+    public double getRbi() {
         return rbit;
     }
 
-    public void setRbit(double rbit) {
+    public void setRbi(double rbit) {
         this.rbit = rbit;
     }
 
@@ -62,12 +69,15 @@ public class Catcher {
         this.sb = sb;
     }
 
-    public int getBa() {
+    public double getBa() {
         return ba;
     }
 
-    public void setBa(int ba) {
+    public void setBa(double ba) {
         this.ba = ba;
     }
+    public String getQp() {
+        return qp;
+    }    
 
 }

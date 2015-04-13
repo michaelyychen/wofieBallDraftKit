@@ -43,35 +43,9 @@ public class WofieBallDraftKit extends Application {
         if (success) {
             PropertiesManager props = PropertiesManager.getPropertiesManager();
             String appTitle = props.getProperty(PROP_APP_TITLE);
-            try {                
-                // WE WILL SAVE OUR COURSE DATA USING THE JSON FILE
-                // FORMAT SO WE'LL LET THIS OBJECT DO THIS FOR US
-                JsonDraftFileManager jsonFileManager = new JsonDraftFileManager();
-                
-                // AND THIS ONE WILL DO THE COURSE WEB PAGE EXPORTING
-                DraftSiteExporter exporter = new DraftSiteExporter(PATH_BASE, PATH_SITES);
-                
-                Instructor lastInstructor = jsonFileManager.loadLastInstructor(JSON_FILE_PATH_LAST_INSTRUCTOR);
-                ArrayList<String> subjects = jsonFileManager.loadSubjects(JSON_FILE_PATH_SUBJECTS);
-                                
-                // AND NOW GIVE ALL OF THIS STUFF TO THE GUI
-                // INITIALIZE THE USER INTERFACE COMPONENTS
-                gui = new WBDK_GUI(primaryStage);
-                gui.setCourseFileManager(jsonFileManager);
-                gui.setSiteExporter(exporter);
-                
-                // CONSTRUCT THE DATA MANAGER AND GIVE IT TO THE GUI
-                DraftDataManager dataManager = new DraftDataManager(gui, lastInstructor); 
-                gui.setDataManager(dataManager);
-
-                // FINALLY, START UP THE USER INTERFACE WINDOW AFTER ALL
-                // REMAINING INITIALIZATION
-                gui.initGUI(appTitle, subjects);                
-            }
-            catch(IOException ioe) {
-                eH = ErrorHandler.getErrorHandler();
-                eH.handlePropertiesFileError();
-            }
+            JsonDraftFileManager jsonFileManager = new JsonDraftFileManager();
+            gui = new WBDK_GUI(primaryStage);
+            gui.setCourseFileManager(jsonFileManager);
         }
     }
     

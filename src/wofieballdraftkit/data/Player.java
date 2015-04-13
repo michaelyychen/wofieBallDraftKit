@@ -16,6 +16,9 @@ public class Player {
     String team;
     String contract;
     String nation;
+    String Notes;
+
+
 
 
     int salary;
@@ -88,6 +91,13 @@ public class Player {
 
     public void setNation(String nation) {
         this.nation = nation;
+    }
+        public String getNotes() {
+        return Notes;
+    }
+
+    public void setNotes(String Notes) {
+        this.Notes = Notes;
     }
     
     
