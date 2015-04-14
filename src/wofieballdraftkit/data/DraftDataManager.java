@@ -17,8 +17,7 @@ public class DraftDataManager {
     
     
    static ArrayList<Player> playerPool = new ArrayList();
-   static ArrayList<Team> teamList = new ArrayList();
-   static ArrayList<Player> eligibleList = new ArrayList();
+
     
     Draft draft;
     DraftDataView view;
@@ -34,8 +33,6 @@ public class DraftDataManager {
          
         view = initView;
         
-        draft = new Draft();
-        
         for(int i = 0; i<p.size();i++){
          playerPool.add((Player)p.get(i));
         }
@@ -44,7 +41,7 @@ public class DraftDataManager {
          playerPool.add((Player)h.get(i));
         }    
         
-        
+        draft = new Draft(playerPool);
         
     }
     
@@ -74,21 +71,4 @@ public class DraftDataManager {
         this.playerPool = playerPool;
     }
 
-    public ArrayList<Team> getTeamList() {
-        return teamList;
-    }
-
-    public void setTeamList(ArrayList<Team> teamList) {
-        this.teamList = teamList;
-    }
-
-    public ArrayList<Player> getEligibleList() {
-        return eligibleList;
-    }
-
-    public void setEligibleList(ArrayList<Player> eligibleList) {
-        this.eligibleList = eligibleList;
-    }
-
-    
 }

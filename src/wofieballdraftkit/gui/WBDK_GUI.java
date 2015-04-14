@@ -81,6 +81,7 @@ public class WBDK_GUI implements DraftDataView{
 
     // THIS IS THE APPLICATION WINDOW
     Stage primaryStage;
+    
     Scene primaryScene;
     // THIS IS THE STAGE'S SCENE GRAPH
     Pane fantasyPane;
