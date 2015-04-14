@@ -105,6 +105,7 @@ public class WBDK_GUI implements DraftDataView{
     
     
     //BOTTOM TOOLBAR AND ITS BUTTON
+    FlowPane switcherPane;
     Button fantasyButton;
     Button playerButton;
     Button standingButton;
@@ -175,7 +176,7 @@ public class WBDK_GUI implements DraftDataView{
      *
      * @return The CourseFileManager used by this UI.
      */
-    public DraftFileManager getCourseFileManager() {
+    public DraftFileManager getDraftFileManager() {
         return draftFileManager;
     }
 
@@ -217,7 +218,7 @@ public class WBDK_GUI implements DraftDataView{
     /**
      * Mutator method for the course file manager.
      *
-     * @param initCourseFileManager The CourseFileManager to be used by this UI.
+     * @param initDraftFileManager The CourseFileManager to be used by this UI.
      */
     public void setDraftFileManager(DraftFileManager initDraftFileManager) {
         draftFileManager = initDraftFileManager;
@@ -236,7 +237,7 @@ public class WBDK_GUI implements DraftDataView{
      * This method fully initializes the user interface for use.
      *
      * @param windowTitle The text to appear in the UI window's title bar.
-     * @param subjects The list of subjects to choose from.
+     
      * @throws IOException Thrown if any initialization files fail to load.
      */
     public void initGUI(String windowTitle) throws IOException {
@@ -373,7 +374,7 @@ public class WBDK_GUI implements DraftDataView{
     }
     
     private void initScreenToolbar() {
-        fileToolbarPane = new FlowPane();
+        switcherPane = new FlowPane();
 
         // HERE ARE OUR FILE TOOLBAR BUTTONS, NOTE THAT SOME WILL
         // START AS ENABLED (false), WHILE OTHERS DISABLED (true)
@@ -663,7 +664,7 @@ public class WBDK_GUI implements DraftDataView{
             fileController.handleExitRequest(this);
         });
         
-        
+        draftController = new DraftEditController();
 //        fantasyButton.setOnAction(e -> {
 //            this.fantasyPane.toFront();
 //        });

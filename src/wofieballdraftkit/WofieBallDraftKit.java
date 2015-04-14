@@ -42,14 +42,16 @@ public class WofieBallDraftKit extends Application {
             try {
                 PropertiesManager props = PropertiesManager.getPropertiesManager();
                 String appTitle = props.getProperty(PROP_APP_TITLE);
+                
+                
+                
+                
                 JsonDraftFileManager jsonFileManager = new JsonDraftFileManager();
                 
                 ArrayList<Pitcher> pitchers = jsonFileManager.loadPitcherData(JSON_FILE_PATH_PITCHERS,"Pitchers");
                 ArrayList<Hitter> hitters = jsonFileManager.loadHitterData(JSON_FILE_PATH_HITTERS,"Hitters");
                 
                 
-                
-              
                 
                 
                 gui = new WBDK_GUI(primaryStage);

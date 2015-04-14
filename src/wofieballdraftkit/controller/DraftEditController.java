@@ -5,9 +5,7 @@
  */
 package wofieballdraftkit.controller;
 
-import java.time.DayOfWeek;
-import java.time.LocalDate;
-import javafx.scene.control.DatePicker;
+import wofieballdraftkit.data.Draft;
 import wofieballdraftkit.error.ErrorHandler;
 import wofieballdraftkit.gui.WBDK_GUI;
 
