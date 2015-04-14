@@ -10,19 +10,10 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import properties_manager.PropertiesManager;
-import static wofieballdraftkit.WBDK_PropertyType.PROP_APP_TITLE;
-import static wofieballdraftkit.WBDK_StartUpConstants.JSON_FILE_PATH_HITTERS;
-import static wofieballdraftkit.WBDK_StartUpConstants.JSON_FILE_PATH_PITCHERS;
-import static wofieballdraftkit.WBDK_StartUpConstants.PATH_DATA;
-import static wofieballdraftkit.WBDK_StartUpConstants.PROPERTIES_FILE_NAME;
-import static wofieballdraftkit.WBDK_StartUpConstants.PROPERTIES_SCHEMA_FILE_NAME;
+import static wofieballdraftkit.WBDK_PropertyType.*;
+import static wofieballdraftkit.WBDK_StartUpConstants.*;
 import wofieballdraftkit.data.DraftDataManager;
 import wofieballdraftkit.data.Hitter;
 import wofieballdraftkit.data.Pitcher;
@@ -58,7 +49,7 @@ public class WofieBallDraftKit extends Application {
                 
                 
                 
-                
+              
                 
                 
                 gui = new WBDK_GUI(primaryStage);
@@ -68,8 +59,8 @@ public class WofieBallDraftKit extends Application {
              //   gui.setSiteExporter(exporter);
                 
                 // CONSTRUCT THE DATA MANAGER AND GIVE IT TO THE GUI
-               // DraftDataManager dataManager = new DraftDataManager(gui); 
-              //  gui.setDataManager(dataManager);
+                DraftDataManager dataManager = new DraftDataManager(gui,pitchers,hitters); 
+                gui.setDataManager(dataManager);
                 
                 gui.initGUI(appTitle);
                 

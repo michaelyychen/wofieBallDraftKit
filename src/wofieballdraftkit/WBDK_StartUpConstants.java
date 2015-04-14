@@ -17,7 +17,7 @@ public class WBDK_StartUpConstants {
     public static final String PATH_DATA = "./data/";
     public static final String PATH_DRAFT = PATH_DATA + "drafts/";
     public static final String PATH_IMAGES = "./images/";
-    public static final String PATH_CSS = "csb/css/";
+    public static final String PATH_CSS = "wofieballdraftkit/css/";
     public static final String PATH_SITES = "sites/";
     public static final String PATH_BASE = PATH_SITES + "base/";
     public static final String PATH_EMPTY = ".";

@@ -16,20 +16,34 @@ import wofieballdraftkit.file.DraftFileManager;
 public class DraftDataManager {    
     
     
-    ArrayList<Player> playerList;
-    ArrayList<Team> teamList;
-    ArrayList<Player> eligibleList;
+   static ArrayList<Player> playerPool = new ArrayList();
+   static ArrayList<Team> teamList = new ArrayList();
+   static ArrayList<Player> eligibleList = new ArrayList();
     
     Draft draft;
-    
     DraftDataView view;
-    
     DraftFileManager fileManager;
     
-    public DraftDataManager(DraftDataView initView, Team Team){
+    
+
+    
+    
+    
+    
+    public DraftDataManager(DraftDataView initView, ArrayList<Pitcher> p,ArrayList<Hitter> h ){
          
         view = initView;
+        
         draft = new Draft();
+        
+        for(int i = 0; i<p.size();i++){
+         playerPool.add((Player)p.get(i));
+        }
+        
+        for(int i = 0; i<h.size();i++){
+         playerPool.add((Player)h.get(i));
+        }    
+        
         
         
     }
@@ -45,16 +59,7 @@ public class DraftDataManager {
     
       public void reset() {
         // CLEAR ALL THE COURSE VALUES
-//        course.setSubject(DEFAULT_COURSE_SUBJECT);
-//        course.setNumber(DEFAULT_NUM);
-//        course.setTitle(DEFAULT_TEXT);
-//        course.setSemester(DEFAULT_SEMESTER);
-//        course.setYear(LocalDate.now().getYear());
-//        LocalDate nextMonday = getNextMonday();
-//        course.setStartingMonday(nextMonday);
-//        course.setEndingFriday(getNextFriday(nextMonday));
-//        course.clearLectureDays();
-//        course.clearPages();
+       
         
         // AND THEN FORCE THE UI TO RELOAD THE UPDATED COURSE
         view.reloadDraft(draft);
@@ -62,11 +67,11 @@ public class DraftDataManager {
     
 
     public ArrayList<Player> getPlayerList() {
-        return playerList;
+        return playerPool;
     }
 
-    public void setPlayerList(ArrayList<Player> playerList) {
-        this.playerList = playerList;
+    public void setPlayerList(ArrayList<Player> playerPool) {
+        this.playerPool = playerPool;
     }
 
     public ArrayList<Team> getTeamList() {

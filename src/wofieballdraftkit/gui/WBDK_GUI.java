@@ -43,6 +43,7 @@ import wofieballdraftkit.controller.DraftEditController;
 import wofieballdraftkit.controller.FileController;
 import wofieballdraftkit.data.Draft;
 import wofieballdraftkit.data.DraftDataManager;
+import wofieballdraftkit.data.DraftDataView;
 import wofieballdraftkit.file.DraftFileManager;
 import wofieballdraftkit.file.DraftSiteExporter;
 
@@ -50,9 +51,9 @@ import wofieballdraftkit.file.DraftSiteExporter;
  *
  * @author MiChAeL
  */
-public class WBDK_GUI {
+public class WBDK_GUI implements DraftDataView{
     
-    static final String PRIMARY_STYLE_SHEET = PATH_CSS + "csb_style.css";
+    static final String PRIMARY_STYLE_SHEET = PATH_CSS + "wbdk_style.css";
     static final String CLASS_BORDERED_PANE = "bordered_pane";
     static final String CLASS_SUBJECT_PANE = "subject_pane";
     static final String CLASS_HEADING_LABEL = "heading_label";
@@ -266,6 +267,53 @@ public class WBDK_GUI {
             workspaceActivated = true;
         }
     }
+    
+    @Override
+    public void reloadDraft(Draft draftToReload) {
+        // FIRST ACTIVATE THE WORKSPACE IF NECESSARY
+        if (!workspaceActivated) {
+            activateWorkspace();
+        }
+
+        // WE DON'T WANT TO RESPOND TO EVENTS FORCED BY
+        // OUR INITIALIZATION SELECTIONS
+        draftController.enable(false);
+
+        // FIRST LOAD ALL THE BASIC COURSE INFO
+//        courseSubjectComboBox.setValue(courseToReload.getSubject());
+//        courseNumberTextField.setText("" + courseToReload.getNumber());
+//        courseSemesterComboBox.setValue(courseToReload.getSemester());
+//        courseYearComboBox.setValue(courseToReload.getYear());
+//        courseTitleTextField.setText(courseToReload.getTitle());
+//        instructorNameTextField.setText(courseToReload.getInstructor().getName());
+//        instructorURLTextField.setText(courseToReload.getInstructor().getHomepageURL());
+//        indexPageCheckBox.setSelected(courseToReload.hasCoursePage(CoursePage.INDEX));
+//        syllabusPageCheckBox.setSelected(courseToReload.hasCoursePage(CoursePage.SYLLABUS));
+//        schedulePageCheckBox.setSelected(courseToReload.hasCoursePage(CoursePage.SCHEDULE));
+//        hwsPageCheckBox.setSelected(courseToReload.hasCoursePage(CoursePage.HWS));
+//        projectsPageCheckBox.setSelected(courseToReload.hasCoursePage(CoursePage.PROJECTS));
+
+//        
+//        mondayCheckBox.setSelected(courseToReload.hasLectureDay(DayOfWeek.MONDAY));
+//        tuesdayCheckBox.setSelected(courseToReload.hasLectureDay(DayOfWeek.TUESDAY));
+//        wednesdayCheckBox.setSelected(courseToReload.hasLectureDay(DayOfWeek.WEDNESDAY));
+//        thursdayCheckBox.setSelected(courseToReload.hasLectureDay(DayOfWeek.THURSDAY));
+//        fridayCheckBox.setSelected(courseToReload.hasLectureDay(DayOfWeek.FRIDAY));
+        
+        // THE SCHEDULE ITEMS TABLE
+       
+        // THE LECTURES TABLE
+        
+        // THE HWS TABLE
+
+        // NOW WE DO WANT TO RESPOND WHEN THE USER INTERACTS WITH OUR CONTROLS
+        draftController.enable(true);
+    }    
+    
+    
+    
+    
+    
     
     /**
      * This method is used to activate/deactivate toolbar buttons when
@@ -748,4 +796,6 @@ public class WBDK_GUI {
 //            course.unselectPage(cP);
 //        }
 //    }    
+
+
 }
