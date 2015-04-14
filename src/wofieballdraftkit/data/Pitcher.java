@@ -13,15 +13,24 @@ public class Pitcher extends Player {
    int w;
    int k;
    int sv;
+
+ 
+   int h;
    double IP;
 
 
    double ERA;
    double WHIP;
    
-   public Pitcher(){
-   super();
+    String lastName;
+    String firstName; 
    
+   
+   
+   public Pitcher(String ln, String fn){
+   super();
+   lastName = ln;
+   firstName = fn;
    }
    
     public double getIP() {
@@ -73,7 +82,13 @@ public class Pitcher extends Player {
     public void setWHIP(double WHIP) {
         this.WHIP = WHIP;
     }
+   public int getH() {
+        return h;
+    }
 
+    public void setH(int h) {
+        this.h = h;
+    }
    
    
 }

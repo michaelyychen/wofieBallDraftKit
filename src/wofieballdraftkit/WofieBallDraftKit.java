@@ -18,10 +18,13 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import properties_manager.PropertiesManager;
 import static wofieballdraftkit.WBDK_PropertyType.PROP_APP_TITLE;
+import static wofieballdraftkit.WBDK_StartUpConstants.JSON_FILE_PATH_PITCHERS;
 import static wofieballdraftkit.WBDK_StartUpConstants.PATH_DATA;
 import static wofieballdraftkit.WBDK_StartUpConstants.PROPERTIES_FILE_NAME;
 import static wofieballdraftkit.WBDK_StartUpConstants.PROPERTIES_SCHEMA_FILE_NAME;
 import wofieballdraftkit.data.DraftDataManager;
+import wofieballdraftkit.data.Hitter;
+import wofieballdraftkit.data.Pitcher;
 import wofieballdraftkit.error.ErrorHandler;
 import wofieballdraftkit.file.JsonDraftFileManager;
 import wofieballdraftkit.gui.WBDK_GUI;
@@ -48,6 +51,15 @@ public class WofieBallDraftKit extends Application {
                 PropertiesManager props = PropertiesManager.getPropertiesManager();
                 String appTitle = props.getProperty(PROP_APP_TITLE);
                 JsonDraftFileManager jsonFileManager = new JsonDraftFileManager();
+                
+                ArrayList<Pitcher> pitchers = jsonFileManager.loadPitcherData(JSON_FILE_PATH_PITCHERS,"Pitchers");
+                ArrayList<Hitter> hitters jsonFileManager.loadHitter();
+                
+                
+                
+                
+                
+                
                 gui = new WBDK_GUI(primaryStage);
                 gui.setDraftFileManager(jsonFileManager);
                 
@@ -59,6 +71,9 @@ public class WofieBallDraftKit extends Application {
               //  gui.setDataManager(dataManager);
                 
                 gui.initGUI(appTitle);
+                
+                
+                
             } catch (IOException ex) {
                 Logger.getLogger(WofieBallDraftKit.class.getName()).log(Level.SEVERE, null, ex);
             }

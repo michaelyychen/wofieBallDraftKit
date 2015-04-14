@@ -10,5 +10,5 @@ package wofieballdraftkit.data;
  * @author MC
  */
 public interface DraftDataView {
-     public void reloadDraft(Draft DraftToReload);
+    public void reloadDraft(Draft draftToReload);
 }

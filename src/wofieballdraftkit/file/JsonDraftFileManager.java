@@ -33,6 +33,8 @@ import wofieballdraftkit.data.Player;
  */
 public class JsonDraftFileManager implements DraftFileManager {
     // JSON FILE READING AND WRITING CONSTANTS
+    String JSON_PITCHERS = "PITCHERS";
+    String JSON_HITTERS = "HITTERS ";
     String JSON_TEAM = "TEAM";
     String JSON_LASTNAME = "LAST_NAME";
     String JSON_FIRSTNAME = "FIRST_NAME";
@@ -65,8 +67,8 @@ public class JsonDraftFileManager implements DraftFileManager {
      * @throws IOException Thrown when there are issues writing
      * to the JSON file.
 //     */
-//    @Override
-//    public void saveDraft(Draft draftToSave) throws IOException {
+    @Override
+    public void saveDraft(Draft draftToSave) throws IOException {
 //        // BUILD THE FILE PATH
 //        String courseListing = "" + courseToSave.getSubject() + courseToSave.getNumber();
 //        String jsonFilePath = PATH_COURSES + SLASH + courseListing + JSON_EXT;
@@ -116,7 +118,7 @@ public class JsonDraftFileManager implements DraftFileManager {
 //        
 //        // AND SAVE EVERYTHING AT ONCE
 //        jsonWriter.writeObject(courseJsonObject);
-//    }
+    }
     
     /**
      * Loads the courseToLoad argument using the data found in the json file.
@@ -186,6 +188,77 @@ public class JsonDraftFileManager implements DraftFileManager {
     
     
     
+    public ArrayList<Pitcher> loadPitcherData(String filePath, String arrayName) throws IOException {
+        
+   
+            
+        JsonObject json = loadJSONFile(filePath);
+        ArrayList<Pitcher> items = new ArrayList();
+        JsonArray jsonArray = json.getJsonArray(arrayName);
+        System.out.println(jsonArray.getJsonObject(0).toString());
+        for ( int i = 0; i < jsonArray.size();i++) {
+        
+        
+            
+        Pitcher a = new Pitcher(jsonArray.getJsonObject(i).getString(JSON_LASTNAME),
+                                jsonArray.getJsonObject(i).getString(JSON_FIRSTNAME));
+        a.setTeam(jsonArray.getJsonObject(i).getString(JSON_TEAM));
+        
+//        double ERA = 9*(jsonArray.getJsonObject(i).getJsonNumber(JSON_ER).doubleValue() / 
+//                            jsonArray.getJsonObject(i).getJsonNumber(JSON_IP).doubleValue());
+//        double WHIP = (jsonArray.getJsonObject(i).getJsonNumber(JSON_BB).doubleValue()+ 
+//                        jsonArray.getJsonObject(i).getJsonNumber(JSON_H).doubleValue())/
+//                        jsonArray.getJsonObject(i).getJsonNumber(JSON_IP).doubleValue();
+//        a.setERA(ERA);
+//        a.setW(jsonArray.getJsonObject(i).getInt(JSON_W));
+////        a.setWHIP(WHIP);
+//        a.setH(jsonArray.getJsonObject(i).getInt(JSON_H));
+//        a.setK(jsonArray.getJsonObject(i).getInt(JSON_K));
+//        a.setSv(jsonArray.getJsonObject(i).getInt(JSON_SV));
+//        a.setNotes(jsonArray.getJsonObject(i).getString(JSON_NOTES));
+//        a.setBirth(jsonArray.getJsonObject(i).getInt(JSON_BIRTH));
+//        a.setNation(jsonArray.getJsonObject(i).getString(JSON_NATION));
+            
+            
+            items.add(a);
+           
+           
+        }
+        return items;
+  
+    }    
+    
+    
+    public ArrayList<Pitcher> buildPitcherList(JsonObject json) {
+        
+        ArrayList<Pitcher> p = new ArrayList();
+       
+  
+
+              
+        
+        
+        Pitcher a = new Pitcher(json.getString(JSON_LASTNAME),
+                                json.getString(JSON_FIRSTNAME));
+        a.setTeam(json.getString(JSON_TEAM));
+        
+        double ERA = 9*(json.getJsonNumber(JSON_ER).doubleValue() / 
+                            json.getJsonNumber(JSON_IP).doubleValue());
+        double WHIP = (json.getJsonNumber(JSON_BB).doubleValue()+ json.getJsonNumber(JSON_H).doubleValue())/
+                        json.getJsonNumber(JSON_IP).doubleValue();
+        a.setERA(ERA);
+        a.setW(json.getInt(JSON_W));
+        a.setWHIP(WHIP);
+        a.setH(json.getInt(JSON_H));
+        a.setK(json.getInt(JSON_K));
+        a.setSv(json.getInt(JSON_SV));
+        a.setNotes(json.getString(JSON_NOTES));
+        a.setBirth(json.getInt(JSON_BIRTH));
+        a.setNation(json.getString(JSON_NATION));
+        
+                                
+        return p;
+    }
     
    
    
@@ -197,6 +270,7 @@ public class JsonDraftFileManager implements DraftFileManager {
         is.close();
         return json;
     }    
+   
     
     // LOADS AN ARRAY OF A SPECIFIC NAME FROM A JSON FILE AND
     // RETURNS IT AS AN ArrayList FULL OF THE DATA FOUND
@@ -206,6 +280,7 @@ public class JsonDraftFileManager implements DraftFileManager {
         JsonArray jsonArray = json.getJsonArray(arrayName);
         for (JsonValue jsV : jsonArray) {
             items.add(jsV.toString());
+            System.out.println(items.add(jsV.toString()));
         }
         return items;
     }
@@ -220,13 +295,14 @@ public class JsonDraftFileManager implements DraftFileManager {
         JsonArray jA = jsb.build();
         return jA;
     }
-}
+
 
     // BUILDS AND RETURNS A JsonObject CONTAINING A JsonArray
     // THAT CONTAINS THE PROVIDED DATA
+
 //    public JsonObject buildJsonArrayObject(List<Object> data) {
 //        JsonArray jA = buildJsonArray(data);
 //        JsonObject arrayObject = Json.createObjectBuilder().add(JSON_SUBJECTS, jA).build();
 //        return arrayObject;
 //    }
-//}
+}

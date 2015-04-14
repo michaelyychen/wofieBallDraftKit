@@ -8,6 +8,7 @@ package wofieballdraftkit.controller;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import properties_manager.PropertiesManager;
@@ -72,13 +73,13 @@ public class FileController {
             MessageDialog initMessageDialog,
             YesNoCancelDialog initYesNoCancelDialog,
             ProgressDialog initProgressDialog,
-            DraftFileManager initCourseIO,
+            DraftFileManager initDraftIO,
             DraftSiteExporter initExporter) {
         // NOTHING YET
         saved = true;
         
         // KEEP THESE GUYS FOR LATER
-        draftIO = initCourseIO;
+        draftIO = initDraftIO;
         exporter = initExporter;
         
         // BE READY FOR ERRORS
@@ -112,7 +113,7 @@ public class FileController {
      * 
      * @param gui The user interface editing the Course.
      */
-    public void handleNewCourseRequest(WBDK_GUI gui) {
+    public void handleNewRequest(WBDK_GUI gui) {
         try {
             // WE MAY HAVE TO SAVE CURRENT WORK
             boolean continueToMakeNew = true;
@@ -147,7 +148,7 @@ public class FileController {
      * 
      * @param gui The user interface editing the course.
      */
-    public void handleLoadCourseRequest(WBDK_GUI gui) {
+    public void handleLoadRequest(WBDK_GUI gui) {
         try {
             // WE MAY HAVE TO SAVE CURRENT WORK
             boolean continueToOpen = true;
@@ -159,7 +160,7 @@ public class FileController {
             // IF THE USER REALLY WANTS TO OPEN A Course
             if (continueToOpen) {
                 // GO AHEAD AND PROCEED LOADING A Course
-                promptToOpen(gui);
+//                promptToOpen(gui);
             }
         } catch (IOException ioe) {
             // SOMETHING WENT WRONG
@@ -175,10 +176,10 @@ public class FileController {
      * 
      * @param courseToSave The course being edited that is to be saved to a file.
      */
-    public void handleSaveCourseRequest(WBDK_GUI gui, Draft draftToSave) {
+    public void handleSaveRequest(WBDK_GUI gui, Draft draftToSave) {
         try {
             // SAVE IT TO A FILE
-            draftIO.saveCourse(draftToSave);
+            draftIO.saveDraft(draftToSave);
 
             // MARK IT AS SAVED
             saved = true;
@@ -199,35 +200,35 @@ public class FileController {
      * 
      * @param gui
      */
-    public void handleExportCourseRequest(WBDK_GUI gui) {
-        // EXPORT THE COURSE
-        DraftDataManager dataManager = gui.getDataManager();
-        Draft draftToExport = dataManager.getDraft();
-
-        // WE'LL NEED THIS TO LOAD THE EXPORTED PAGE FOR VIEWING
-        String courseURL = exporter.getPageURLPath(draftToExport);
-        
-        // NOW GET THE EXPORTER
-        try {            
-            
-            // AND EXPORT THE COURSE
-            exporter.exportCourseSite(courseToExport, progressDialog);
-
-            progressDialog.showAndWait();
-
-            
-            // AND THEN OPEN UP THE PAGE IN A BROWSER
-            Stage webBrowserStage = new Stage();
-            WebBrowser webBrowser = new WebBrowser(webBrowserStage, courseURL);
-            webBrowserStage.show();
-        }
-        // WE'LL HANDLE COURSE EXPORT PROBLEMS AND COURSE PAGE VIEWING
-        // PROBLEMS USING DIFFERENT ERROR MESSAGES
-        catch (MalformedURLException murle) {
-            errorHandler.handleViewSchedulePageError(courseURL);
-        } catch (Exception ioe) {
-            errorHandler.handleExportCourseError(draftToExport);
-        }
+    public void handleExportRequest(WBDK_GUI gui) {
+//        // EXPORT THE COURSE
+//        DraftDataManager dataManager = gui.getDataManager();
+//        Draft draftToExport = dataManager.getDraft();
+//
+//        // WE'LL NEED THIS TO LOAD THE EXPORTED PAGE FOR VIEWING
+//        String courseURL = exporter.getPageURLPath(draftToExport);
+//        
+//        // NOW GET THE EXPORTER
+//        try {            
+//            
+//            // AND EXPORT THE COURSE
+//            exporter.exportCourseSite(courseToExport, progressDialog);
+//
+//            progressDialog.showAndWait();
+//
+//            
+//            // AND THEN OPEN UP THE PAGE IN A BROWSER
+//            Stage webBrowserStage = new Stage();
+//            WebBrowser webBrowser = new WebBrowser(webBrowserStage, courseURL);
+//            webBrowserStage.show();
+//        }
+//        // WE'LL HANDLE COURSE EXPORT PROBLEMS AND COURSE PAGE VIEWING
+//        // PROBLEMS USING DIFFERENT ERROR MESSAGES
+//        catch (MalformedURLException murle) {
+//            errorHandler.handleViewSchedulePageError(courseURL);
+//        } catch (Exception ioe) {
+//            errorHandler.handleExportCourseError(draftToExport);
+//        }
     }
 
     /**
@@ -282,7 +283,7 @@ public class FileController {
         if (selection.equals(YesNoCancelDialog.YES)) {
             // SAVE THE COURSE
             DraftDataManager dataManager = gui.getDataManager();
-            draftIO.saveCourse(dataManager.getCourse());
+            draftIO.saveDraft(dataManager.getDraft());
             saved = true;
             
             // AND THE INSTRUCTOR INFO
@@ -306,28 +307,37 @@ public class FileController {
      * the open process, nothing is done. If an error occurs loading the file, a
      * message is displayed, but nothing changes.
      */
-    private void promptToOpen(WBDK_GUI gui) {
-        // AND NOW ASK THE USER FOR THE COURSE TO OPEN
-        FileChooser draftFileChooser = new FileChooser();
-        draftFileChooser.setInitialDirectory(new File(PATH_DRAFT));
-        File selectedFile = draftFileChooser.showOpenDialog(gui.getWindow());
-
-        // ONLY OPEN A NEW FILE IF THE USER SAYS OK
-        if (selectedFile != null) {
-            try {
-                Draft draftToLoad = gui.getDataManager().getDraft();
-                draftIO.loadDraft(draftToLoad, selectedFile.getAbsolutePath());
-                gui.reloadCourse(draftToLoad);
-                saved = true;
-                gui.updateToolbarControls(saved);
-                
-               
-            } catch (Exception e) {
-                ErrorHandler eH = ErrorHandler.getErrorHandler();
-                eH.handleLoadCourseError();
-            }
-        }
-    }
+//    private void promptToOpen(WBDK_GUI gui) {
+//        // AND NOW ASK THE USER FOR THE COURSE TO OPEN
+//        FileChooser draftFileChooser = new FileChooser();
+//        draftFileChooser.setInitialDirectory(new File(PATH_DRAFT));
+//        File selectedFile = draftFileChooser.showOpenDialog(gui.getWindow());
+//
+//        // ONLY OPEN A NEW FILE IF THE USER SAYS OK
+//        if (selectedFile != null) {
+//            try {
+//                Draft draftToLoad = gui.getDataManager().getDraft();
+//                draftIO.loadDraft(draftToLoad, selectedFile.getAbsolutePath());
+//                gui.reloadDraft(draftToLoad);
+//                saved = true;
+//                gui.updateToolbarControls(saved);
+//                
+//               
+//            } catch (Exception e) {
+//                ErrorHandler eH = ErrorHandler.getErrorHandler();
+//                eH.handleLoadCourseError();
+//            }
+//        }
+//    }
+    
+    
+    
+ 
+    
+    
+    
+    
+    
 
     /**
      * This mutator method marks the file as not saved, which means that when

@@ -103,7 +103,7 @@ public class WBDK_GUI {
     
     
     //BOTTOM TOOLBAR AND ITS BUTTON
-    Button homeButton;
+    Button fantasyButton;
     Button playerButton;
     Button standingButton;
     Button draftButton;
@@ -293,7 +293,7 @@ public class WBDK_GUI {
      * 
      * @param course The course to be updated using the data from the UI controls.
      */
-    public void updateCourseInfo( ) {
+    public void updateDraftInfo(Draft draftToEdit ) {
 
     }
 
@@ -328,7 +328,7 @@ public class WBDK_GUI {
 
         // HERE ARE OUR FILE TOOLBAR BUTTONS, NOTE THAT SOME WILL
         // START AS ENABLED (false), WHILE OTHERS DISABLED (true)
-        homeButton = initChildButton(fileToolbarPane, WBDK_PropertyType.HOME_ICON, WBDK_PropertyType.HOME_TOOLTIP, false);
+        fantasyButton = initChildButton(fileToolbarPane, WBDK_PropertyType.HOME_ICON, WBDK_PropertyType.HOME_TOOLTIP, false);
         playerButton = initChildButton(fileToolbarPane, WBDK_PropertyType.PLAYER_ICON, WBDK_PropertyType.PLAYER_TOOLTIP, false);
         draftButton = initChildButton(fileToolbarPane, WBDK_PropertyType.DRAFT_ICON, WBDK_PropertyType.DRAFT_TOOLTIP, true);
         standingButton = initChildButton(fileToolbarPane, WBDK_PropertyType.STANDING_ICON, WBDK_PropertyType.STANDING_TOOLTIP, true);
@@ -598,140 +598,63 @@ public class WBDK_GUI {
     private void initEventHandlers() throws IOException {
         // FIRST THE FILE CONTROLS
         fileController = new FileController(messageDialog, yesNoCancelDialog, progressDialog, draftFileManager, siteExporter);
-        newCourseButton.setOnAction(e -> {
+        newButton.setOnAction(e -> {
             fileController.handleNewRequest(this);
         });
-        loadCourseButton.setOnAction(e -> {
-            fileController.handleLoadCourseRequest(this);
+        loadButton.setOnAction(e -> {
+            fileController.handleLoadRequest(this);
         });
-        saveCourseButton.setOnAction(e -> {
-            fileController.handleSaveCourseRequest(this, dataManager.getCourse());
+        saveButton.setOnAction(e -> {
+            fileController.handleSaveRequest(this, dataManager.getDraft());
         });
-        exportSiteButton.setOnAction(e -> {
-            fileController.handleExportCourseRequest(this);
+        exportButton.setOnAction(e -> {
+            fileController.handleExportRequest(this);
         });
         exitButton.setOnAction(e -> {
             fileController.handleExitRequest(this);
         });
+        
+        
+//        fantasyButton.setOnAction(e -> {
+//            this.fantasyPane.toFront();
+//        });
+//        playerButton.setOnAction(e -> {
+//            this.playerPane.toFront();
+//        });
+//        standingButton.setOnAction(e -> {
+//            this.standingButton.toFront();
+//        });
+//        draftButton.setOnAction(e -> {
+//            this.draftButton.toFront();
+//        });
+//        MLBButton.setOnAction(e -> {
+//            this.MLBButton.toFront();
+//        });
+        
+        
+        
+        
+        
+        
+        
+        
 
         // THEN THE COURSE EDITING CONTROLS
-        courseController = new CourseEditController();
-        courseSubjectComboBox.setOnAction(e -> {
-            courseController.handleCourseChangeRequest(this);
-        });
-        courseSemesterComboBox.setOnAction(e -> {
-            courseController.handleCourseChangeRequest(this);
-        });
-        courseYearComboBox.setOnAction(e -> {
-            courseController.handleCourseChangeRequest(this);
-        });
-        indexPageCheckBox.setOnAction(e -> {
-            courseController.handleCourseChangeRequest(this);
-        });
-        syllabusPageCheckBox.setOnAction(e -> {
-            courseController.handleCourseChangeRequest(this);
-        });
-        schedulePageCheckBox.setOnAction(e -> {
-            courseController.handleCourseChangeRequest(this);
-        });
-        hwsPageCheckBox.setOnAction(e -> {
-            courseController.handleCourseChangeRequest(this);
-        });
-        projectsPageCheckBox.setOnAction(e -> {
-            courseController.handleCourseChangeRequest(this);
-        });
+
 
         // TEXT FIELDS HAVE A DIFFERENT WAY OF LISTENING FOR TEXT CHANGES
-        registerTextFieldController(courseNumberTextField);
-        registerTextFieldController(courseTitleTextField);
-        registerTextFieldController(instructorNameTextField);
-        registerTextFieldController(instructorURLTextField);
+//        registerTextFieldController(courseNumberTextField);
 
-        // THE DATE SELECTION ONES HAVE PARTICULAR CONCERNS, AND SO
-        // GO THROUGH A DIFFERENT METHOD
-        startDatePicker.setOnAction(e -> {
-            courseController.handleDateSelectionRequest(this, startDatePicker, endDatePicker);
-        });
-        endDatePicker.setOnAction(e -> {
-            courseController.handleDateSelectionRequest(this, startDatePicker, endDatePicker);
-        });
 
-        // AND THE LECTURE DAYS CHECKBOXES
-        mondayCheckBox.setOnAction(e -> {
-            courseController.handleCourseChangeRequest(this);
-        });
-        tuesdayCheckBox.setOnAction(e -> {
-            courseController.handleCourseChangeRequest(this);
-        });
-        wednesdayCheckBox.setOnAction(e -> {
-            courseController.handleCourseChangeRequest(this);
-        });
-        thursdayCheckBox.setOnAction(e -> {
-            courseController.handleCourseChangeRequest(this);
-        });
-        fridayCheckBox.setOnAction(e -> {
-            courseController.handleCourseChangeRequest(this);
-        });
         
-        // AND NOW THE SCHEDULE ITEM ADDING AND EDITING CONTROLS
-        scheduleController = new ScheduleEditController(primaryStage, dataManager.getCourse(), messageDialog, yesNoCancelDialog);
-        addScheduleItemButton.setOnAction(e -> {
-            scheduleController.handleAddScheduleItemRequest(this);
-        });
-        removeScheduleItemButton.setOnAction(e -> {
-            scheduleController.handleRemoveScheduleItemRequest(this, scheduleItemsTable.getSelectionModel().getSelectedItem());
-        });
-        addLectureButton.setOnAction(e -> {
-            scheduleController.handleAddLectureRequest(this);
-        });
-        removeLectureButton.setOnAction(e-> {
-            scheduleController.handleRemoveLectureRequest(this, lecturesTable.getSelectionModel().getSelectedItem());
-        });
-        moveUpLectureButton.setOnAction(e -> {
-            scheduleController.handleMoveUpLectureRequest(this, lecturesTable.getSelectionModel().getSelectedItem());
-        });
-        moveDownLectureButton.setOnAction(e -> {
-            scheduleController.handleMoveDownLectureRequest(this, lecturesTable.getSelectionModel().getSelectedItem());
-        });
-        addHWButton.setOnAction(e -> {
-            scheduleController.handleAddAssignmentRequest(this);
-        });
-        removeHWButton.setOnAction(e -> {
-            scheduleController.handleRemoveAssignmentRequest(this, hwsTable.getSelectionModel().getSelectedItem());
-        });
-        
-        // AND NOW THE SCHEDULE ITEMS TABLE
-        scheduleItemsTable.setOnMouseClicked(e -> {
-            if (e.getClickCount() == 2) {
-                // OPEN UP THE SCHEDULE ITEM EDITOR
-                ScheduleItem si = scheduleItemsTable.getSelectionModel().getSelectedItem();
-                scheduleController.handleEditScheduleItemRequest(this, si);
-            }
-        });
-        
-        // AND THE LECTURES TABLE
-        lecturesTable.setOnMouseClicked(e -> {
-            if (e.getClickCount() == 2) {
-                // OPEN UP THE LECTURE EDITOR
-                Lecture l = lecturesTable.getSelectionModel().getSelectedItem();
-                scheduleController.handleEditLectureRequest(this, l);
-            }
-        });
-        
-        // AND THE HWS TABLE
-        hwsTable.setOnMouseClicked(e -> {
-            if (e.getClickCount() == 2) {
-                // OPEN UP THE HWS EDITOR
-                Assignment a = hwsTable.getSelectionModel().getSelectedItem();
-                scheduleController.handleEditAssignmentRequest(this, a);
-            }
-        });
+ 
+
     }
 
     // REGISTER THE EVENT LISTENER FOR A TEXT FIELD
     private void registerTextFieldController(TextField textField) {
         textField.textProperty().addListener((observable, oldValue, newValue) -> {
-//            courseController.handleCourseChangeRequest(this);
+            draftController.handleDraftChangeRequest(this);
         });
     }
     

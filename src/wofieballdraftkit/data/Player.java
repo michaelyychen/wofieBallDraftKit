@@ -10,17 +10,16 @@ package wofieballdraftkit.data;
  * @author MC
  */
 public class Player {
-    String position;
-    String firstname;
-    String lastname;
     String team;
+    String lastname;
+    String firstname;
+    String position;
+    
+ 
+    
     String contract;
     String nation;
-    String Notes;
-
-
-
-
+    String notes;
     int salary;
     int birth;
     
@@ -93,11 +92,11 @@ public class Player {
         this.nation = nation;
     }
         public String getNotes() {
-        return Notes;
+        return notes;
     }
 
-    public void setNotes(String Notes) {
-        this.Notes = Notes;
+    public void setNotes(String notes) {
+        this.notes = notes;
     }
     
     

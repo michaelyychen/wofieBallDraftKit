@@ -6,6 +6,8 @@
 package wofieballdraftkit.data;
 
 import java.util.ArrayList;
+import wofieballdraftkit.file.DraftFileManager;
+
 
 /**
  *
@@ -18,11 +20,45 @@ public class DraftDataManager {
     ArrayList<Team> teamList;
     ArrayList<Player> eligibleList;
     
+    Draft draft;
+    
+    DraftDataView view;
+    
+    DraftFileManager fileManager;
+    
+    public DraftDataManager(DraftDataView initView, Team Team){
+         
+        view = initView;
+        draft = new Draft();
+        
+        
+    }
+    
+    public Draft getDraft(){
+        return draft;
+    }
+    
+    public DraftFileManager getFileManager() {
+       return fileManager;
+    }
     
     
-    
-    
-    
+      public void reset() {
+        // CLEAR ALL THE COURSE VALUES
+//        course.setSubject(DEFAULT_COURSE_SUBJECT);
+//        course.setNumber(DEFAULT_NUM);
+//        course.setTitle(DEFAULT_TEXT);
+//        course.setSemester(DEFAULT_SEMESTER);
+//        course.setYear(LocalDate.now().getYear());
+//        LocalDate nextMonday = getNextMonday();
+//        course.setStartingMonday(nextMonday);
+//        course.setEndingFriday(getNextFriday(nextMonday));
+//        course.clearLectureDays();
+//        course.clearPages();
+        
+        // AND THEN FORCE THE UI TO RELOAD THE UPDATED COURSE
+        view.reloadDraft(draft);
+    }
     
 
     public ArrayList<Player> getPlayerList() {
