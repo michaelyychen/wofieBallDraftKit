@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Rectangle2D;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -86,11 +87,11 @@ public class WBDK_GUI implements DraftDataView{
     
     Scene primaryScene;
     // THIS IS THE STAGE'S SCENE GRAPH
-    Pane fantasyPane;
-    Pane playerPane;
-    Pane standingPane;
-    Pane draftPane;
-    Pane MLBPane;
+    BorderPane fantasyPane;
+    BorderPane playerPane;
+    BorderPane standingPane;
+    BorderPane draftPane;
+    BorderPane MLBPane;
     
 
     // THIS PANE ORGANIZES THE BIG PICTURE CONTAINERS FOR THE
@@ -116,6 +117,7 @@ public class WBDK_GUI implements DraftDataView{
     
 
     // WE'LL ORGANIZE OUR WORKSPACE COMPONENTS USING A BORDER PANE
+    
     BorderPane workspacePane;
     boolean workspaceActivated;
     
@@ -249,11 +251,13 @@ public class WBDK_GUI implements DraftDataView{
         // INIT THE TOOLBAR
         initFileToolbar();
         
-       
         initScreenToolbar();
         
         initFantasyPane();
-        
+        initPlayerPane();
+        initStandingPane();
+        initDraftPane();
+        initMLBPane();
         // INIT THE CENTER WORKSPACE CONTROLS BUT DON'T ADD THEM
         // TO THE WINDOW YET
         initWorkspace();
@@ -273,8 +277,9 @@ public class WBDK_GUI implements DraftDataView{
         if (!workspaceActivated) {
             // PUT THE WORKSPACE IN THE GUI
             
-       
-            wbdkPane.setCenter(workSpaceStackPane);
+            workspacePane.setCenter(fantasyPane);
+            wbdkPane.setCenter(workspacePane);
+            
             //wbdkPane.setCenter(fantasyPane);
             workspaceActivated = true;
         }
@@ -432,6 +437,10 @@ public class WBDK_GUI implements DraftDataView{
         workSpaceStackPane.getChildren().add(workspacePane);
         workSpaceStackPane.setPrefSize(600, 600);
         
+        
+     
+        
+        
 
         // NOTE THAT WE HAVE NOT PUT THE WORKSPACE INTO THE WINDOW,
         // THAT WILL BE DONE WHEN THE USER EITHER CREATES A NEW
@@ -442,14 +451,65 @@ public class WBDK_GUI implements DraftDataView{
     // INITIALIZES THE TOP PORTION OF THE WORKWPACE UI
     private void initFantasyPane() {
         // HERE'S THE SPLIT PANE, ADD THE TWO GROUPS OF CONTROLS
-         fantasyPane = new BorderPane();
-         fantasyPane.setPrefSize(200, 200);
-         Text text = new Text();
-         text.setText("abd");
-         fantasyPane.getChildren().add(text);
+        fantasyPane = new BorderPane();
+        GridPane a = new GridPane();
+             
+        a.add(initLabel(WBDK_PropertyType.FANTASY_TEAMS_LABEL, CLASS_HEADING_LABEL), 0, 0);
+        a.setStyle("-fx-background-color: GhostWhite");
+           
+        fantasyPane.setCenter(a);
+        fantasyPane.setBottom(switcherPane);
          
     }
-
+    private void initPlayerPane() {
+        // HERE'S THE SPLIT PANE, ADD THE TWO GROUPS OF CONTROLS
+        playerPane = new BorderPane();
+        GridPane a = new GridPane();
+             
+        a.add(initLabel(WBDK_PropertyType.PLAYERS_LABEL, CLASS_HEADING_LABEL), 0, 0);
+        a.setStyle("-fx-background-color: GhostWhite");
+           
+        playerPane.setCenter(a);
+        playerPane.setBottom(switcherPane);
+         
+    }
+    
+    private void initStandingPane() {
+        // HERE'S THE SPLIT PANE, ADD THE TWO GROUPS OF CONTROLS
+        standingPane = new BorderPane();
+        GridPane a = new GridPane();
+             
+        a.add(initLabel(WBDK_PropertyType.STANDING_LABEL, CLASS_HEADING_LABEL), 0, 0);
+        a.setStyle("-fx-background-color: GhostWhite");
+           
+        standingPane.setCenter(a);
+        standingPane.setBottom(switcherPane);
+         
+    }
+    private void initDraftPane() {
+        // HERE'S THE SPLIT PANE, ADD THE TWO GROUPS OF CONTROLS
+        draftPane = new BorderPane();
+        GridPane a = new GridPane();
+             
+        a.add(initLabel(WBDK_PropertyType.DRAFT_LABEL, CLASS_HEADING_LABEL), 0, 0);
+        a.setStyle("-fx-background-color: GhostWhite");
+           
+        draftPane.setCenter(a);
+        draftPane.setBottom(switcherPane);
+         
+    }    
+    private void initMLBPane() {
+        // HERE'S THE SPLIT PANE, ADD THE TWO GROUPS OF CONTROLS
+        MLBPane = new BorderPane();
+        GridPane a = new GridPane();
+             
+        a.add(initLabel(WBDK_PropertyType.MLB_LABEL, CLASS_HEADING_LABEL), 0, 0);
+        a.setStyle("-fx-background-color: GhostWhite");
+           
+        MLBPane.setCenter(a);
+        MLBPane.setBottom(switcherPane);
+         
+    }
    
 
     // INITIALIZE THE WINDOW (i.e. STAGE) PUTTING ALL THE CONTROLS
