@@ -34,7 +34,9 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import properties_manager.PropertiesManager;
@@ -119,7 +121,7 @@ public class WBDK_GUI implements DraftDataView{
     
     // WE'LL PUT THE WORKSPACE INSIDE A SCROLL PANE
     ScrollPane workspaceScrollPane;
-
+    StackPane workSpaceStackPane;
     // WE'LL PUT THIS IN THE TOP OF THE WORKSPACE, IT WILL
     // HOLD TWO OTHER PANES FULL OF CONTROLS AS WELL AS A LABEL
     VBox topWorkspacePane;
@@ -250,7 +252,7 @@ public class WBDK_GUI implements DraftDataView{
        
         initScreenToolbar();
         
-        
+        initFantasyPane();
         
         // INIT THE CENTER WORKSPACE CONTROLS BUT DON'T ADD THEM
         // TO THE WINDOW YET
@@ -270,8 +272,10 @@ public class WBDK_GUI implements DraftDataView{
     public void activateWorkspace() {
         if (!workspaceActivated) {
             // PUT THE WORKSPACE IN THE GUI
-            wbdkPane.setCenter(workspaceScrollPane);
             
+       
+            wbdkPane.setCenter(workSpaceStackPane);
+            //wbdkPane.setCenter(fantasyPane);
             workspaceActivated = true;
         }
     }
@@ -384,11 +388,11 @@ public class WBDK_GUI implements DraftDataView{
 
         // HERE ARE OUR FILE TOOLBAR BUTTONS, NOTE THAT SOME WILL
         // START AS ENABLED (false), WHILE OTHERS DISABLED (true)
-        fantasyButton = initChildButton(fileToolbarPane, WBDK_PropertyType.HOME_ICON, WBDK_PropertyType.HOME_TOOLTIP, false);
-        playerButton = initChildButton(fileToolbarPane, WBDK_PropertyType.PLAYER_ICON, WBDK_PropertyType.PLAYER_TOOLTIP, false);
-        draftButton = initChildButton(fileToolbarPane, WBDK_PropertyType.DRAFT_ICON, WBDK_PropertyType.DRAFT_TOOLTIP, true);
-        standingButton = initChildButton(fileToolbarPane, WBDK_PropertyType.STANDING_ICON, WBDK_PropertyType.STANDING_TOOLTIP, true);
-        MLBButton = initChildButton(fileToolbarPane, WBDK_PropertyType.MLB_ICON, WBDK_PropertyType.MLB_TOOLTIP, false);
+        fantasyButton = initChildButton(switcherPane, WBDK_PropertyType.HOME_ICON, WBDK_PropertyType.HOME_TOOLTIP, false);
+        playerButton = initChildButton(switcherPane, WBDK_PropertyType.PLAYER_ICON, WBDK_PropertyType.PLAYER_TOOLTIP, false);
+        draftButton = initChildButton(switcherPane, WBDK_PropertyType.DRAFT_ICON, WBDK_PropertyType.DRAFT_TOOLTIP, true);
+        standingButton = initChildButton(switcherPane, WBDK_PropertyType.STANDING_ICON, WBDK_PropertyType.STANDING_TOOLTIP, true);
+        MLBButton = initChildButton(switcherPane, WBDK_PropertyType.MLB_ICON, WBDK_PropertyType.MLB_TOOLTIP, false);
     }
     
     
@@ -406,7 +410,7 @@ public class WBDK_GUI implements DraftDataView{
 
         // THE TOP WORKSPACE HOLDS BOTH THE BASIC COURSE INFO
         // CONTROLS AS WELL AS THE PAGE SELECTION CONTROLS
-        initTopWorkspace();
+      
 
       
 
@@ -422,6 +426,12 @@ public class WBDK_GUI implements DraftDataView{
         workspaceScrollPane.setContent(workspacePane);
         workspaceScrollPane.setFitToWidth(true);
         workspaceScrollPane.setFitToHeight(true);
+        
+        
+        workSpaceStackPane = new StackPane();
+        workSpaceStackPane.getChildren().add(workspacePane);
+        workSpaceStackPane.setPrefSize(600, 600);
+        
 
         // NOTE THAT WE HAVE NOT PUT THE WORKSPACE INTO THE WINDOW,
         // THAT WILL BE DONE WHEN THE USER EITHER CREATES A NEW
@@ -430,22 +440,14 @@ public class WBDK_GUI implements DraftDataView{
     }
     
     // INITIALIZES THE TOP PORTION OF THE WORKWPACE UI
-    private void initTopWorkspace() {
+    private void initFantasyPane() {
         // HERE'S THE SPLIT PANE, ADD THE TWO GROUPS OF CONTROLS
-        topWorkspaceSplitPane = new SplitPane();
-//        topWorkspaceSplitPane.getItems().add();
-//        topWorkspaceSplitPane.getItems().add();
-
-        // THE TOP WORKSPACE PANE WILL ONLY DIRECTLY HOLD 2 THINGS, A LABEL
-        // AND A SPLIT PANE, WHICH WILL HOLD 2 ADDITIONAL GROUPS OF CONTROLS
-        topWorkspacePane = new VBox();
-        topWorkspacePane.getStyleClass().add(CLASS_BORDERED_PANE);
-
-        // HERE'S THE LABEL
-      //  courseHeadingLabel = initChildLabel(topWorkspacePane, CSB_PropertyType.COURSE_HEADING_LABEL, CLASS_HEADING_LABEL);
-
-        // AND NOW ADD THE SPLIT PANE
-        topWorkspacePane.getChildren().add(topWorkspaceSplitPane);
+         fantasyPane = new BorderPane();
+         fantasyPane.setPrefSize(200, 200);
+         Text text = new Text();
+         text.setText("abd");
+         fantasyPane.getChildren().add(text);
+         
     }
 
    
