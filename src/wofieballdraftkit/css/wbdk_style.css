@@ -23,7 +23,7 @@ and open the template in the editor.
 
 // CSS CLASS FOR OUR BIG PANES
 .bordered_pane {
-    -fx-background-color: #aaaaff;
+    -fx-background-color: #FFB6C1;
     -fx-background-radius: 5.0;
     -fx-padding: 15;
     -fx-spacing: 10;
