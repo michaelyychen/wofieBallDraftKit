@@ -278,6 +278,7 @@ public class WBDK_GUI implements DraftDataView{
             // PUT THE WORKSPACE IN THE GUI
             
             workspacePane.setCenter(fantasyPane);
+            workspacePane.setBottom(switcherPane);
             wbdkPane.setCenter(workspacePane);
             
             //wbdkPane.setCenter(fantasyPane);
@@ -395,8 +396,8 @@ public class WBDK_GUI implements DraftDataView{
         // START AS ENABLED (false), WHILE OTHERS DISABLED (true)
         fantasyButton = initChildButton(switcherPane, WBDK_PropertyType.HOME_ICON, WBDK_PropertyType.HOME_TOOLTIP, false);
         playerButton = initChildButton(switcherPane, WBDK_PropertyType.PLAYER_ICON, WBDK_PropertyType.PLAYER_TOOLTIP, false);
-        draftButton = initChildButton(switcherPane, WBDK_PropertyType.DRAFT_ICON, WBDK_PropertyType.DRAFT_TOOLTIP, true);
-        standingButton = initChildButton(switcherPane, WBDK_PropertyType.STANDING_ICON, WBDK_PropertyType.STANDING_TOOLTIP, true);
+        draftButton = initChildButton(switcherPane, WBDK_PropertyType.DRAFT_ICON, WBDK_PropertyType.DRAFT_TOOLTIP, false);
+        standingButton = initChildButton(switcherPane, WBDK_PropertyType.STANDING_ICON, WBDK_PropertyType.STANDING_TOOLTIP, false);
         MLBButton = initChildButton(switcherPane, WBDK_PropertyType.MLB_ICON, WBDK_PropertyType.MLB_TOOLTIP, false);
     }
     
@@ -458,7 +459,7 @@ public class WBDK_GUI implements DraftDataView{
         a.setStyle("-fx-background-color: GhostWhite");
            
         fantasyPane.setCenter(a);
-        fantasyPane.setBottom(switcherPane);
+      //  fantasyPane.setBottom(switcherPane);
          
     }
     private void initPlayerPane() {
@@ -470,7 +471,7 @@ public class WBDK_GUI implements DraftDataView{
         a.setStyle("-fx-background-color: GhostWhite");
            
         playerPane.setCenter(a);
-        playerPane.setBottom(switcherPane);
+      //  playerPane.setBottom(switcherPane);
          
     }
     
@@ -483,7 +484,7 @@ public class WBDK_GUI implements DraftDataView{
         a.setStyle("-fx-background-color: GhostWhite");
            
         standingPane.setCenter(a);
-        standingPane.setBottom(switcherPane);
+      //  standingPane.setBottom(switcherPane);
          
     }
     private void initDraftPane() {
@@ -495,7 +496,7 @@ public class WBDK_GUI implements DraftDataView{
         a.setStyle("-fx-background-color: GhostWhite");
            
         draftPane.setCenter(a);
-        draftPane.setBottom(switcherPane);
+     //   draftPane.setBottom(switcherPane);
          
     }    
     private void initMLBPane() {
@@ -507,7 +508,7 @@ public class WBDK_GUI implements DraftDataView{
         a.setStyle("-fx-background-color: GhostWhite");
            
         MLBPane.setCenter(a);
-        MLBPane.setBottom(switcherPane);
+      //  MLBPane.setBottom(switcherPane);
          
     }
    
@@ -565,21 +566,30 @@ public class WBDK_GUI implements DraftDataView{
         });
         
         draftController = new DraftEditController();
-//        fantasyButton.setOnAction(e -> {
-//            this.fantasyPane.toFront();
-//        });
-//        playerButton.setOnAction(e -> {
-//            this.playerPane.toFront();
-//        });
-//        standingButton.setOnAction(e -> {
-//            this.standingButton.toFront();
-//        });
-//        draftButton.setOnAction(e -> {
-//            this.draftButton.toFront();
-//        });
-//        MLBButton.setOnAction(e -> {
-//            this.MLBButton.toFront();
-//        });
+        
+        
+        fantasyButton.setOnAction(e -> {
+            
+            
+            workspacePane.setCenter(fantasyPane);
+
+        });
+        playerButton.setOnAction(e -> {
+            workspacePane.setCenter(playerPane);
+            
+        });
+        standingButton.setOnAction(e -> {
+            workspacePane.setCenter(standingPane);
+            
+        });
+        draftButton.setOnAction(e -> {
+            workspacePane.setCenter(draftPane);
+            
+        });
+        MLBButton.setOnAction(e -> {
+            workspacePane.setCenter(MLBPane);
+            ;
+        });
         
         
         
