@@ -38,7 +38,7 @@ public class JsonDraftFileManager implements DraftFileManager {
     String JSON_TEAM = "TEAM";
     String JSON_LASTNAME = "LAST_NAME";
     String JSON_FIRSTNAME = "FIRST_NAME";
-    String JSON_QP = "OP";
+    String JSON_QP = "QP";
     String JSON_AB = "AB";
     String JSON_R = "R";
     String JSON_H ="H";
@@ -128,70 +128,108 @@ public class JsonDraftFileManager implements DraftFileManager {
      * 
      * @throws IOException Thrown when IO fails.
      */
+//    @Override
+//    public void loadPitcher(Pitcher playerToLoad, String jsonFilePath) throws IOException {
+//        // LOAD THE JSON FILE WITH ALL THE DATA
+//        JsonObject json = loadJSONFile(jsonFilePath);
+//        
+//        // NOW LOAD THE COURSE
+//        
+//        double ERA = 9*(json.getJsonNumber(JSON_ER).doubleValue() / 
+//                            json.getJsonNumber(JSON_IP).doubleValue());
+//        double WHIP = (json.getJsonNumber(JSON_BB).doubleValue()+ json.getJsonNumber(JSON_H).doubleValue())/
+//                        json.getJsonNumber(JSON_IP).doubleValue();
+//        
+//        
+//        playerToLoad.setTeam(json.getString(JSON_TEAM));
+//        playerToLoad.setLastName(json.getString(JSON_LASTNAME));
+//        playerToLoad.setFirstName(json.getString(JSON_FIRSTNAME));
+//        playerToLoad.setERA(ERA);
+//        playerToLoad.setWHIP(WHIP);
+//        playerToLoad.setK(json.getInt(JSON_K));
+//        playerToLoad.setW(json.getInt(JSON_W));
+//        playerToLoad.setSv(json.getInt(JSON_SV));
+//        playerToLoad.setBirth(json.getInt(JSON_BIRTH));
+//        playerToLoad.setNation(json.getString(JSON_NATION));
+//        playerToLoad.setNotes(json.getString(JSON_NOTES));
+//        
+//
+//    }
+//    
+//        @Override
+//    public void loadHitter(Hitter playerToLoad, String jsonFilePath) throws IOException {
+//        // LOAD THE JSON FILE WITH ALL THE DATA
+//        JsonObject json = loadJSONFile(jsonFilePath);
+//        
+//        // NOW LOAD THE COURSE
+//        
+//        double BA = (json.getJsonNumber(JSON_H).doubleValue() / 
+//                            json.getJsonNumber(JSON_AB).doubleValue());
+//
+//        
+//        
+//        playerToLoad.setTeam(json.getString(JSON_TEAM));
+//        playerToLoad.setLastName(json.getString(JSON_LASTNAME));
+//        playerToLoad.setFirstName(json.getString(JSON_FIRSTNAME));
+//        playerToLoad.setR(json.getInt(JSON_R));
+//        playerToLoad.setHr(json.getInt(JSON_HR));
+//        playerToLoad.setRbi(json.getJsonNumber(JSON_RBI).doubleValue());
+//        playerToLoad.setSb(json.getJsonNumber(JSON_SB).intValue());
+//        playerToLoad.setBa(BA);
+//        playerToLoad.setBirth(json.getInt(JSON_BIRTH));
+//        playerToLoad.setNation(json.getString(JSON_NATION));
+//        playerToLoad.setNotes(json.getString(JSON_NOTES));
+//
+//    }
+    
     @Override
-    public void loadPitcher(Pitcher playerToLoad, String jsonFilePath) throws IOException {
-        // LOAD THE JSON FILE WITH ALL THE DATA
-        JsonObject json = loadJSONFile(jsonFilePath);
+    public ArrayList<Hitter> loadHitterData(String filePath, String arrayName) throws IOException {
         
-        // NOW LOAD THE COURSE
-        
-        double ERA = 9*(json.getJsonNumber(JSON_ER).doubleValue() / 
-                            json.getJsonNumber(JSON_IP).doubleValue());
-        double WHIP = (json.getJsonNumber(JSON_BB).doubleValue()+ json.getJsonNumber(JSON_H).doubleValue())/
-                        json.getJsonNumber(JSON_IP).doubleValue();
-        
-        
-        playerToLoad.setTeam(json.getString(JSON_TEAM));
-        playerToLoad.setLastName(json.getString(JSON_LASTNAME));
-        playerToLoad.setFirstName(json.getString(JSON_FIRSTNAME));
-        playerToLoad.setERA(ERA);
-        playerToLoad.setWHIP(WHIP);
-        playerToLoad.setK(json.getInt(JSON_K));
-        playerToLoad.setW(json.getInt(JSON_W));
-        playerToLoad.setSv(json.getInt(JSON_SV));
-        playerToLoad.setBirth(json.getInt(JSON_BIRTH));
-        playerToLoad.setNation(json.getString(JSON_NATION));
-        playerToLoad.setNotes(json.getString(JSON_NOTES));
-        
-
-    }
-    
-        @Override
-    public void loadHitter(Hitter playerToLoad, String jsonFilePath) throws IOException {
-        // LOAD THE JSON FILE WITH ALL THE DATA
-        JsonObject json = loadJSONFile(jsonFilePath);
-        
-        // NOW LOAD THE COURSE
-        
-        double BA = (json.getJsonNumber(JSON_H).doubleValue() / 
-                            json.getJsonNumber(JSON_AB).doubleValue());
-
-        
-        
-        playerToLoad.setTeam(json.getString(JSON_TEAM));
-        playerToLoad.setLastName(json.getString(JSON_LASTNAME));
-        playerToLoad.setFirstName(json.getString(JSON_FIRSTNAME));
-        playerToLoad.setR(json.getInt(JSON_R));
-        playerToLoad.setHr(json.getInt(JSON_HR));
-        playerToLoad.setRbi(json.getJsonNumber(JSON_RBI).doubleValue());
-        playerToLoad.setSb(json.getJsonNumber(JSON_SB).intValue());
-        playerToLoad.setBa(BA);
-        playerToLoad.setBirth(json.getInt(JSON_BIRTH));
-        playerToLoad.setNation(json.getString(JSON_NATION));
-        playerToLoad.setNotes(json.getString(JSON_NOTES));
-
-    }
-    
-    
-    
-    
-    
-    
-    
-    public ArrayList<Pitcher> loadPitcherData(String filePath, String arrayName) throws IOException {
+        JsonObject json = loadJSONFile(filePath);
+        ArrayList<Hitter> items = new ArrayList();
+        JsonArray jsonArray = json.getJsonArray(arrayName);
+        System.out.println(jsonArray.getJsonObject(0).toString());
+        for ( int i = 0; i < jsonArray.size();i++) {
         
    
             
+        Hitter a = new Hitter(jsonArray.getJsonObject(i).getString(JSON_LASTNAME),
+                                jsonArray.getJsonObject(i).getString(JSON_FIRSTNAME));
+        a.setTeam(jsonArray.getJsonObject(i).getString(JSON_TEAM));
+        
+        double BA = Double.valueOf(jsonArray.getJsonObject(i).getString(JSON_H)) / 
+                            Double.valueOf(jsonArray.getJsonObject(i).getString(JSON_AB));
+               
+        a.setBa(BA);
+
+        a.setQp(jsonArray.getJsonObject(i).getString(JSON_QP));
+        a.setR(Integer.valueOf(jsonArray.getJsonObject(i).getString(JSON_R)));
+        a.setH(Integer.valueOf(jsonArray.getJsonObject(i).getString(JSON_H)));
+        a.setHr(Integer.valueOf(jsonArray.getJsonObject(i).getString(JSON_HR)));
+        a.setRbi(Integer.valueOf(jsonArray.getJsonObject(i).getString(JSON_RBI)));
+        a.setSb(Integer.valueOf(jsonArray.getJsonObject(i).getString(JSON_SB)));
+        a.setNotes(jsonArray.getJsonObject(i).getString(JSON_NOTES));
+        a.setBirth(Integer.valueOf(jsonArray.getJsonObject(i).getString(JSON_BIRTH)));
+        a.setNation(jsonArray.getJsonObject(i).getString(JSON_NATION));
+           
+            items.add(a);
+         
+        }
+        return items;
+  
+    }    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    @Override
+    public ArrayList<Pitcher> loadPitcherData(String filePath, String arrayName) throws IOException {
+        
         JsonObject json = loadJSONFile(filePath);
         ArrayList<Pitcher> items = new ArrayList();
         JsonArray jsonArray = json.getJsonArray(arrayName);
@@ -204,61 +242,33 @@ public class JsonDraftFileManager implements DraftFileManager {
                                 jsonArray.getJsonObject(i).getString(JSON_FIRSTNAME));
         a.setTeam(jsonArray.getJsonObject(i).getString(JSON_TEAM));
         
-//        double ERA = 9*(jsonArray.getJsonObject(i).getJsonNumber(JSON_ER).doubleValue() / 
-//                            jsonArray.getJsonObject(i).getJsonNumber(JSON_IP).doubleValue());
-//        double WHIP = (jsonArray.getJsonObject(i).getJsonNumber(JSON_BB).doubleValue()+ 
-//                        jsonArray.getJsonObject(i).getJsonNumber(JSON_H).doubleValue())/
-//                        jsonArray.getJsonObject(i).getJsonNumber(JSON_IP).doubleValue();
-//        a.setERA(ERA);
-//        a.setW(jsonArray.getJsonObject(i).getInt(JSON_W));
-////        a.setWHIP(WHIP);
-//        a.setH(jsonArray.getJsonObject(i).getInt(JSON_H));
-//        a.setK(jsonArray.getJsonObject(i).getInt(JSON_K));
-//        a.setSv(jsonArray.getJsonObject(i).getInt(JSON_SV));
-//        a.setNotes(jsonArray.getJsonObject(i).getString(JSON_NOTES));
-//        a.setBirth(jsonArray.getJsonObject(i).getInt(JSON_BIRTH));
-//        a.setNation(jsonArray.getJsonObject(i).getString(JSON_NATION));
-            
-            
+        double ERA = 9*(Double.valueOf(jsonArray.getJsonObject(i).getString(JSON_ER)) / 
+                         Double.valueOf(jsonArray.getJsonObject(i).getString(JSON_IP)));
+        double WHIP = (
+                        Double.valueOf(jsonArray.getJsonObject(i).getString(JSON_BB))+ 
+                        Double.valueOf(jsonArray.getJsonObject(i).getString(JSON_H))/
+                        Double.valueOf(jsonArray.getJsonObject(i).getString(JSON_IP))
+                );
+        a.setERA(ERA);
+        a.setW(Integer.valueOf(jsonArray.getJsonObject(i).getString(JSON_W)));
+        a.setWHIP(WHIP);
+        a.setIP(Double.valueOf(jsonArray.getJsonObject(i).getString(JSON_IP)));
+        a.setH(Integer.valueOf(jsonArray.getJsonObject(i).getString(JSON_H)));
+        a.setK(Integer.valueOf(jsonArray.getJsonObject(i).getString(JSON_K)));
+        a.setSv(Integer.valueOf(jsonArray.getJsonObject(i).getString(JSON_SV)));
+        a.setNotes(jsonArray.getJsonObject(i).getString(JSON_NOTES));
+        a.setBirth(Integer.valueOf(jsonArray.getJsonObject(i).getString(JSON_BIRTH)));
+        a.setNation(jsonArray.getJsonObject(i).getString(JSON_NATION));
+           
             items.add(a);
-           
-           
+         
         }
         return items;
   
     }    
     
     
-    public ArrayList<Pitcher> buildPitcherList(JsonObject json) {
-        
-        ArrayList<Pitcher> p = new ArrayList();
-       
-  
 
-              
-        
-        
-        Pitcher a = new Pitcher(json.getString(JSON_LASTNAME),
-                                json.getString(JSON_FIRSTNAME));
-        a.setTeam(json.getString(JSON_TEAM));
-        
-        double ERA = 9*(json.getJsonNumber(JSON_ER).doubleValue() / 
-                            json.getJsonNumber(JSON_IP).doubleValue());
-        double WHIP = (json.getJsonNumber(JSON_BB).doubleValue()+ json.getJsonNumber(JSON_H).doubleValue())/
-                        json.getJsonNumber(JSON_IP).doubleValue();
-        a.setERA(ERA);
-        a.setW(json.getInt(JSON_W));
-        a.setWHIP(WHIP);
-        a.setH(json.getInt(JSON_H));
-        a.setK(json.getInt(JSON_K));
-        a.setSv(json.getInt(JSON_SV));
-        a.setNotes(json.getString(JSON_NOTES));
-        a.setBirth(json.getInt(JSON_BIRTH));
-        a.setNation(json.getString(JSON_NATION));
-        
-                                
-        return p;
-    }
     
    
    

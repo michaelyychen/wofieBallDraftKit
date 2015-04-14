@@ -18,6 +18,7 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import properties_manager.PropertiesManager;
 import static wofieballdraftkit.WBDK_PropertyType.PROP_APP_TITLE;
+import static wofieballdraftkit.WBDK_StartUpConstants.JSON_FILE_PATH_HITTERS;
 import static wofieballdraftkit.WBDK_StartUpConstants.JSON_FILE_PATH_PITCHERS;
 import static wofieballdraftkit.WBDK_StartUpConstants.PATH_DATA;
 import static wofieballdraftkit.WBDK_StartUpConstants.PROPERTIES_FILE_NAME;
@@ -53,7 +54,7 @@ public class WofieBallDraftKit extends Application {
                 JsonDraftFileManager jsonFileManager = new JsonDraftFileManager();
                 
                 ArrayList<Pitcher> pitchers = jsonFileManager.loadPitcherData(JSON_FILE_PATH_PITCHERS,"Pitchers");
-                ArrayList<Hitter> hitters jsonFileManager.loadHitter();
+                ArrayList<Hitter> hitters = jsonFileManager.loadHitterData(JSON_FILE_PATH_HITTERS,"Hitters");
                 
                 
                 

@@ -10,32 +10,29 @@ package wofieballdraftkit.data;
  * @author MiChAeL
  */
 public class Hitter extends Player{
-    int op;
+
     int r;
     int hr;
+    int h;
+
+
     double rbit;
     int sb;
     double ba;
     String qp;
 
+    String lastName;
+    String firstName;  
 
 
-    public void setQp(String qp) {
-        this.qp = qp;
-    }
     
-    public Hitter(){
-    super();
+    public Hitter(String ln, String fn){
+   super();
+   lastName = ln;
+   firstName = fn;
+   }
     
-    }
-    
-    public int getOp() {
-        return op;
-    }
 
-    public void setOp(int op) {
-        this.op = op;
-    }
 
     public int getR() {
         return r;
@@ -78,6 +75,17 @@ public class Hitter extends Player{
     }
     public String getQp() {
         return qp;
+    }    
+    
+    public void setQp(String qp) {
+        this.qp = qp;
+    }   
+    public int getH() {
+        return h;
+    }
+
+    public void setH(int h) {
+        this.h = h;
     }    
 
 }
