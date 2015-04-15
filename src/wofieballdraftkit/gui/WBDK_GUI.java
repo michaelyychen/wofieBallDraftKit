@@ -153,18 +153,36 @@ public class WBDK_GUI implements DraftDataView{
     
     
     TableView playerTable;
-
+    TableColumn firstNameColumn;
+    TableColumn lastNameColumn;
+    TableColumn proTeamColumn;
+    TableColumn positionsColumn;
+    TableColumn yearOfBirthColumn;
+    TableColumn RWColumn;
+    TableColumn HRSVColumn;
+    TableColumn RBIKColumn;
+    TableColumn SBERAColumn;
+    TableColumn BAWHIPColumn;
+    TableColumn estimatedColumn;
+    TableColumn notesColumn;    
 
 
     
     // AND TABLE COLUMNS
-    static final String COL_DESCRIPTION = "Description";
-    static final String COL_DATE = "Date";
-    static final String COL_LINK = "Link";
-    static final String COL_TOPIC = "Topic";
-    static final String COL_SESSIONS = "Number of Sessions";
-    static final String COL_NAME = "Name";
-    static final String COL_TOPICS = "Topics";
+    static final String COL_FIRST = "First Name";
+    static final String COL_LAST = "Last Name";
+    static final String COL_PROTEAM = "Pro Team";
+    static final String COL_POSITIONS = "Positions";
+    static final String COL_YEAROFBIRTH = "Year of Birth";
+    static final String COL_RW = "R/W";
+    static final String COL_HRSV = "HR/SV";
+    static final String COL_RBIK = "RBI/K";
+    static final String COL_SBERA = "SB/ERA";
+    static final String COL_BAWHIP = "BA/WHIP";
+    static final String COL_ESTIMATED = "Estimated Value";
+    static final String COL_NOTES = "Notes";
+    
+    
     
     // HERE ARE OUR DIALOGS
     MessageDialog messageDialog;
@@ -510,7 +528,7 @@ public class WBDK_GUI implements DraftDataView{
         
         
         radioHBox.setPadding(new Insets(25,30,20,30));
-        radioHBox.setVgap(5);
+//        radioHBox.setVgap(5);
         radioHBox.setHgap(10);
         radioHBox.setStyle("-fx-background-color: #FFB6C1; -fx-border-color: #FF69B4;");
      
@@ -528,12 +546,38 @@ public class WBDK_GUI implements DraftDataView{
         
         radioHBox.getChildren().addAll(all,C,first,CI,third,second,MI,SS,OF,U,P);
         
+        playerTable = new TableView();
+        
+        firstNameColumn = new TableColumn(COL_FIRST);
+        lastNameColumn = new TableColumn(COL_LAST);
+        proTeamColumn = new TableColumn(COL_PROTEAM);
+        positionsColumn = new TableColumn(COL_POSITIONS);
+        yearOfBirthColumn = new TableColumn(COL_YEAROFBIRTH);
+        RWColumn = new TableColumn(COL_RW);
+        HRSVColumn = new TableColumn(COL_HRSV);
+        RBIKColumn = new TableColumn(COL_RBIK);
+        SBERAColumn = new TableColumn(COL_SBERA);
+        BAWHIPColumn = new TableColumn(COL_BAWHIP);
+        estimatedColumn = new TableColumn(COL_ESTIMATED);
+        notesColumn = new TableColumn(COL_NOTES);    
+        
+        
+        
+        
+        estimatedColumn.setPrefWidth(100);
+        
+        
+        
+        
+        playerTable.getColumns().addAll(firstNameColumn,lastNameColumn,proTeamColumn, positionsColumn,yearOfBirthColumn
+        , RWColumn, HRSVColumn, RBIKColumn, SBERAColumn, BAWHIPColumn, estimatedColumn, notesColumn);
         
         
      
         playerPane.getChildren().add(initLabel(WBDK_PropertyType.PLAYERS_LABEL, CLASS_HEADING_LABEL));
         playerPane.getChildren().add(searchHbox);    
-        playerPane.getChildren().add(radioHBox);   
+        playerPane.getChildren().add(radioHBox);
+        playerPane.getChildren().add(playerTable);
         playerPane.setStyle("-fx-background-color: GhostWhite");
         playerPane.setSpacing(10);
      //   playerPane.setCenter(a);
