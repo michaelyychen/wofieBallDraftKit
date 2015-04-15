@@ -188,7 +188,7 @@ public class JsonDraftFileManager implements DraftFileManager {
         JsonObject json = loadJSONFile(filePath);
         ArrayList<Hitter> items = new ArrayList();
         JsonArray jsonArray = json.getJsonArray(arrayName);
-        System.out.println(jsonArray.getJsonObject(0).toString());
+        
         for ( int i = 0; i < jsonArray.size();i++) {
         
    
@@ -290,7 +290,7 @@ public class JsonDraftFileManager implements DraftFileManager {
         JsonArray jsonArray = json.getJsonArray(arrayName);
         for (JsonValue jsV : jsonArray) {
             items.add(jsV.toString());
-            System.out.println(items.add(jsV.toString()));
+           
         }
         return items;
     }

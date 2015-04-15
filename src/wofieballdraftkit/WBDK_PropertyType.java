@@ -56,6 +56,7 @@ public enum WBDK_PropertyType {
         STANDING_LABEL,
         DRAFT_LABEL,
         MLB_LABEL,
+        SEARCH_LABEL,
 
 
 

@@ -11,8 +11,12 @@ import java.net.URL;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.geometry.HPos;
+import javafx.geometry.Insets;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -21,6 +25,7 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.TableColumn;
@@ -88,7 +93,7 @@ public class WBDK_GUI implements DraftDataView{
     Scene primaryScene;
     // THIS IS THE STAGE'S SCENE GRAPH
     BorderPane fantasyPane;
-    BorderPane playerPane;
+    VBox playerPane;
     BorderPane standingPane;
     BorderPane draftPane;
     BorderPane MLBPane;
@@ -115,6 +120,9 @@ public class WBDK_GUI implements DraftDataView{
     Button draftButton;
     Button MLBButton;
     
+    Button addButton;
+    Button minusButton;
+    
 
     // WE'LL ORGANIZE OUR WORKSPACE COMPONENTS USING A BORDER PANE
     
@@ -129,6 +137,22 @@ public class WBDK_GUI implements DraftDataView{
     VBox topWorkspacePane;
     Label courseHeadingLabel;
     SplitPane topWorkspaceSplitPane;
+    
+    RadioButton all; 
+    RadioButton C ;
+    RadioButton first;
+    RadioButton CI;
+    RadioButton third; 
+    RadioButton second ;
+    RadioButton MI ;
+    RadioButton SS ;
+    RadioButton OF;
+    RadioButton U ;
+    RadioButton P ;
+    
+    
+    
+    TableView playerTable;
 
 
 
@@ -453,6 +477,7 @@ public class WBDK_GUI implements DraftDataView{
     private void initFantasyPane() {
         // HERE'S THE SPLIT PANE, ADD THE TWO GROUPS OF CONTROLS
         fantasyPane = new BorderPane();
+ 
         GridPane a = new GridPane();
              
         a.add(initLabel(WBDK_PropertyType.FANTASY_TEAMS_LABEL, CLASS_HEADING_LABEL), 0, 0);
@@ -463,15 +488,55 @@ public class WBDK_GUI implements DraftDataView{
          
     }
     private void initPlayerPane() {
-        // HERE'S THE SPLIT PANE, ADD THE TWO GROUPS OF CONTROLS
-        playerPane = new BorderPane();
+        playerPane = new VBox();
         GridPane a = new GridPane();
-             
-        a.add(initLabel(WBDK_PropertyType.PLAYERS_LABEL, CLASS_HEADING_LABEL), 0, 0);
-        a.setStyle("-fx-background-color: GhostWhite");
-           
-        playerPane.setCenter(a);
-      //  playerPane.setBottom(switcherPane);
+        
+   
+        FlowPane searchHbox = new FlowPane();
+        FlowPane radioHBox = new FlowPane();
+      //  BorderPane wrapper = new BorderPane();
+        
+        addButton = initChildButton(searchHbox, WBDK_PropertyType.ADD_ICON, WBDK_PropertyType.ADD_PLAYER_TOOLTIP, false);
+        minusButton = initChildButton(searchHbox, WBDK_PropertyType.MINUS_ICON, WBDK_PropertyType.REMOVE_PLAYER_TOOLTIP, false); 
+        Label searchLabel = initLabel(WBDK_PropertyType.SEARCH_LABEL, CLASS_SUBHEADING_LABEL);
+        
+        
+        TextField tf = new TextField();
+        tf.setPrefColumnCount(100);
+        tf.setText("");
+        tf.setEditable(true);
+        
+        searchHbox.getChildren().addAll(searchLabel,tf);
+        
+        
+        radioHBox.setPadding(new Insets(25,30,20,30));
+        radioHBox.setVgap(5);
+        radioHBox.setHgap(10);
+        radioHBox.setStyle("-fx-background-color: #FFB6C1; -fx-border-color: #FF69B4;");
+     
+         all = new RadioButton("All");
+         C = new RadioButton("C");
+         first = new RadioButton("1B");
+         CI = new RadioButton("CI");
+         third = new RadioButton("3B");
+         second = new RadioButton("2B");
+         MI = new RadioButton("MI");
+         SS = new RadioButton("SS");
+         OF = new RadioButton("OF");
+         U = new RadioButton("U");
+         P = new RadioButton("P");
+        
+        radioHBox.getChildren().addAll(all,C,first,CI,third,second,MI,SS,OF,U,P);
+        
+        
+        
+     
+        playerPane.getChildren().add(initLabel(WBDK_PropertyType.PLAYERS_LABEL, CLASS_HEADING_LABEL));
+        playerPane.getChildren().add(searchHbox);    
+        playerPane.getChildren().add(radioHBox);   
+        playerPane.setStyle("-fx-background-color: GhostWhite");
+        playerPane.setSpacing(10);
+     //   playerPane.setCenter(a);
          
     }
     
@@ -661,6 +726,14 @@ public class WBDK_GUI implements DraftDataView{
         container.add(comboBox, col, row, colSpan, rowSpan);
         return comboBox;
     }
+    private void initGridButton (GridPane container,Button button, int col, int row, int colSpan, int rowSpan) throws IOException {
+       
+        container.add(button, col, row, colSpan, rowSpan);
+        
+    }    
+    
+    
+    
 
     // LOAD THE COMBO BOX TO HOLD Course SUBJECTS
 //    private void loadSubjectComboBox(ArrayList<String> subjects) {

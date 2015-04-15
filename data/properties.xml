@@ -49,7 +49,7 @@
         <property name="STANDING_LABEL"                  value="Fantasy Standing"></property>
         <property name="DRAFT_LABEL"                     value="Draft Summary"></property>
         <property name="MLB_LABEL"                       value="MLB Teams"></property>
-
+        <property name="SEARCH_LABEL"                       value="Search: "></property>
         
         <!-- ERROR MESSAGES -->
 
