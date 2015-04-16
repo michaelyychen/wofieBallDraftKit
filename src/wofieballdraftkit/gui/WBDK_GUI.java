@@ -763,39 +763,7 @@ public class WBDK_GUI implements DraftDataView{
             workspacePane.setCenter(MLBPane);
         });
         
-        all.setOnAction(e -> {
-        
-        });
-        C.setOnAction(e -> {
-        
-        });
-        first.setOnAction(e -> {
-        
-        });
-        CI.setOnAction(e -> {
-        
-        });
-        third.setOnAction(e -> {
-        
-        });
-        second.setOnAction(e -> {
-        
-        });
-        MI.setOnAction(e -> {
-        
-        });
-        SS.setOnAction(e -> {
-        
-        });
-        OF.setOnAction(e -> {
-        
-        });
-        U.setOnAction(e -> {
-        
-        });
-        P.setOnAction(e -> {
-        
-        });
+
                
         registerTextFieldController(searchTF);
         registerToggleGroupController(group);
@@ -810,10 +778,9 @@ public class WBDK_GUI implements DraftDataView{
         Toggle old_toggle, Toggle new_toggle) {
             if (group.getSelectedToggle() != null) {
                 
-                    System.out.println(group.getSelectedToggle());
-                    
-               
-               
+                
+                
+                dataManager.getDraft().handleToggleController(new_toggle.toString().substring(46, new_toggle.toString().length()-1));
             }                
         }
 });
@@ -919,7 +886,10 @@ public class WBDK_GUI implements DraftDataView{
         return dp;
     }
 
-
+    
+    public ToggleGroup getToggle(){
+    return group;
+    }
     
 //    // LOADS CHECKBOX DATA INTO A Course OBJECT REPRESENTING A CoursePage
 //    private void updatePageUsingCheckBox(CheckBox cB, Course course, CoursePage cP) {

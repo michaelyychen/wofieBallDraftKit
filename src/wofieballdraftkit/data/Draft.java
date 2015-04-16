@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.Toggle;
+import wofieballdraftkit.gui.WBDK_GUI;
 
 /**
  *
@@ -20,7 +22,7 @@ public class Draft {
     List<Player> dataPool;
     List<Team> teamList;
     List<MLBTeams> MLBList;
-    
+    WBDK_GUI gui;
     ObservableList<Player> guiPool;
     int current;
     
@@ -97,5 +99,27 @@ public class Draft {
   return guiPool;
     }
     
-    
+    public ObservableList<Player> handleToggleController(String selection){
+       
+        guiPool.clear();
+        
+        if(selection.equalsIgnoreCase("all")){
+        guiPool.addAll(dataPool);
+        }
+        
+        else if(selection.equalsIgnoreCase("p")){
+            for(int i = 0;  i<dataPool.size(); i ++){
+          
+          
+            if(dataPool.get(i).getPosition().contains("P")){
+        
+            guiPool.add(dataPool.get(i));
+        }
+        
+          }
+            
+        }
+               
+        return guiPool;
+    }
 }
