@@ -15,6 +15,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Rectangle2D;
@@ -29,10 +30,12 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
@@ -45,6 +48,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import javax.swing.event.HyperlinkEvent;
 import properties_manager.PropertiesManager;
 import wofieballdraftkit.WBDK_PropertyType;
 import wofieballdraftkit.controller.DraftEditController;
@@ -52,6 +56,7 @@ import wofieballdraftkit.controller.FileController;
 import wofieballdraftkit.data.Draft;
 import wofieballdraftkit.data.DraftDataManager;
 import wofieballdraftkit.data.DraftDataView;
+import wofieballdraftkit.data.Pitcher;
 import wofieballdraftkit.file.DraftFileManager;
 import wofieballdraftkit.file.DraftSiteExporter;
 
@@ -559,7 +564,7 @@ public class WBDK_GUI implements DraftDataView{
         SBERAColumn = new TableColumn(COL_SBERA);
         BAWHIPColumn = new TableColumn(COL_BAWHIP);
         estimatedColumn = new TableColumn(COL_ESTIMATED);
-        notesColumn = new TableColumn(COL_NOTES);    
+        notesColumn = new TableColumn(COL_NOTES);  
         
         estimatedColumn.setPrefWidth(100);
            
@@ -568,31 +573,38 @@ public class WBDK_GUI implements DraftDataView{
         proTeamColumn.setCellValueFactory(new PropertyValueFactory<String, String>("team"));
         positionsColumn.setCellValueFactory(new PropertyValueFactory<String, String>("position"));
         yearOfBirthColumn.setCellValueFactory(new PropertyValueFactory<String, String>("birth"));
-        estimatedColumn.setCellValueFactory(new PropertyValueFactory<String, String>(""));      
-        notesColumn.setCellValueFactory(new PropertyValueFactory<String, String>("notes"));
-       
+        estimatedColumn.setCellValueFactory(new PropertyValueFactory<String, String>(""));  
         
+        notesColumn.setCellValueFactory(new PropertyValueFactory<String, String>("notes"));
+        notesColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        notesColumn.setEditable(true); 
+        
+        
+        playerTable.setItems(dataManager.getDraft().getGuiPool());
+             
+        
+       
         RWColumn.setCellValueFactory(new PropertyValueFactory<Integer, String>("w"));
         HRSVColumn.setCellValueFactory(new PropertyValueFactory<Integer, String>("sv"));
         RBIKColumn.setCellValueFactory(new PropertyValueFactory<Double, String>("k"));
         SBERAColumn.setCellValueFactory(new PropertyValueFactory<Double, String>("ERA"));
         BAWHIPColumn.setCellValueFactory(new PropertyValueFactory<Double, String>("WHIP"));
-        
-        
+       
         
         RWColumn.setCellValueFactory(new PropertyValueFactory<>("r"));
         HRSVColumn.setCellValueFactory(new PropertyValueFactory<Integer, String>("hr"));
         RBIKColumn.setCellValueFactory(new PropertyValueFactory<Integer, String>("rbi"));
         SBERAColumn.setCellValueFactory(new PropertyValueFactory<Double, String>("sb"));        
         BAWHIPColumn.setCellValueFactory(new PropertyValueFactory<Double, String>("ba"));
+           
+        
+      
+       
+        
+     playerTable.getColumns().addAll(firstNameColumn,lastNameColumn,proTeamColumn, positionsColumn,yearOfBirthColumn
+        , RWColumn, HRSVColumn, RBIKColumn, SBERAColumn, BAWHIPColumn, estimatedColumn, notesColumn);   
         
         
-        
-        
-        playerTable.getColumns().addAll(firstNameColumn,lastNameColumn,proTeamColumn, positionsColumn,yearOfBirthColumn
-        , RWColumn, HRSVColumn, RBIKColumn, SBERAColumn, BAWHIPColumn, estimatedColumn, notesColumn);
-        
-        playerTable.setItems(dataManager.getDraft().getGuiPool());
         
         
         
@@ -723,6 +735,8 @@ public class WBDK_GUI implements DraftDataView{
             workspacePane.setCenter(MLBPane);
             ;
         });
+
+        
         
         
         
