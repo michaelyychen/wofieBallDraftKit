@@ -17,19 +17,18 @@ import javafx.collections.ObservableList;
 public class Draft {
     List<Hitter> hitterList;
     List<Pitcher> pitcherList;
-    List<Player> playerPool;
+    List<Player> dataPool;
     List<Team> teamList;
     List<MLBTeams> MLBList;
     
     ObservableList<Player> guiPool;
-    
+    int current;
     
     public Draft(List<Player> initPool){
     
 
-  //  playerPool = initPool;
-    teamList = new ArrayList();
-    MLBList= new ArrayList();
+    dataPool = new ArrayList(initPool);
+
     
     
     guiPool =FXCollections.observableArrayList(); 
@@ -50,13 +49,11 @@ public class Draft {
     }
 
 
-    public List<Player> getPlayerPool() {
-        return playerPool;
+    public List<Player> getDataPool() {
+        return dataPool;
     }
 
-    public void setPlayerPool(List<Player> playerPool) {
-        this.playerPool = playerPool;
-    }
+  
 
     public List<Team> getTeamList() {
         return teamList;
@@ -69,13 +66,36 @@ public class Draft {
     public List<MLBTeams> getMLBList() {
         return MLBList;
     }
-
+    
 
     public ObservableList<Player> getGuiPool() {
         return guiPool;
     }
-
-
+    
+    public Player getCurrentPlayer(){
+    
+        return guiPool.get(current);
+    
+    }
+    
+    public ObservableList<Player> handleSearchTF(String s) {
+        
+        guiPool.clear();
+        
+        String lowFirst; 
+        String lowLast;
+        for(int i = 0;  i<dataPool.size(); i ++){
+          
+            lowFirst =  dataPool.get(i).getFirstName().toLowerCase();
+            lowLast =  dataPool.get(i).getLastName().toLowerCase();
+        if(lowFirst.contains(s.toLowerCase()) ||lowLast.contains(s.toLowerCase())){
+        
+            guiPool.add(dataPool.get(i));
+        }
+        
+    }    
+  return guiPool;
+    }
     
     
 }

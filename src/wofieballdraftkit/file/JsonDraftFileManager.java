@@ -233,7 +233,7 @@ public class JsonDraftFileManager implements DraftFileManager {
         JsonObject json = loadJSONFile(filePath);
         ArrayList<Pitcher> items = new ArrayList();
         JsonArray jsonArray = json.getJsonArray(arrayName);
-        System.out.println(jsonArray.getJsonObject(0).toString());
+        
         for ( int i = 0; i < jsonArray.size();i++) {
         
         

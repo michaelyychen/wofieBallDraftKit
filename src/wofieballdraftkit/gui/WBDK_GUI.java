@@ -13,9 +13,13 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
+import javafx.event.EventType;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Rectangle2D;
@@ -33,6 +37,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Toggle;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.Tooltip;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
@@ -48,6 +54,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 import javax.swing.event.HyperlinkEvent;
 import properties_manager.PropertiesManager;
 import wofieballdraftkit.WBDK_PropertyType;
@@ -171,8 +178,9 @@ public class WBDK_GUI implements DraftDataView{
     TableColumn estimatedColumn;
     TableColumn notesColumn;    
 
-
+    TextField searchTF;
     
+    final ToggleGroup group = new ToggleGroup();
     // AND TABLE COLUMNS
     static final String COL_FIRST = "First Name";
     static final String COL_LAST = "Last Name";
@@ -524,12 +532,12 @@ public class WBDK_GUI implements DraftDataView{
         Label searchLabel = initLabel(WBDK_PropertyType.SEARCH_LABEL, CLASS_SUBHEADING_LABEL);
         
         
-        TextField tf = new TextField();
-        tf.setPrefColumnCount(100);
-        tf.setText("");
-        tf.setEditable(true);
+        searchTF = new TextField();
+        searchTF.setPrefColumnCount(100);
+        searchTF.setText("");
+        searchTF.setEditable(true);
         
-        searchHbox.getChildren().addAll(searchLabel,tf);
+        searchHbox.getChildren().addAll(searchLabel,searchTF);
         
         
         radioHBox.setPadding(new Insets(25,30,20,30));
@@ -549,7 +557,29 @@ public class WBDK_GUI implements DraftDataView{
          U = new RadioButton("U");
          P = new RadioButton("P");
         
+         all.setToggleGroup(group);
+         all.setSelected(true);
+         C.setToggleGroup(group);
+         first.setToggleGroup(group);
+         CI.setToggleGroup(group);
+         third.setToggleGroup(group);
+         second.setToggleGroup(group);
+         MI.setToggleGroup(group);
+         SS.setToggleGroup(group);
+         OF.setToggleGroup(group);
+         U.setToggleGroup(group);
+         P.setToggleGroup(group);
+         
+         
+         
+         
         radioHBox.getChildren().addAll(all,C,first,CI,third,second,MI,SS,OF,U,P);
+        
+        
+        
+        
+        
+        
         
         playerTable = new TableView();
         
@@ -579,8 +609,7 @@ public class WBDK_GUI implements DraftDataView{
         notesColumn.setCellFactory(TextFieldTableCell.forTableColumn());
         notesColumn.setEditable(true); 
         
-        
-        playerTable.setItems(dataManager.getDraft().getGuiPool());
+
              
         
        
@@ -590,21 +619,21 @@ public class WBDK_GUI implements DraftDataView{
         SBERAColumn.setCellValueFactory(new PropertyValueFactory<Double, String>("ERA"));
         BAWHIPColumn.setCellValueFactory(new PropertyValueFactory<Double, String>("WHIP"));
        
-        
-        RWColumn.setCellValueFactory(new PropertyValueFactory<>("r"));
+      
+        RWColumn.setCellValueFactory(new PropertyValueFactory<Integer, String>("r"));
         HRSVColumn.setCellValueFactory(new PropertyValueFactory<Integer, String>("hr"));
         RBIKColumn.setCellValueFactory(new PropertyValueFactory<Integer, String>("rbi"));
         SBERAColumn.setCellValueFactory(new PropertyValueFactory<Double, String>("sb"));        
         BAWHIPColumn.setCellValueFactory(new PropertyValueFactory<Double, String>("ba"));
-           
+        
         
       
        
         
-     playerTable.getColumns().addAll(firstNameColumn,lastNameColumn,proTeamColumn, positionsColumn,yearOfBirthColumn
+        playerTable.getColumns().addAll(firstNameColumn,lastNameColumn,proTeamColumn, positionsColumn,yearOfBirthColumn
         , RWColumn, HRSVColumn, RBIKColumn, SBERAColumn, BAWHIPColumn, estimatedColumn, notesColumn);   
         
-        
+       playerTable.setItems(dataManager.getDraft().getGuiPool());
         
         
         
@@ -714,9 +743,8 @@ public class WBDK_GUI implements DraftDataView{
         
         
         fantasyButton.setOnAction(e -> {
-            
-            
-            workspacePane.setCenter(fantasyPane);
+           
+        workspacePane.setCenter(fantasyPane);
 
         });
         playerButton.setOnAction(e -> {
@@ -733,35 +761,71 @@ public class WBDK_GUI implements DraftDataView{
         });
         MLBButton.setOnAction(e -> {
             workspacePane.setCenter(MLBPane);
-            ;
         });
-
         
+        all.setOnAction(e -> {
         
+        });
+        C.setOnAction(e -> {
         
+        });
+        first.setOnAction(e -> {
         
+        });
+        CI.setOnAction(e -> {
         
+        });
+        third.setOnAction(e -> {
         
+        });
+        second.setOnAction(e -> {
         
+        });
+        MI.setOnAction(e -> {
         
+        });
+        SS.setOnAction(e -> {
         
-
-        // THEN THE COURSE EDITING CONTROLS
-
-
-        // TEXT FIELDS HAVE A DIFFERENT WAY OF LISTENING FOR TEXT CHANGES
-//        registerTextFieldController(courseNumberTextField);
-
-
+        });
+        OF.setOnAction(e -> {
         
- 
-
+        });
+        U.setOnAction(e -> {
+        
+        });
+        P.setOnAction(e -> {
+        
+        });
+               
+        registerTextFieldController(searchTF);
+        registerToggleGroupController(group);
     }
+    
+    
+    
+    private void registerToggleGroupController(ToggleGroup group){
+        
+    group.selectedToggleProperty().addListener(new ChangeListener<Toggle>(){
+    public void changed(ObservableValue<? extends Toggle> ov,
+        Toggle old_toggle, Toggle new_toggle) {
+            if (group.getSelectedToggle() != null) {
+                
+                    System.out.println(group.getSelectedToggle());
+                    
+               
+               
+            }                
+        }
+});
 
+    
+    }
+    
     // REGISTER THE EVENT LISTENER FOR A TEXT FIELD
     private void registerTextFieldController(TextField textField) {
         textField.textProperty().addListener((observable, oldValue, newValue) -> {
-            draftController.handleDraftChangeRequest(this);
+            dataManager.getDraft().handleSearchTF(newValue);
+
         });
     }
     
@@ -854,6 +918,8 @@ public class WBDK_GUI implements DraftDataView{
         container.getChildren().add(dp);
         return dp;
     }
+
+
     
 //    // LOADS CHECKBOX DATA INTO A Course OBJECT REPRESENTING A CoursePage
 //    private void updatePageUsingCheckBox(CheckBox cB, Course course, CoursePage cP) {
