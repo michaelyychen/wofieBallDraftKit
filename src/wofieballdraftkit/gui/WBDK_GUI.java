@@ -64,6 +64,7 @@ import wofieballdraftkit.data.Draft;
 import wofieballdraftkit.data.DraftDataManager;
 import wofieballdraftkit.data.DraftDataView;
 import wofieballdraftkit.data.Pitcher;
+import wofieballdraftkit.data.Player;
 import wofieballdraftkit.file.DraftFileManager;
 import wofieballdraftkit.file.DraftSiteExporter;
 
@@ -777,10 +778,10 @@ public class WBDK_GUI implements DraftDataView{
     public void changed(ObservableValue<? extends Toggle> ov,
         Toggle old_toggle, Toggle new_toggle) {
             if (group.getSelectedToggle() != null) {
+              //  System.out.println(new_toggle.toString().);
+               // System.out.println(new_toggle.toString().substring(46, new_toggle.toString().length()-1));
+                handleToggleController(new_toggle);
                 
-                
-                
-                dataManager.getDraft().handleToggleController(new_toggle.toString().substring(46, new_toggle.toString().length()-1));
             }                
         }
 });
@@ -890,7 +891,97 @@ public class WBDK_GUI implements DraftDataView{
     public ToggleGroup getToggle(){
     return group;
     }
-    
+    public ObservableList<Player> handleToggleController(Toggle selection){
+        String s="";
+        String s2 = "";
+        ObservableList<Player> temp = dataManager.getDraft().getGuiPool();
+        ObservableList<Player> data = FXCollections.observableArrayList(); 
+        data.addAll(dataManager.getDraft().getDataPool());
+        temp.clear();
+        
+        if(selection.equals(all)){
+        temp.addAll(data);
+        RWColumn.setText(COL_RW);
+        HRSVColumn.setText(COL_HRSV);
+        RBIKColumn.setText(COL_RBIK);
+        SBERAColumn.setText(COL_SBERA);
+        BAWHIPColumn.setText(COL_BAWHIP);
+        }
+        
+        else if(selection.equals(P)){
+   
+            for(int i = 0;  i<data.size(); i ++){
+            if(data.get(i).getPosition().contains("P")){
+            temp.add(data.get(i));
+                        }
+                }
+        RWColumn.setText("W");
+        HRSVColumn.setText("SV");
+        RBIKColumn.setText("K");
+        SBERAColumn.setText("ERA");
+        BAWHIPColumn.setText("WHIP");
+            
+            }
+        
+        else {
+        
+        RWColumn.setText("R");
+        HRSVColumn.setText("HR");
+        RBIKColumn.setText("RBI");
+        SBERAColumn.setText("SB");
+        BAWHIPColumn.setText("BA");
+            
+            
+            
+            
+            if(selection.equals(C)){ s ="C"; }
+            else if(selection.equals(first)){ s ="1B"; }
+            else if(selection.equals(third)){ s ="3B"; }
+            else if(selection.equals(second)){ s ="2B"; }
+            else if(selection.equals(SS)){ s ="SS"; }
+            else if(selection.equals(OF)){ s ="OF"; }
+                       
+            if(selection.equals(U)){
+            for(int i = 0;  i<data.size(); i ++){
+            if(!data.get(i).getPosition().contains("P")){
+            temp.add(data.get(i));
+                }   
+            }
+           }
+            else if (selection.equals(CI)||selection.equals(MI)) {
+            if(selection.equals(CI)){ s="1B"; s2="3B";  }
+            else{s="2B"; s2="SS";}
+            for(int i = 0;  i<data.size(); i ++){
+            if(data.get(i).getPosition().contains(s) 
+                    ||data.get(i).getPosition().contains(s2) ){
+            temp.add(data.get(i));
+                     }   
+                 }
+            }
+            else {
+             
+            for(int i = 0;  i<data.size(); i ++){
+            if(data.get(i).getPosition().contains(s)){
+            temp.add(data.get(i));
+                }   
+            }
+            
+            
+            
+            }
+            
+        }
+        
+            
+            
+            
+                        
+            
+        
+          
+      
+      return temp;
+    }    
 //    // LOADS CHECKBOX DATA INTO A Course OBJECT REPRESENTING A CoursePage
 //    private void updatePageUsingCheckBox(CheckBox cB, Course course, CoursePage cP) {
 //        if (cB.isSelected()) {
@@ -900,5 +991,5 @@ public class WBDK_GUI implements DraftDataView{
 //        }
 //    }    
 
-
+    
 }
