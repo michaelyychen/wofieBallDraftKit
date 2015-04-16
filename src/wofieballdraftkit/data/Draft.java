@@ -34,6 +34,7 @@ public class Draft {
     
     guiPool =FXCollections.observableArrayList(); 
     guiPool.addAll(initPool);
+    
     }
     
     

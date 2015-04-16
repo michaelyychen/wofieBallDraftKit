@@ -6,6 +6,9 @@
 package wofieballdraftkit.data;
 
 import java.util.ArrayList;
+import java.util.List;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import wofieballdraftkit.file.DraftFileManager;
 
 
@@ -18,7 +21,9 @@ public class DraftDataManager {
     
    static ArrayList<Player> playerPool = new ArrayList();
 
-    
+
+   static ObservableList<Hitter> HList ;
+   static ObservableList<Pitcher> PList;
     Draft draft;
     DraftDataView view;
     DraftFileManager fileManager;
@@ -41,6 +46,14 @@ public class DraftDataManager {
          playerPool.add((Player)h.get(i));
         }    
         
+        
+        HList = FXCollections.observableArrayList();
+        HList.addAll(h);
+        
+        PList = FXCollections.observableArrayList();
+        PList.addAll(p);
+        
+        
         draft = new Draft(playerPool);
         
     }
@@ -48,6 +61,9 @@ public class DraftDataManager {
     public Draft getDraft(){
         return draft;
     }
+    
+    
+    
     
     public DraftFileManager getFileManager() {
        return fileManager;
@@ -69,6 +85,14 @@ public class DraftDataManager {
 
     public void setPlayerList(ArrayList<Player> playerPool) {
         this.playerPool = playerPool;
+    }
+
+    public  ObservableList<Hitter> getHList() {
+        return HList;
+    }
+
+    public  ObservableList<Pitcher> getPList() {
+        return PList;
     }
 
 }

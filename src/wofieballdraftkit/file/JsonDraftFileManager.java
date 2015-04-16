@@ -200,9 +200,9 @@ public class JsonDraftFileManager implements DraftFileManager {
         double BA = Double.valueOf(jsonArray.getJsonObject(i).getString(JSON_H)) / 
                             Double.valueOf(jsonArray.getJsonObject(i).getString(JSON_AB));
                
-        a.setBA(BA);
+        a.setBA(      ((double)((int)(BA*100)))/100  );
 
-        a.setQP(jsonArray.getJsonObject(i).getString(JSON_QP));
+        a.setPosition(jsonArray.getJsonObject(i).getString(JSON_QP));
         a.setR(Integer.valueOf(jsonArray.getJsonObject(i).getString(JSON_R)));
         a.setH(Integer.valueOf(jsonArray.getJsonObject(i).getString(JSON_H)));
         a.setHR(Integer.valueOf(jsonArray.getJsonObject(i).getString(JSON_HR)));
@@ -249,9 +249,10 @@ public class JsonDraftFileManager implements DraftFileManager {
                         Double.valueOf(jsonArray.getJsonObject(i).getString(JSON_H))/
                         Double.valueOf(jsonArray.getJsonObject(i).getString(JSON_IP))
                 );
-        a.setERA(ERA);
+        a.setERA(      ((double)((int)(ERA*100)))/100  );
+       
         a.setW(Integer.valueOf(jsonArray.getJsonObject(i).getString(JSON_W)));
-        a.setWHIP(WHIP);
+        a.setWHIP(      ((double)((int)(WHIP*100)))/100  );
         a.setIP(Double.valueOf(jsonArray.getJsonObject(i).getString(JSON_IP)));
         a.setH(Integer.valueOf(jsonArray.getJsonObject(i).getString(JSON_H)));
         a.setK(Integer.valueOf(jsonArray.getJsonObject(i).getString(JSON_K)));
@@ -259,7 +260,7 @@ public class JsonDraftFileManager implements DraftFileManager {
         a.setNotes(jsonArray.getJsonObject(i).getString(JSON_NOTES));
         a.setBirth(jsonArray.getJsonObject(i).getString(JSON_BIRTH));
         a.setNation(jsonArray.getJsonObject(i).getString(JSON_NATION));
-           
+        a.setPosition("P");
             items.add(a);
          
         }

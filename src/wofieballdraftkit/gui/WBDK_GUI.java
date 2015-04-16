@@ -564,9 +564,27 @@ public class WBDK_GUI implements DraftDataView{
         estimatedColumn.setPrefWidth(100);
            
         firstNameColumn.setCellValueFactory(new PropertyValueFactory<String, String>("firstname"));
+        lastNameColumn.setCellValueFactory(new PropertyValueFactory<String, String>("lastname"));
+        proTeamColumn.setCellValueFactory(new PropertyValueFactory<String, String>("team"));
+        positionsColumn.setCellValueFactory(new PropertyValueFactory<String, String>("position"));
+        yearOfBirthColumn.setCellValueFactory(new PropertyValueFactory<String, String>("birth"));
+        estimatedColumn.setCellValueFactory(new PropertyValueFactory<String, String>(""));      
+        notesColumn.setCellValueFactory(new PropertyValueFactory<String, String>("notes"));
+       
+        
+        RWColumn.setCellValueFactory(new PropertyValueFactory<Integer, String>("w"));
+        HRSVColumn.setCellValueFactory(new PropertyValueFactory<Integer, String>("sv"));
+        RBIKColumn.setCellValueFactory(new PropertyValueFactory<Double, String>("k"));
+        SBERAColumn.setCellValueFactory(new PropertyValueFactory<Double, String>("ERA"));
+        BAWHIPColumn.setCellValueFactory(new PropertyValueFactory<Double, String>("WHIP"));
         
         
-     
+        
+        RWColumn.setCellValueFactory(new PropertyValueFactory<>("r"));
+        HRSVColumn.setCellValueFactory(new PropertyValueFactory<Integer, String>("hr"));
+        RBIKColumn.setCellValueFactory(new PropertyValueFactory<Integer, String>("rbi"));
+        SBERAColumn.setCellValueFactory(new PropertyValueFactory<Double, String>("sb"));        
+        BAWHIPColumn.setCellValueFactory(new PropertyValueFactory<Double, String>("ba"));
         
         
         
@@ -575,7 +593,11 @@ public class WBDK_GUI implements DraftDataView{
         , RWColumn, HRSVColumn, RBIKColumn, SBERAColumn, BAWHIPColumn, estimatedColumn, notesColumn);
         
         playerTable.setItems(dataManager.getDraft().getGuiPool());
-     
+        
+        
+        
+        
+        playerTable.setPrefHeight(1000);
         playerPane.getChildren().add(initLabel(WBDK_PropertyType.PLAYERS_LABEL, CLASS_HEADING_LABEL));
         playerPane.getChildren().add(searchHbox);    
         playerPane.getChildren().add(radioHBox);
