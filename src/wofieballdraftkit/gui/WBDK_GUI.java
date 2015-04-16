@@ -561,10 +561,12 @@ public class WBDK_GUI implements DraftDataView{
         estimatedColumn = new TableColumn(COL_ESTIMATED);
         notesColumn = new TableColumn(COL_NOTES);    
         
-        
-        
-        
         estimatedColumn.setPrefWidth(100);
+           
+        firstNameColumn.setCellValueFactory(new PropertyValueFactory<String, String>("firstname"));
+        
+        
+     
         
         
         
@@ -572,7 +574,7 @@ public class WBDK_GUI implements DraftDataView{
         playerTable.getColumns().addAll(firstNameColumn,lastNameColumn,proTeamColumn, positionsColumn,yearOfBirthColumn
         , RWColumn, HRSVColumn, RBIKColumn, SBERAColumn, BAWHIPColumn, estimatedColumn, notesColumn);
         
-        
+        playerTable.setItems(dataManager.getDraft().getGuiPool());
      
         playerPane.getChildren().add(initLabel(WBDK_PropertyType.PLAYERS_LABEL, CLASS_HEADING_LABEL));
         playerPane.getChildren().add(searchHbox);    

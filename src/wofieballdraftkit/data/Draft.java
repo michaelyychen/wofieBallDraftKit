@@ -26,12 +26,14 @@ public class Draft {
     
     public Draft(List<Player> initPool){
     
-    hitterList =new ArrayList();
-    pitcherList = new ArrayList();
-    playerPool = initPool;
+
+  //  playerPool = initPool;
     teamList = new ArrayList();
     MLBList= new ArrayList();
-    guiPool =FXCollections.observableArrayList();       
+    
+    
+    guiPool =FXCollections.observableArrayList(); 
+    guiPool.addAll(initPool);
     }
     
     

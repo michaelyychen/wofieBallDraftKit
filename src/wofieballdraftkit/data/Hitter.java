@@ -5,87 +5,130 @@
  */
 package wofieballdraftkit.data;
 
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+
+
 /**
  *
  * @author MiChAeL
  */
 public class Hitter extends Player{
 
-    int r;
-    int hr;
-    int h;
+    final IntegerProperty r;
+    final IntegerProperty hr;
+    final IntegerProperty h;
+    final IntegerProperty sb;
 
-
-    double rbit;
-    int sb;
-    double ba;
-    String qp;
-
-    String lastName;
-    String firstName;  
-
-
+    final DoubleProperty rbi;
+    final DoubleProperty ba;
     
-    public Hitter(String ln, String fn){
+    final StringProperty qp;
+    
+    public static final String DEFAULT_NAME = "";
+    public static final int DEFAULT_NUM = 0 ;
+    
+    public Hitter(String initFirstname, String initLastname){
    super();
-   lastName = ln;
-   firstName = fn;
+   
+   this.firstname.set(initFirstname);
+   this.lastname.set(initLastname);
+   
+   r = new SimpleIntegerProperty(DEFAULT_NUM);
+   hr = new SimpleIntegerProperty(DEFAULT_NUM);
+   h = new SimpleIntegerProperty(DEFAULT_NUM);
+   sb = new SimpleIntegerProperty(DEFAULT_NUM);
+   
+   rbi = new SimpleDoubleProperty(DEFAULT_NUM);
+   ba = new SimpleDoubleProperty(DEFAULT_NUM);   
+   
+   qp = new SimpleStringProperty(DEFAULT_NAME);
+   
+   
    }
+    public String getQP() {
+        return qp.get();
+    }
+
+    public void setQP(String initQP) {
+        qp.set(initQP);
+    }
     
+    public StringProperty qpProperty(){
+    return qp;
+    } 
+    public double getRBI() {
+        return rbi.get();
+    }
 
+    public void setRBI(double initRBI) {
+        rbi.set(initRBI);
+    }
+    
+    public DoubleProperty rbiProperty(){
+    return rbi;
+    }     
+    public double getBA() {
+        return ba.get();
+    }
 
+    public void setBA(double initBA) {
+        ba.set(initBA);
+    }
+    
+    public DoubleProperty baProperty(){
+    return ba;
+    }
     public int getR() {
-        return r;
+        return r.get();
     }
 
-    public void setR(int r) {
-        this.r = r;
+    public void setR(int initR) {
+        r.set(initR);
     }
-
-    public int getHr() {
-        return hr;
-    }
-
-    public void setHr(int hr) {
-        this.hr = hr;
-    }
-
-    public double getRbi() {
-        return rbit;
-    }
-
-    public void setRbi(double rbit) {
-        this.rbit = rbit;
-    }
-
-    public int getSb() {
-        return sb;
-    }
-
-    public void setSb(int sb) {
-        this.sb = sb;
-    }
-
-    public double getBa() {
-        return ba;
-    }
-
-    public void setBa(double ba) {
-        this.ba = ba;
-    }
-    public String getQp() {
-        return qp;
-    }    
     
-    public void setQp(String qp) {
-        this.qp = qp;
-    }   
-    public int getH() {
-        return h;
+    public IntegerProperty rProperty(){
+    return r;
+    }
+    public int getHR() {
+        return hr.get();
     }
 
-    public void setH(int h) {
-        this.h = h;
-    }    
+    public void setHR(int initHR) {
+        hr.set(initHR);
+    }
+    
+    public IntegerProperty hrProperty(){
+    return hr;
+    }
+    public int getH() {
+        return h.get();
+    }
+
+    public void setH(int initH) {
+        h.set(initH);
+    }
+    
+    public IntegerProperty hProperty(){
+    return h;
+    }
+    public int getSB() {
+        return sb.get();
+    }
+
+    public void setSB(int initSB) {
+        sb.set(initSB);
+    }
+    
+    public IntegerProperty sbProperty(){
+    return sb;
+    }      
+
+
+    
 
 }

@@ -200,16 +200,16 @@ public class JsonDraftFileManager implements DraftFileManager {
         double BA = Double.valueOf(jsonArray.getJsonObject(i).getString(JSON_H)) / 
                             Double.valueOf(jsonArray.getJsonObject(i).getString(JSON_AB));
                
-        a.setBa(BA);
+        a.setBA(BA);
 
-        a.setQp(jsonArray.getJsonObject(i).getString(JSON_QP));
+        a.setQP(jsonArray.getJsonObject(i).getString(JSON_QP));
         a.setR(Integer.valueOf(jsonArray.getJsonObject(i).getString(JSON_R)));
         a.setH(Integer.valueOf(jsonArray.getJsonObject(i).getString(JSON_H)));
-        a.setHr(Integer.valueOf(jsonArray.getJsonObject(i).getString(JSON_HR)));
-        a.setRbi(Integer.valueOf(jsonArray.getJsonObject(i).getString(JSON_RBI)));
-        a.setSb(Integer.valueOf(jsonArray.getJsonObject(i).getString(JSON_SB)));
+        a.setHR(Integer.valueOf(jsonArray.getJsonObject(i).getString(JSON_HR)));
+        a.setRBI(Integer.valueOf(jsonArray.getJsonObject(i).getString(JSON_RBI)));
+        a.setSB(Integer.valueOf(jsonArray.getJsonObject(i).getString(JSON_SB)));
         a.setNotes(jsonArray.getJsonObject(i).getString(JSON_NOTES));
-        a.setBirth(Integer.valueOf(jsonArray.getJsonObject(i).getString(JSON_BIRTH)));
+        a.setBirth(jsonArray.getJsonObject(i).getString(JSON_BIRTH));
         a.setNation(jsonArray.getJsonObject(i).getString(JSON_NATION));
            
             items.add(a);
@@ -255,9 +255,9 @@ public class JsonDraftFileManager implements DraftFileManager {
         a.setIP(Double.valueOf(jsonArray.getJsonObject(i).getString(JSON_IP)));
         a.setH(Integer.valueOf(jsonArray.getJsonObject(i).getString(JSON_H)));
         a.setK(Integer.valueOf(jsonArray.getJsonObject(i).getString(JSON_K)));
-        a.setSv(Integer.valueOf(jsonArray.getJsonObject(i).getString(JSON_SV)));
+        a.setSV(Integer.valueOf(jsonArray.getJsonObject(i).getString(JSON_SV)));
         a.setNotes(jsonArray.getJsonObject(i).getString(JSON_NOTES));
-        a.setBirth(Integer.valueOf(jsonArray.getJsonObject(i).getString(JSON_BIRTH)));
+        a.setBirth(jsonArray.getJsonObject(i).getString(JSON_BIRTH));
         a.setNation(jsonArray.getJsonObject(i).getString(JSON_NATION));
            
             items.add(a);

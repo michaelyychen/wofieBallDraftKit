@@ -5,90 +5,120 @@
  */
 package wofieballdraftkit.data;
 
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+
 /**
  *
  * @author MiChAeL
  */
 public class Pitcher extends Player {
-   int w;
-   int k;
-   int sv;
+  final IntegerProperty w;
+  final IntegerProperty k;
+  final IntegerProperty sv;
+  final IntegerProperty h;
 
- 
-   int h;
-   double IP;
+  final DoubleProperty IP;
+  final DoubleProperty ERA;
+  final DoubleProperty WHIP;
 
-
-   double ERA;
-   double WHIP;
    
-    String lastName;
-    String firstName; 
+   public static final int DEFAULT_NUM = 0 ;
    
-   
-   
-   public Pitcher(String ln, String fn){
+   public Pitcher(String initFirstname, String initLastname){
    super();
-   lastName = ln;
-   firstName = fn;
+   
+   this.firstname.set(initFirstname);
+   this.lastname.set(initLastname);
+   
+   w = new SimpleIntegerProperty(DEFAULT_NUM);
+   k = new SimpleIntegerProperty(DEFAULT_NUM);
+   sv = new SimpleIntegerProperty(DEFAULT_NUM);
+   h = new SimpleIntegerProperty(DEFAULT_NUM);
+   
+   IP = new SimpleDoubleProperty(DEFAULT_NUM);
+   ERA = new SimpleDoubleProperty(DEFAULT_NUM);
+   WHIP = new SimpleDoubleProperty(DEFAULT_NUM);
+ 
    }
-   
-    public double getIP() {
-        return IP;
-    }
-
-    public void setIP(double IP) {
-        this.IP = IP;
-    }
-   
-   
-   
     public int getW() {
-        return w;
+        return w.get();
     }
 
-    public void setW(int w) {
-        this.w = w;
+    public void setW(int initW) {
+        w.set(initW);
     }
-
+    
+    public IntegerProperty wProperty(){
+    return w;
+    }
+    
     public int getK() {
-        return k;
+        return k.get();
     }
 
-    public void setK(int k) {
-        this.k = k;
+    public void setK(int initK) {
+        k.set(initK);
+    }
+    
+    public IntegerProperty kProperty(){
+    return k;
+    }      
+    public int getSV() {
+        return sv.get();
     }
 
-    public int getSv() {
-        return sv;
+    public void setSV(int initSV) {
+        sv.set(initSV);
+    }
+    
+    public IntegerProperty svProperty(){
+    return sv;
+    }     
+    public int getH() {
+        return h.get();
     }
 
-    public void setSv(int sv) {
-        this.sv = sv;
+    public void setH(int initH) {
+        h.set(initH);
+    }
+    
+    public IntegerProperty hProperty(){
+    return h;
+    }      
+    public double getIP() {
+        return IP.get();
     }
 
+    public void setIP(double initIP) {
+        IP.set(initIP);
+    }
+    
+    public DoubleProperty ipProperty(){
+    return IP;
+    }     
     public double getERA() {
-        return ERA;
+        return ERA.get();
     }
 
-    public void setERA(double ERA) {
-        this.ERA = ERA;
+    public void setERA(double initERA) {
+        ERA.set(initERA);
     }
-
+    
+    public DoubleProperty eraProperty(){
+    return ERA;
+    }   
     public double getWHIP() {
-        return WHIP;
+        return WHIP.get();
     }
 
-    public void setWHIP(double WHIP) {
-        this.WHIP = WHIP;
+    public void setWHIP(double initWHIP) {
+        WHIP.set(initWHIP);
     }
-   public int getH() {
-        return h;
-    }
-
-    public void setH(int h) {
-        this.h = h;
-    }
-   
-   
+    
+    public DoubleProperty whipProperty(){
+    return WHIP;
+    }      
 }
