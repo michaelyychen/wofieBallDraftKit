@@ -23,6 +23,9 @@ public class Pitcher extends Player {
   final DoubleProperty IP;
   final DoubleProperty ERA;
   final DoubleProperty WHIP;
+  
+  
+
 
    
    public static final int DEFAULT_NUM = 0 ;
@@ -48,6 +51,7 @@ public class Pitcher extends Player {
     }
 
     public void setW(int initW) {
+        this.rw.setValue(initW);
         w.set(initW);
     }
     
@@ -60,6 +64,7 @@ public class Pitcher extends Player {
     }
 
     public void setK(int initK) {
+        this.rbik.set(initK);
         k.set(initK);
     }
     
@@ -71,6 +76,7 @@ public class Pitcher extends Player {
     }
 
     public void setSV(int initSV) {
+        this.hrsv.set(initSV);
         sv.set(initSV);
     }
     
@@ -104,6 +110,7 @@ public class Pitcher extends Player {
     }
 
     public void setERA(double initERA) {
+        this.sbera.set(initERA);
         ERA.set(initERA);
     }
     
@@ -115,6 +122,7 @@ public class Pitcher extends Player {
     }
 
     public void setWHIP(double initWHIP) {
+        this.bawhip.set(initWHIP);
         WHIP.set(initWHIP);
     }
     

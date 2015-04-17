@@ -66,6 +66,7 @@ public class Hitter extends Player{
     }
 
     public void setRBI(double initRBI) {
+        this.rbik.set(initRBI);
         rbi.set(initRBI);
     }
     
@@ -77,6 +78,7 @@ public class Hitter extends Player{
     }
 
     public void setBA(double initBA) {
+        this.bawhip.set(initBA);
         ba.set(initBA);
     }
     
@@ -88,6 +90,7 @@ public class Hitter extends Player{
     }
 
     public void setR(int initR) {
+        this.rw.set(initR);
         r.set(initR);
     }
     
@@ -99,6 +102,7 @@ public class Hitter extends Player{
     }
 
     public void setHR(int initHR) {
+        this.hrsv.set(initHR);
         hr.set(initHR);
     }
     
@@ -120,7 +124,9 @@ public class Hitter extends Player{
         return sb.get();
     }
 
-    public void setSB(int initSB) {
+    public void setSB(int initSB) 
+    {   
+        this.setSBERA(initSB);
         sb.set(initSB);
     }
     

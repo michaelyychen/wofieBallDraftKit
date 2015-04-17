@@ -8,11 +8,7 @@ package wofieballdraftkit.gui;
 import static wofieballdraftkit.WBDK_StartUpConstants.*;
 import java.io.IOException;
 import java.net.URL;
-import java.time.DayOfWeek;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.Collections;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -542,7 +538,7 @@ public class WBDK_GUI implements DraftDataView{
         
         
         radioHBox.setPadding(new Insets(25,30,20,30));
-//        radioHBox.setVgap(5);
+
         radioHBox.setHgap(10);
         radioHBox.setStyle("-fx-background-color: #FFB6C1; -fx-border-color: #FF69B4;");
      
@@ -573,7 +569,6 @@ public class WBDK_GUI implements DraftDataView{
          
          
          
-         
         radioHBox.getChildren().addAll(all,C,first,CI,third,second,MI,SS,OF,U,P);
         
         
@@ -596,7 +591,7 @@ public class WBDK_GUI implements DraftDataView{
         BAWHIPColumn = new TableColumn(COL_BAWHIP);
         estimatedColumn = new TableColumn(COL_ESTIMATED);
         notesColumn = new TableColumn(COL_NOTES);  
-        
+
         estimatedColumn.setPrefWidth(100);
            
         firstNameColumn.setCellValueFactory(new PropertyValueFactory<String, String>("firstname"));
@@ -608,44 +603,41 @@ public class WBDK_GUI implements DraftDataView{
         
         notesColumn.setCellValueFactory(new PropertyValueFactory<String, String>("notes"));
         notesColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        
+        playerTable.setEditable(true);
         notesColumn.setEditable(true); 
         
 
              
         
        
-        RWColumn.setCellValueFactory(new PropertyValueFactory<Integer, String>("w"));
-        HRSVColumn.setCellValueFactory(new PropertyValueFactory<Integer, String>("sv"));
-        RBIKColumn.setCellValueFactory(new PropertyValueFactory<Double, String>("k"));
-        SBERAColumn.setCellValueFactory(new PropertyValueFactory<Double, String>("ERA"));
-        BAWHIPColumn.setCellValueFactory(new PropertyValueFactory<Double, String>("WHIP"));
+        RWColumn.setCellValueFactory(new PropertyValueFactory<Integer, String>("rw"));
+        HRSVColumn.setCellValueFactory(new PropertyValueFactory<Integer, String>("hrsv"));
+        RBIKColumn.setCellValueFactory(new PropertyValueFactory<Double, String>("rbik"));
+        SBERAColumn.setCellValueFactory(new PropertyValueFactory<Double, String>("sbera"));
+        BAWHIPColumn.setCellValueFactory(new PropertyValueFactory<Double, String>("bawhip"));
        
       
-        RWColumn.setCellValueFactory(new PropertyValueFactory<Integer, String>("r"));
-        HRSVColumn.setCellValueFactory(new PropertyValueFactory<Integer, String>("hr"));
-        RBIKColumn.setCellValueFactory(new PropertyValueFactory<Integer, String>("rbi"));
-        SBERAColumn.setCellValueFactory(new PropertyValueFactory<Double, String>("sb"));        
-        BAWHIPColumn.setCellValueFactory(new PropertyValueFactory<Double, String>("ba"));
-        
-        
-      
+ 
        
         
         playerTable.getColumns().addAll(firstNameColumn,lastNameColumn,proTeamColumn, positionsColumn,yearOfBirthColumn
         , RWColumn, HRSVColumn, RBIKColumn, SBERAColumn, BAWHIPColumn, estimatedColumn, notesColumn);   
         
-       playerTable.setItems(dataManager.getDraft().getGuiPool());
+        playerTable.setItems(dataManager.getDraft().getGuiPool());
         
-        
-        
+       // firstNameColumn.setSortType(TableColumn.SortType.ASCENDING);
+        FXCollections.sort(dataManager.getDraft().getGuiPool(), new NameComparator());
         
         playerTable.setPrefHeight(1000);
+        
         playerPane.getChildren().add(initLabel(WBDK_PropertyType.PLAYERS_LABEL, CLASS_HEADING_LABEL));
         playerPane.getChildren().add(searchHbox);    
         playerPane.getChildren().add(radioHBox);
         playerPane.getChildren().add(playerTable);
         playerPane.setStyle("-fx-background-color: GhostWhite");
         playerPane.setSpacing(10);
+        
      //   playerPane.setCenter(a);
          
     }
@@ -765,9 +757,10 @@ public class WBDK_GUI implements DraftDataView{
         });
         
 
-               
+        registerToggleGroupController(group);     
         registerTextFieldController(searchTF);
-        registerToggleGroupController(group);
+        
+        
     }
     
     
@@ -780,7 +773,8 @@ public class WBDK_GUI implements DraftDataView{
             if (group.getSelectedToggle() != null) {
               //  System.out.println(new_toggle.toString().);
                // System.out.println(new_toggle.toString().substring(46, new_toggle.toString().length()-1));
-                handleToggleController(new_toggle);
+              
+                dataManager.getDraft().addSearchPool(handleToggleController(new_toggle) );
                 
             }                
         }
@@ -891,6 +885,7 @@ public class WBDK_GUI implements DraftDataView{
     public ToggleGroup getToggle(){
     return group;
     }
+    
     public ObservableList<Player> handleToggleController(Toggle selection){
         String s="";
         String s2 = "";
@@ -971,13 +966,6 @@ public class WBDK_GUI implements DraftDataView{
             }
             
         }
-        
-            
-            
-            
-                        
-            
-        
           
       
       return temp;

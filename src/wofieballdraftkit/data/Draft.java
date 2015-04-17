@@ -24,6 +24,7 @@ public class Draft {
     List<MLBTeams> MLBList;
     WBDK_GUI gui;
     ObservableList<Player> guiPool;
+    ObservableList<Player> searchPool;
     int current;
     
     public Draft(List<Player> initPool){
@@ -32,7 +33,8 @@ public class Draft {
     dataPool = new ArrayList(initPool);
 
     
-    
+    searchPool =FXCollections.observableArrayList(); 
+    searchPool.addAll(initPool);
     guiPool =FXCollections.observableArrayList(); 
     guiPool.addAll(initPool);
     
@@ -74,11 +76,12 @@ public class Draft {
         return guiPool;
     }
     
-    public Player getCurrentPlayer(){
+    public void addSearchPool(ObservableList<Player> t) {
+        searchPool.clear();
+        searchPool.addAll(t);
+    }    
     
-        return guiPool.get(current);
-    
-    }
+
     
     public ObservableList<Player> handleSearchTF(String s) {
         
@@ -86,13 +89,13 @@ public class Draft {
         
         String lowFirst; 
         String lowLast;
-        for(int i = 0;  i<dataPool.size(); i ++){
+        for(int i = 0;  i<searchPool.size(); i ++){
           
-            lowFirst =  dataPool.get(i).getFirstName().toLowerCase();
-            lowLast =  dataPool.get(i).getLastName().toLowerCase();
+            lowFirst =  searchPool.get(i).getFirstName().toLowerCase();
+            lowLast =  searchPool.get(i).getLastName().toLowerCase();
         if(lowFirst.contains(s.toLowerCase()) ||lowLast.contains(s.toLowerCase())){
         
-            guiPool.add(dataPool.get(i));
+            guiPool.add(searchPool.get(i));
         }
         
     }    
