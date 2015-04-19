@@ -160,7 +160,7 @@ public class WBDK_GUI implements DraftDataView{
     RadioButton P ;
     
     
-    
+    String tf ;
     TableView playerTable;
     TableColumn firstNameColumn;
     TableColumn lastNameColumn;
@@ -176,7 +176,7 @@ public class WBDK_GUI implements DraftDataView{
     TableColumn notesColumn;    
 
     TextField searchTF;
-    
+    String tfo;
     final ToggleGroup group = new ToggleGroup();
     // AND TABLE COLUMNS
     static final String COL_FIRST = "First Name";
@@ -786,8 +786,14 @@ public class WBDK_GUI implements DraftDataView{
     // REGISTER THE EVENT LISTENER FOR A TEXT FIELD
     private void registerTextFieldController(TextField textField) {
         textField.textProperty().addListener((observable, oldValue, newValue) -> {
-            dataManager.getDraft().handleSearchTF(newValue);
+         //   dataManager.getDraft().addSearchPool( dataManager.getDraft().handleSearchTF(newValue) );
+           // ObservableList<Player> t = 
+            
+            handleSearchTF(newValue);
+            tf = newValue;
+            tfo = oldValue;
 
+         //   dataManager.getDraft().addTextPool(t);
         });
     }
     
@@ -839,16 +845,7 @@ public class WBDK_GUI implements DraftDataView{
         container.add(button, col, row, colSpan, rowSpan);
         
     }    
-    
-    
-    
 
-    // LOAD THE COMBO BOX TO HOLD Course SUBJECTS
-//    private void loadSubjectComboBox(ArrayList<String> subjects) {
-//        for (String s : subjects) {
-//            courseSubjectComboBox.getItems().add(s);
-//        }
-//    }
 
     // INIT A TEXT FIELD AND PUT IT IN A GridPane
     private TextField initGridTextField(GridPane container, int size, String initText, boolean editable, int col, int row, int colSpan, int rowSpan) {
@@ -889,9 +886,18 @@ public class WBDK_GUI implements DraftDataView{
     public ObservableList<Player> handleToggleController(Toggle selection){
         String s="";
         String s2 = "";
+        String k;
         ObservableList<Player> temp = dataManager.getDraft().getGuiPool();
-        ObservableList<Player> data = FXCollections.observableArrayList(); 
-        data.addAll(dataManager.getDraft().getDataPool());
+        
+        
+        ObservableList<Player> data = FXCollections.observableArrayList(dataManager.getDraft().getDataPool()); 
+        ObservableList<Player> text = FXCollections.observableArrayList(dataManager.getDraft().getGuiPool()); 
+        
+        if(searchTF.textProperty().getValue().equals("")){
+        text = data;
+        }
+
+      
         temp.clear();
         
         if(selection.equals(all)){
@@ -905,9 +911,9 @@ public class WBDK_GUI implements DraftDataView{
         
         else if(selection.equals(P)){
    
-            for(int i = 0;  i<data.size(); i ++){
-            if(data.get(i).getPosition().contains("P")){
-            temp.add(data.get(i));
+            for(int i = 0;  i<text.size(); i ++){
+            if(text.get(i).getPosition().contains("P")){
+            temp.add(text.get(i));
                         }
                 }
         RWColumn.setText("W");
@@ -937,39 +943,63 @@ public class WBDK_GUI implements DraftDataView{
             else if(selection.equals(OF)){ s ="OF"; }
                        
             if(selection.equals(U)){
-            for(int i = 0;  i<data.size(); i ++){
-            if(!data.get(i).getPosition().contains("P")){
-            temp.add(data.get(i));
+            for(int i = 0;  i<text.size(); i ++){
+            if(!text.get(i).getPosition().contains("P")){
+            temp.add(text.get(i));
                 }   
             }
            }
             else if (selection.equals(CI)||selection.equals(MI)) {
             if(selection.equals(CI)){ s="1B"; s2="3B";  }
             else{s="2B"; s2="SS";}
-            for(int i = 0;  i<data.size(); i ++){
-            if(data.get(i).getPosition().contains(s) 
-                    ||data.get(i).getPosition().contains(s2) ){
-            temp.add(data.get(i));
+            for(int i = 0;  i<text.size(); i ++){
+            if(text.get(i).getPosition().contains(s) 
+                    ||text.get(i).getPosition().contains(s2) ){
+            temp.add(text.get(i));
                      }   
                  }
             }
             else {
              
-            for(int i = 0;  i<data.size(); i ++){
-            if(data.get(i).getPosition().contains(s)){
-            temp.add(data.get(i));
+            for(int i = 0;  i<text.size(); i ++){
+            if(text.get(i).getPosition().contains(s)){
+            temp.add(text.get(i));
                 }   
             }
-            
-            
-            
             }
             
         }
           
       
       return temp;
+    }
+    public ObservableList<Player> handleSearchTF(String s) {
+        ObservableList<Player> guiPool = dataManager.getDraft().getGuiPool();
+        ObservableList<Player> temp =FXCollections.observableArrayList(dataManager.getDraft().getSearchPool());
+        guiPool.clear();
+        
+        String lowFirst; 
+        String lowLast;
+        for(int i = 0;  i<temp.size(); i ++){
+            lowFirst =  temp.get(i).getFirstName().toLowerCase();
+            lowLast =  temp.get(i).getLastName().toLowerCase();
+            
+        if(lowFirst.contains(s.toLowerCase()) ||lowLast.contains(s.toLowerCase())){
+            guiPool.add(temp.get(i));
+        }       
+    }
+        
+
+      if(searchTF.textProperty().getValue().equalsIgnoreCase("")){
+          
+       guiPool = handleToggleController(group.getSelectedToggle());
+       dataManager.getDraft().addSearchPool(guiPool);
+      }  
+  return guiPool;
     }    
+    
+    
+    
 //    // LOADS CHECKBOX DATA INTO A Course OBJECT REPRESENTING A CoursePage
 //    private void updatePageUsingCheckBox(CheckBox cB, Course course, CoursePage cP) {
 //        if (cB.isSelected()) {
