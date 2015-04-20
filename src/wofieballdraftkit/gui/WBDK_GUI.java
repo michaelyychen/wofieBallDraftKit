@@ -350,9 +350,9 @@ public class WBDK_GUI implements DraftDataView{
         draftController.enable(false);
 
         // FIRST LOAD ALL THE BASIC COURSE INFO
-//        courseSubjectComboBox.setValue(courseToReload.getSubject());
-//        courseNumberTextField.setText("" + courseToReload.getNumber());
-//        courseSemesterComboBox.setValue(courseToReload.getSemester());
+
+          searchTF.setText("" );
+          group.selectToggle(all);
 //        courseYearComboBox.setValue(courseToReload.getYear());
 //        courseTitleTextField.setText(courseToReload.getTitle());
 //        instructorNameTextField.setText(courseToReload.getInstructor().getName());
@@ -991,9 +991,10 @@ public class WBDK_GUI implements DraftDataView{
         
 
       if(searchTF.textProperty().getValue().equalsIgnoreCase("")){
-          
+  
        guiPool = handleToggleController(group.getSelectedToggle());
        dataManager.getDraft().addSearchPool(guiPool);
+       
       }  
   return guiPool;
     }    
