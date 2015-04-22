@@ -15,11 +15,17 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import wofieballdraftkit.data.Player;
 import static wofieballdraftkit.gui.WBDK_GUI.CLASS_HEADING_LABEL;
+import static wofieballdraftkit.gui.WBDK_GUI.CLASS_PROMPT_LABEL;
 import static wofieballdraftkit.gui.WBDK_GUI.PRIMARY_STYLE_SHEET;
 
 /**
@@ -39,7 +45,8 @@ public class EditPlayerDialog extends Stage{
     Label positionLabel;
     Label contractLabel;
     Label salaryLabel;
-    
+    Label nameLabel;
+    Label qpLabel;
     
     ComboBox fantasyTeamComboBox;
     ComboBox positionComboBox;
@@ -47,6 +54,10 @@ public class EditPlayerDialog extends Stage{
     TextField salaryTextField;
     Button completeButton;
     Button cancelButton;
+    
+    FlowPane flowPane;
+    BorderPane borderPane;
+    VBox vbox;
     
     // THIS IS FOR KEEPING TRACK OF WHICH BUTTON THE USER PRESSED
     String selection;
@@ -67,15 +78,18 @@ public class EditPlayerDialog extends Stage{
      * 
      * @param primaryStage The owner of this modal dialog.
      */
-    public EditPlayerDialog(Stage primaryStage) {
+    public EditPlayerDialog(Stage primaryStage, Player player ) {
         // FIRST MAKE OUR LECTURE AND INITIALIZE
         // IT WITH DEFAULT VALUES
-        player = new Player();
+        
         setTitle(EDIT_PLAYER_TITLE);
         // MAKE THIS DIALOG MODAL, MEANING OTHERS WILL WAIT
         // FOR IT WHEN IT IS DISPLAYED
         initModality(Modality.WINDOW_MODAL);
         initOwner(primaryStage);
+        
+        
+        
         
         // FIRST OUR CONTAINER
         gridPane = new GridPane();
@@ -95,16 +109,43 @@ public class EditPlayerDialog extends Stage{
         positionLabel = new Label(POSITION_PROMPT);
         positionComboBox = new ComboBox();
         
+            String string = player.getPosition();
+            String[] parts = string.split("_");
+            for(String s:parts){
+                {
+                  positionComboBox.getItems().add(s);
+            }
+                 positionComboBox.getSelectionModel().select(0);
+            
+            }
+
+            
+            
+            
+        
         contractLabel = new Label(CONTRACT_PROMPT);
         contractComboBox = new ComboBox();
         contractComboBox.getItems().addAll("S2","S1","X");
+        contractComboBox.getSelectionModel().select(0);
         salaryLabel = new Label(SALARY_PROMPT);
         salaryTextField = new TextField();        
         
       
+       // ImageView playerPhoto = new ImageView("./images/players/"+ player.getLastName()+player.getFirstName()+".jpg");
+        ImageView playerPhoto = new ImageView(new Image("file:./images/players/"+player.getLastName()+player.getFirstName()+".jpg"));
+        ImageView playerNation = new ImageView(new Image("file:./images/flags/"+player.getNation()+".png"));
+        playerLabel = new Label(player.getFirstName()+" " +player.getLastName());
+        playerLabel.getStyleClass().add(CLASS_PROMPT_LABEL);
+        qpLabel = new Label(player.getPosition());
+        qpLabel.getStyleClass().add(CLASS_PROMPT_LABEL);
+        
+        vbox = new VBox();
+        borderPane = new BorderPane();
+        borderPane.setLeft(playerPhoto);
+        vbox.getChildren().addAll(playerNation,playerLabel, qpLabel);
+        vbox.setSpacing(20);
         
 
-        
         // AND THE NUMBER OF SESSIONS
 
 //      sessionsComboBox.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
@@ -128,9 +169,15 @@ public class EditPlayerDialog extends Stage{
         };
         completeButton.setOnAction(completeCancelHandler);
         cancelButton.setOnAction(completeCancelHandler);
-
+        
+        
+        flowPane = new FlowPane();
+        flowPane.getChildren().addAll(completeButton,cancelButton);
+        flowPane.setPrefWrapLength(100);
         // NOW LET'S ARRANGE THEM ALL AT ONCE
         gridPane.add(headingLabel,      0, 0, 2, 1);
+        gridPane.add(borderPane         , 0, 1, 1, 1);
+        gridPane.add(vbox         , 1, 1, 1, 1);
         gridPane.add(fantasyTeamLabel,        0, 2, 1, 1);
         gridPane.add(fantasyTeamComboBox,    1, 2, 1, 1);
         gridPane.add(positionLabel,     0, 3, 1, 1);
@@ -139,9 +186,9 @@ public class EditPlayerDialog extends Stage{
         gridPane.add(contractComboBox,  1, 4, 1, 1);
         gridPane.add(salaryLabel,     0, 5, 1, 1);
         gridPane.add(salaryTextField,  1, 5, 1, 1);        
-        gridPane.add(completeButton,    1, 6, 1, 1);
-        gridPane.add(cancelButton,      2, 6, 1, 1);
-
+        gridPane.add(flowPane,    1, 6, 1, 1);
+        
+      //  gridPane.setGridLinesVisible(true);
         // AND PUT THE GRID PANE IN THE WINDOW
         dialogScene = new Scene(gridPane);
         dialogScene.getStylesheets().add(PRIMARY_STYLE_SHEET);

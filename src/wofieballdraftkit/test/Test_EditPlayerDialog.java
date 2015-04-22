@@ -22,8 +22,12 @@ public class Test_EditPlayerDialog extends Application{
         @Override
         public void start(Stage primaryStage) throws Exception {
         Player course = new Player();
+        course.setFirstName("Francisco");
+        course.setLastName("Cervelli");
+        course.setNation("Colombia");
+        course.setPosition("C_U");
         MessageDialog messageDialog = new MessageDialog(primaryStage, "CLOSE");
-        EditPlayerDialog testDialog = new EditPlayerDialog(primaryStage);
+        EditPlayerDialog testDialog = new EditPlayerDialog(primaryStage,course);
         testDialog.show();
     }
     public static void main(String[] args) {

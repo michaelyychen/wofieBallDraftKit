@@ -24,7 +24,7 @@
         <property name="STANDING_ICON"      value="Standing.png"></property>
         <property name="DRAFT_ICON"         value="Draft.png"></property>
         <property name="MLB_ICON"           value="MLB.png"></property>
-        
+        <property name="PEN_ICON"           value="Pen.png"></property>
         <!-- TOOLTIPS FOR BUTTONS -->
         <property name="NEW_TOOLTIP"                value="Create a New Draft"></property>
         <property name="LOAD_TOOLTIP"               value="Load and Existing Draft"></property>
@@ -34,11 +34,14 @@
         <property name="EXIT_TOOLTIP"               value="Exit the Application"></property>
         <property name="HOME_TOOLTIP"               value="Fantasy Teams Screen"></property>
         <property name="PLAYER_TOOLTIP"               value="Player Screen"></property>
+        <property name="EDIT_TOOLTIP"               value="Edit Draft Team"></property>
         <property name="STANDING_TOOLTIP"             value="Fantasy Standing Screen"></property>
         <property name="DRAFT_TOOLTIP"             value="Draft Screen"></property>
         <property name="MLB_TOOLTIP"               value="MLB Screen"></property>
-        <property name="ADD_PLAYER_TOOLTIP"           value="Add Player Item"></property>
-        <property name="REMOVE_PLAYER_TOOLTIP"        value="Remove Player Item"></property>
+        <property name="ADD_PLAYER_TOOLTIP"           value="Add Player "></property>
+        <property name="REMOVE_PLAYER_TOOLTIP"        value="Remove Player "></property>
+        <property name="ADD_FANTASYTEAM_TOOLTIP"           value="Add Fantasy Team"></property>
+        <property name="REMOVE_FANTASYTEAM_TOOLTIP"        value="Remove Fantasy Team"></property>        
         <property name="MOVE_UP_TOOLTIP"            value="Move Up Lecture"></property>
         <property name="MOVE_DOWN_TOOLTIP"          value="Move Down Lecture"></property>
 
@@ -48,8 +51,12 @@
         <property name="PLAYERS_LABEL"                   value="Avaliable Players"></property>
         <property name="STANDING_LABEL"                  value="Fantasy Standing"></property>
         <property name="DRAFT_LABEL"                     value="Draft Summary"></property>
+        <property name="DRAFT_NAME_LABEL"                     value="Draft Name: "></property>        
         <property name="MLB_LABEL"                       value="MLB Teams"></property>
+        <property name="LINEUP_LABEL"                       value="Starting Lineup "></property>
+        <property name="TAXISQUAD_LABEL"                       value="Taxi Squad "></property>
         <property name="SEARCH_LABEL"                       value="Search: "></property>
+        <property name="SELECT_DRAFT_LABEL"                       value="Select Fantasy Team: "></property>    
         
         <!-- ERROR MESSAGES -->
 

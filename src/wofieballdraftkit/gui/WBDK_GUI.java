@@ -101,7 +101,7 @@ public class WBDK_GUI implements DraftDataView{
     
     Scene primaryScene;
     // THIS IS THE STAGE'S SCENE GRAPH
-    BorderPane fantasyPane;
+    VBox fantasyPane;
     VBox playerPane;
     BorderPane standingPane;
     BorderPane draftPane;
@@ -128,10 +128,11 @@ public class WBDK_GUI implements DraftDataView{
     Button standingButton;
     Button draftButton;
     Button MLBButton;
-    
     Button addButton;
     Button minusButton;
     
+    
+    Button editButton;
 
     // WE'LL ORGANIZE OUR WORKSPACE COMPONENTS USING A BORDER PANE
     
@@ -161,10 +162,13 @@ public class WBDK_GUI implements DraftDataView{
     
     
     String tf ;
+    TableView taxiDraftTable;
+    TableView startingLineUpTable;
     TableView playerTable;
     TableColumn firstNameColumn;
     TableColumn lastNameColumn;
     TableColumn proTeamColumn;
+    TableColumn positionColumn; //this is specifically use for pos in fantasy team
     TableColumn positionsColumn;
     TableColumn yearOfBirthColumn;
     TableColumn RWColumn;
@@ -173,15 +177,20 @@ public class WBDK_GUI implements DraftDataView{
     TableColumn SBERAColumn;
     TableColumn BAWHIPColumn;
     TableColumn estimatedColumn;
-    TableColumn notesColumn;    
+    TableColumn notesColumn;
+    TableColumn contractColumn; 
+    TableColumn salaryColumn; 
 
     TextField searchTF;
     String tfo;
     final ToggleGroup group = new ToggleGroup();
+    ComboBox fantasyTeamComboBox;
+    
     // AND TABLE COLUMNS
     static final String COL_FIRST = "First Name";
     static final String COL_LAST = "Last Name";
     static final String COL_PROTEAM = "Pro Team";
+    static final String COL_POSITION = "Position";
     static final String COL_POSITIONS = "Positions";
     static final String COL_YEAROFBIRTH = "Year of Birth";
     static final String COL_RW = "R/W";
@@ -191,7 +200,8 @@ public class WBDK_GUI implements DraftDataView{
     static final String COL_BAWHIP = "BA/WHIP";
     static final String COL_ESTIMATED = "Estimated Value";
     static final String COL_NOTES = "Notes";
-    
+    static final String COL_CONTRACT = "Contract";
+    static final String COL_SALARY = "Salary";
     
     
     // HERE ARE OUR DIALOGS
@@ -504,31 +514,95 @@ public class WBDK_GUI implements DraftDataView{
     // INITIALIZES THE TOP PORTION OF THE WORKWPACE UI
     private void initFantasyPane() {
         // HERE'S THE SPLIT PANE, ADD THE TWO GROUPS OF CONTROLS
-        fantasyPane = new BorderPane();
- 
-        GridPane a = new GridPane();
-             
-        a.add(initLabel(WBDK_PropertyType.FANTASY_TEAMS_LABEL, CLASS_HEADING_LABEL), 0, 0);
-        a.setStyle("-fx-background-color: GhostWhite");
-           
-        fantasyPane.setCenter(a);
-      //  fantasyPane.setBottom(switcherPane);
+        fantasyPane = new VBox();
+        FlowPane draftNamePane = new FlowPane();
+        FlowPane iconPane = new FlowPane();
+        
+        
+        Label nameLabel = initLabel(WBDK_PropertyType.DRAFT_NAME_LABEL, CLASS_SUBHEADING_LABEL);
+        searchTF = new TextField();
+        searchTF.setPrefColumnCount(20);
+        searchTF.setText("");
+        searchTF.setEditable(true);        
+        draftNamePane.getChildren().addAll(nameLabel,searchTF);
+       
+        addButton = initChildButton(iconPane, WBDK_PropertyType.ADD_ICON, WBDK_PropertyType.ADD_FANTASYTEAM_TOOLTIP, false);
+        minusButton = initChildButton(iconPane, WBDK_PropertyType.MINUS_ICON, WBDK_PropertyType.REMOVE_FANTASYTEAM_TOOLTIP, false); 
+        editButton = initChildButton(iconPane, WBDK_PropertyType.PEN_ICON, WBDK_PropertyType.EDIT_TOOLTIP, false); 
+        Label selectLabel = initLabel(WBDK_PropertyType.SELECT_DRAFT_LABEL, CLASS_SUBHEADING_LABEL);
+        fantasyTeamComboBox = new ComboBox();
+        iconPane.getChildren().addAll(selectLabel,fantasyTeamComboBox);
+        
+        VBox  temp = new VBox();
+        startingLineUpTable = new TableView();
+        Label lineupLabel = initLabel(WBDK_PropertyType.LINEUP_LABEL, CLASS_SUBHEADING_LABEL);
+        positionColumn = new TableColumn(COL_POSITION);
+        firstNameColumn = new TableColumn(COL_FIRST);
+        lastNameColumn = new TableColumn(COL_LAST);
+        proTeamColumn = new TableColumn(COL_PROTEAM);
+        positionsColumn = new TableColumn(COL_POSITIONS);
+        RWColumn = new TableColumn(COL_RW);
+        HRSVColumn = new TableColumn(COL_HRSV);
+        RBIKColumn = new TableColumn(COL_RBIK);
+        SBERAColumn = new TableColumn(COL_SBERA);
+        BAWHIPColumn = new TableColumn(COL_BAWHIP);
+        estimatedColumn = new TableColumn(COL_ESTIMATED);
+        contractColumn = new TableColumn(COL_CONTRACT);
+        salaryColumn = new TableColumn(COL_SALARY);
+        
+        startingLineUpTable.getColumns().addAll(positionColumn,firstNameColumn,lastNameColumn,proTeamColumn, positionsColumn
+        , RWColumn, HRSVColumn, RBIKColumn, SBERAColumn, BAWHIPColumn, estimatedColumn, contractColumn,salaryColumn);  
+        startingLineUpTable.setPrefHeight(800);
+        
+
+      
+        taxiDraftTable = new TableView();
+        Label taxiDraftLabel = initLabel(WBDK_PropertyType.TAXISQUAD_LABEL, CLASS_SUBHEADING_LABEL);
+        positionColumn = new TableColumn(COL_POSITION);
+        firstNameColumn = new TableColumn(COL_FIRST);
+        lastNameColumn = new TableColumn(COL_LAST);
+        proTeamColumn = new TableColumn(COL_PROTEAM);
+        positionsColumn = new TableColumn(COL_POSITIONS);
+        RWColumn = new TableColumn(COL_RW);
+        HRSVColumn = new TableColumn(COL_HRSV);
+        RBIKColumn = new TableColumn(COL_RBIK);
+        SBERAColumn = new TableColumn(COL_SBERA);
+        BAWHIPColumn = new TableColumn(COL_BAWHIP);
+        estimatedColumn = new TableColumn(COL_ESTIMATED);
+        contractColumn = new TableColumn(COL_CONTRACT);
+        salaryColumn = new TableColumn(COL_SALARY);
+        
+        taxiDraftTable.getColumns().addAll(positionColumn,firstNameColumn,lastNameColumn,proTeamColumn, positionsColumn
+        , RWColumn, HRSVColumn, RBIKColumn, SBERAColumn, BAWHIPColumn, estimatedColumn, contractColumn,salaryColumn);  
+        taxiDraftTable.setPrefHeight(800);
+        
+        temp.setSpacing(5);
+        temp.setPadding(new Insets(10,20,20,20));
+        temp.setStyle("-fx-background-color: #FFB6C1; -fx-border-color: #FF69B4;");
+        temp.getChildren().addAll(lineupLabel,startingLineUpTable,taxiDraftLabel,taxiDraftTable);
+        
+        fantasyPane.getChildren().add(initLabel(WBDK_PropertyType.FANTASY_TEAMS_LABEL, CLASS_HEADING_LABEL));
+        fantasyPane.getChildren().addAll(draftNamePane,iconPane,temp);
+        
+        
+        fantasyPane.setStyle("-fx-background-color: GhostWhite");
+        fantasyPane.setSpacing(10);   
+        
+
+  
          
     }
     private void initPlayerPane() {
         playerPane = new VBox();
-        GridPane a = new GridPane();
-        
-   
+               
         FlowPane searchHbox = new FlowPane();
         FlowPane radioHBox = new FlowPane();
-      //  BorderPane wrapper = new BorderPane();
+        //  BorderPane wrapper = new BorderPane();
         
         addButton = initChildButton(searchHbox, WBDK_PropertyType.ADD_ICON, WBDK_PropertyType.ADD_PLAYER_TOOLTIP, false);
         minusButton = initChildButton(searchHbox, WBDK_PropertyType.MINUS_ICON, WBDK_PropertyType.REMOVE_PLAYER_TOOLTIP, false); 
         Label searchLabel = initLabel(WBDK_PropertyType.SEARCH_LABEL, CLASS_SUBHEADING_LABEL);
-        
-        
+
         searchTF = new TextField();
         searchTF.setPrefColumnCount(100);
         searchTF.setText("");
@@ -567,15 +641,7 @@ public class WBDK_GUI implements DraftDataView{
          U.setToggleGroup(group);
          P.setToggleGroup(group);
          
-         
-         
-        radioHBox.getChildren().addAll(all,C,first,CI,third,second,MI,SS,OF,U,P);
-        
-        
-        
-        
-        
-        
+        radioHBox.getChildren().addAll(all,C,first,CI,third,second,MI,SS,OF,U,P);      
         
         playerTable = new TableView();
         
@@ -591,6 +657,10 @@ public class WBDK_GUI implements DraftDataView{
         BAWHIPColumn = new TableColumn(COL_BAWHIP);
         estimatedColumn = new TableColumn(COL_ESTIMATED);
         notesColumn = new TableColumn(COL_NOTES);  
+        
+        
+        playerTable.getColumns().addAll(firstNameColumn,lastNameColumn,proTeamColumn, positionsColumn,yearOfBirthColumn
+        , RWColumn, HRSVColumn, RBIKColumn, SBERAColumn, BAWHIPColumn, estimatedColumn, notesColumn);       
 
         estimatedColumn.setPrefWidth(100);
            
@@ -600,16 +670,10 @@ public class WBDK_GUI implements DraftDataView{
         positionsColumn.setCellValueFactory(new PropertyValueFactory<String, String>("position"));
         yearOfBirthColumn.setCellValueFactory(new PropertyValueFactory<String, String>("birth"));
         estimatedColumn.setCellValueFactory(new PropertyValueFactory<String, String>(""));  
-        
         notesColumn.setCellValueFactory(new PropertyValueFactory<String, String>("notes"));
         notesColumn.setCellFactory(TextFieldTableCell.forTableColumn());
-        
         playerTable.setEditable(true);
         notesColumn.setEditable(true); 
-        
-
-             
-        
        
         RWColumn.setCellValueFactory(new PropertyValueFactory<Integer, String>("rw"));
         HRSVColumn.setCellValueFactory(new PropertyValueFactory<Integer, String>("hrsv"));
@@ -617,12 +681,7 @@ public class WBDK_GUI implements DraftDataView{
         SBERAColumn.setCellValueFactory(new PropertyValueFactory<Double, String>("sbera"));
         BAWHIPColumn.setCellValueFactory(new PropertyValueFactory<Double, String>("bawhip"));
        
-      
- 
-       
-        
-        playerTable.getColumns().addAll(firstNameColumn,lastNameColumn,proTeamColumn, positionsColumn,yearOfBirthColumn
-        , RWColumn, HRSVColumn, RBIKColumn, SBERAColumn, BAWHIPColumn, estimatedColumn, notesColumn);   
+
         
         playerTable.setItems(dataManager.getDraft().getGuiPool());
         

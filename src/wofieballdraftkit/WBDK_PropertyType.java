@@ -29,6 +29,7 @@ public enum WBDK_PropertyType {
         STANDING_ICON,
         DRAFT_ICON,
         MLB_ICON,
+        PEN_ICON,
         
         
         
@@ -43,11 +44,15 @@ public enum WBDK_PropertyType {
         PLAYER_TOOLTIP,
         STANDING_TOOLTIP,
         DRAFT_TOOLTIP,
+        EDIT_TOOLTIP,
         MLB_TOOLTIP,
         ADD_PLAYER_TOOLTIP,
         REMOVE_PLAYER_TOOLTIP,
         MOVE_UP_TOOLTIP,
         MOVE_DOWN_TOOLTIP,
+        ADD_FANTASYTEAM_TOOLTIP,
+        REMOVE_FANTASYTEAM_TOOLTIP,
+        
     
 
         // FOR COURSE EDIT WORKSPACE
@@ -55,8 +60,12 @@ public enum WBDK_PropertyType {
         PLAYERS_LABEL,
         STANDING_LABEL,
         DRAFT_LABEL,
+        DRAFT_NAME_LABEL,
         MLB_LABEL,
         SEARCH_LABEL,
+        SELECT_DRAFT_LABEL,
+        LINEUP_LABEL,
+        TAXISQUAD_LABEL,
 
 
 
