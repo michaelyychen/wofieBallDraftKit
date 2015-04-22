@@ -5,14 +5,18 @@
  */
 package wofieballdraftkit.gui;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -35,24 +39,38 @@ public class AddNewPlayerDialog extends Stage{
     Label lastNameLabel;
     Label proTeamLabel;
     Label headingLabel;
+    Label positionLabel;
     TextField firstNameTextField;
     TextField lastNameTextField;
     ComboBox proTeamComboBox;
+    CheckBox C;
+    CheckBox first;
+    CheckBox second;
+    CheckBox third;
+    CheckBox SS;
+    CheckBox OF;
+    CheckBox P;
     
     
+    FlowPane flow;
     
     Button completeButton;
     Button cancelButton;
     
     // THIS IS FOR KEEPING TRACK OF WHICH BUTTON THE USER PRESSED
     String selection;
-    
+    ArrayList<String> teamArray = new ArrayList(
+                    Arrays.asList("ATL", "AZ", "CHC", "CIN", "COL", "LAD", "MIA", "MIL",
+                                "NYM", "PHI", "PIT", "SD", "SF", "STL", "WAS"));
+   
+            
     // CONSTANTS FOR OUR UI
     public static final String COMPLETE = "Complete";
     public static final String CANCEL = "Cancel";
     public static final String FIRSTNAME_PROMPT = "First Name: ";
-    public static final String LASTNAME_PROMPT = "LastName";
-    public static final String PROTEAM_PROMPT = "Pro Team";
+    public static final String LASTNAME_PROMPT = "Last Name:";
+    public static final String PROTEAM_PROMPT = "Pro Team:";
+     public static final String POSITION_PROMPT = "Positions:";
     public static final String PLAYER_HEADING = "Player Details";
     public static final String ADD_PLAYER_TITLE = "Add New Player";
    
@@ -73,7 +91,7 @@ public class AddNewPlayerDialog extends Stage{
         gridPane.setPadding(new Insets(10, 20, 20, 20));
         gridPane.setHgap(10);
         gridPane.setVgap(10);
-        
+       
         // PUT THE HEADING IN THE GRID, NOTE THAT THE TEXT WILL DEPEND
         // ON WHETHER WE'RE ADDING OR EDITING
         headingLabel = new Label(PLAYER_HEADING);
@@ -100,7 +118,7 @@ public class AddNewPlayerDialog extends Stage{
         proTeamLabel = new Label(PROTEAM_PROMPT);
         proTeamLabel.getStyleClass().add(CLASS_PROMPT_LABEL);
         proTeamComboBox = new ComboBox();
-        
+        loadProTeamComboBox(teamArray);
         
 //        urlTextField.textProperty().addListener((observable, oldValue, newValue) -> {
 //            scheduleItem.setLink(newValue);
@@ -118,7 +136,24 @@ public class AddNewPlayerDialog extends Stage{
         };
         completeButton.setOnAction(completeCancelHandler);
         cancelButton.setOnAction(completeCancelHandler);
+        
+        positionLabel = new Label(POSITION_PROMPT);
+        positionLabel.getStyleClass().add(CLASS_PROMPT_LABEL);
+        flow = new FlowPane();
+        C = new CheckBox("C");
+        first = new CheckBox("1B");
+        third = new CheckBox("3B");
+        second = new CheckBox("2B");
+        SS = new CheckBox("SS");
+        OF = new CheckBox("OF");
+        P = new CheckBox("P");
+        flow.getChildren().addAll(C,first,third,second,SS,OF,P);
+        flow.setHgap(5);
+        flow.setPrefWrapLength(300);
+        
 
+        
+        
         // NOW LET'S ARRANGE THEM ALL AT ONCE
         gridPane.add(headingLabel, 0, 0, 2, 1);
         gridPane.add(firstNameLabel, 0, 1, 1, 1);
@@ -127,12 +162,23 @@ public class AddNewPlayerDialog extends Stage{
         gridPane.add(lastNameTextField, 1, 2, 1, 1);
         gridPane.add(proTeamLabel, 0, 3, 1, 1);
         gridPane.add(proTeamComboBox, 1, 3, 1, 1);
-        gridPane.add(completeButton, 0, 4, 1, 1);
-        gridPane.add(cancelButton, 1, 4, 1, 1);
-
+        gridPane.add(positionLabel, 0, 4, 1, 1);
+        gridPane.add(flow, 1, 4, 1, 1);    
+        gridPane.add(completeButton, 0, 6, 1, 1);
+        gridPane.add(cancelButton, 1, 6, 1, 1);
+       
+    
         // AND PUT THE GRID PANE IN THE WINDOW
+        setTitle(ADD_PLAYER_TITLE);
         dialogScene = new Scene(gridPane);
         dialogScene.getStylesheets().add(PRIMARY_STYLE_SHEET);
+        
+        
+        
+        
+        
+        
+        
         this.setScene(dialogScene);
     }
     
@@ -156,17 +202,18 @@ public class AddNewPlayerDialog extends Stage{
      * 
      * @param message Message to appear inside the dialog.
      */
-    public Player showAddScheduleItemDialog() {
+    public Player showAddPlayerDialog() {
         // SET THE DIALOG TITLE
-        setTitle(ADD_PLAYER_TITLE);
+     
+        
         
         // RESET THE SCHEDULE ITEM OBJECT WITH DEFAULT VALUES
         player = new Player();
-        
+       
         // LOAD THE UI STUFF
        // firstNameTextField.setText();
        // lastNameTextField.setText(scheduleItem.getDescription());
-        
+
 
         
         // AND OPEN IT UP
@@ -185,6 +232,15 @@ public class AddNewPlayerDialog extends Stage{
     public boolean wasCompleteSelected() {
         return selection.equals(COMPLETE);
     }
+    
+    private void loadProTeamComboBox(ArrayList<String> proTeams) {
+            for (String s : proTeams) {
+                proTeamComboBox.getItems().add(s);
+            }
+         proTeamComboBox.getSelectionModel().select(0);
+        }    
+    
+    
     
  
 }
