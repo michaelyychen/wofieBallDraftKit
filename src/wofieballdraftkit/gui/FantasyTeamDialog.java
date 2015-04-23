@@ -52,6 +52,7 @@ public class FantasyTeamDialog extends Stage {
     public static final String OWNER_PROMPT = "Owner";
     public static final String FANTASY_HEADING = "Fantasy Team Details";
     public static final String ADD_FANTASY_TITLE = "Add New Fantasy Team";
+    public static final String EDIT_FANTASY_TITLE = "Edit New Fantasy Team";
     
     /**
      * Initializes this dialog so that it can be used for either adding
@@ -81,7 +82,7 @@ public class FantasyTeamDialog extends Stage {
         nameLabel.getStyleClass().add(CLASS_PROMPT_LABEL);
         nameTextField = new TextField();
         nameTextField.textProperty().addListener((observable, oldValue, newValue) -> {
-          //  fantasyTeam.setDescription(newValue);
+            fantasyTeam.setTeamName(newValue);
         });
         
         // AND THE DATE
@@ -89,7 +90,7 @@ public class FantasyTeamDialog extends Stage {
         ownerLabel.getStyleClass().add(CLASS_PROMPT_LABEL);
         ownerTextField = new TextField();
         ownerTextField.textProperty().addListener((observable, oldValue, newValue) -> {
-         
+            fantasyTeam.setOwner(newValue);
         });
         
         // AND FINALLY, THE BUTTONS
@@ -140,7 +141,7 @@ public class FantasyTeamDialog extends Stage {
      * 
      * @param message Message to appear inside the dialog.
      */
-    public FantasyTeam showAddScheduleItemDialog() {
+    public FantasyTeam showAddFantasyTeamDialog() {
         // SET THE DIALOG TITLE
         setTitle(ADD_FANTASY_TITLE);
         
@@ -148,8 +149,8 @@ public class FantasyTeamDialog extends Stage {
         fantasyTeam = new FantasyTeam();
         
         // LOAD THE UI STUFF
-    //    nameTextField.setText(scheduleItem.getDescription());
-   //     ownerTextField.setText(scheduleItem.getLink());
+        nameTextField.setText(fantasyTeam.getTeamName());
+        ownerTextField.setText(fantasyTeam.getOwner());
         
         // AND OPEN IT UP
         this.showAndWait();
@@ -159,13 +160,30 @@ public class FantasyTeamDialog extends Stage {
     
     public void loadGUIData() {
         // LOAD THE UI STUFF
-     //   nameTextField.setText(FantasyTeam.getDescription());
-     //   ownerTextField.setText(FantasyTeam.getLink());       
+        nameTextField.setText(fantasyTeam.getTeamName());
+        ownerTextField.setText(fantasyTeam.getOwner());       
     }
     
     public boolean wasCompleteSelected() {
         return selection.equals(COMPLETE);
     }
+    
+    public void showEditFantasyTeamDialog(FantasyTeam teamToEdit) {
+        // SET THE DIALOG TITLE
+        setTitle(EDIT_FANTASY_TITLE);
+        
+        // LOAD THE LECTURE INTO OUR LOCAL OBJECT
+        fantasyTeam = new FantasyTeam();
+        fantasyTeam.setTeamName(teamToEdit.getTeamName());
+        fantasyTeam.setOwner(teamToEdit.getOwner());
+        
+        loadGUIData();
+               
+        // AND OPEN IT UP
+        this.showAndWait();
+    }    
+    
+    
     
 
 }

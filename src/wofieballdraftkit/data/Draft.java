@@ -19,24 +19,32 @@ import wofieballdraftkit.gui.WBDK_GUI;
 public class Draft {
     List<Hitter> hitterList;
     List<Pitcher> pitcherList;
+    ArrayList<FantasyTeam> teamList;
+    
     ObservableList<Player> dataPool;
     ObservableList<Player> guiPool;
     ObservableList<Player> searchPool;
-    ObservableList<Player> textPool;
+    
     int current;
     
     public Draft(List<Player> initPool){
     
 
     dataPool = FXCollections.observableArrayList(initPool); 
-
-    textPool =FXCollections.observableArrayList(initPool); 
+    teamList = new ArrayList();
+    
     searchPool =FXCollections.observableArrayList(initPool); 
     guiPool =FXCollections.observableArrayList(initPool); 
 
     
     }
     
+    public ArrayList<FantasyTeam> getTeamList(){
+        return teamList;
+    } 
+    public void setTeamList(ArrayList<FantasyTeam> list){
+        this.teamList = list;
+    }        
     
 
     public List<Hitter> getHitterList() {
@@ -47,7 +55,6 @@ public class Draft {
         return pitcherList;
     }
 
-
     public ObservableList<Player> getDataPool() {
         return dataPool;
     }
@@ -55,7 +62,6 @@ public class Draft {
     public ObservableList<Player> getSearchPool() {
         return searchPool;
     }
-    
 
     public ObservableList<Player> getGuiPool() {
         return guiPool;
@@ -63,19 +69,6 @@ public class Draft {
     public void setGuiPool(ObservableList<Player> pool) {
         this.guiPool = pool;
     }
-    public ObservableList<Player> getTextPool() {
-        return textPool;
-    }    
-    public void setTextPool(ObservableList<Player> pool) {
-        this.textPool= pool;
-    } 
-    public void addTextPool(ObservableList<Player> t) {
-        textPool.clear();
-        textPool.addAll(t);
-    }       
-    
-    
-    
     
     public void addSearchPool(ObservableList<Player> t) {
         searchPool.clear();

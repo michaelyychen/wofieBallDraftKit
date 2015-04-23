@@ -8,6 +8,7 @@ package wofieballdraftkit.controller;
 import javafx.stage.Stage;
 import wofieballdraftkit.data.Draft;
 import wofieballdraftkit.data.DraftDataManager;
+import wofieballdraftkit.data.FantasyTeam;
 import wofieballdraftkit.data.Player;
 import wofieballdraftkit.error.ErrorHandler;
 import wofieballdraftkit.gui.AddNewPlayerDialog;
@@ -112,6 +113,61 @@ public class DraftEditController {
             // THE USER MUST HAVE PRESSED CANCEL, SO
             // WE DO NOTHING
         }
+    }    
+
+    public void handleNewFantasyTeamRequest(WBDK_GUI gui) {
+        
+        
+        DraftDataManager cdm = gui.getDataManager();
+        Draft draft = cdm.getDraft();
+        ftd.showAddFantasyTeamDialog();
+        
+        // DID THE USER CONFIRM?
+        if (ftd.wasCompleteSelected()) {
+            // GET THE SCHEDULE ITEM
+            FantasyTeam si = ftd.getFantasyTeam();
+            
+            // AND ADD IT AS A ROW TO THE TABLE
+            
+            draft.getTeamList().add(si);
+
+            // THE COURSE IS NOW DIRTY, MEANING IT'S BEEN 
+            // CHANGED SINCE IT WAS LAST SAVED, SO MAKE SURE
+            // THE SAVE BUTTON IS ENABLED
+            gui.getFileController().markAsEdited(gui);
+        }
+        else {
+            // THE USER MUST HAVE PRESSED CANCEL, SO
+            // WE DO NOTHING
+        }        
+    }
+    
+    public void handleEditFantasyTeamRequest(WBDK_GUI gui, FantasyTeam teamToEdit) {
+        
+        DraftDataManager cdm = gui.getDataManager();
+        Draft draft = cdm.getDraft();
+        ftd.showEditFantasyTeamDialog(teamToEdit);
+        
+        // DID THE USER CONFIRM?
+        if (ftd.wasCompleteSelected()) {
+            // GET THE SCHEDULE ITEM
+            FantasyTeam si = ftd.getFantasyTeam();
+            
+            // AND ADD IT AS A ROW TO THE TABLE
+            
+            teamToEdit.setTeamName(si.getTeamName());
+            teamToEdit.setOwner(si.getOwner());
+           
+            
+            // THE COURSE IS NOW DIRTY, MEANING IT'S BEEN 
+            // CHANGED SINCE IT WAS LAST SAVED, SO MAKE SURE
+            // THE SAVE BUTTON IS ENABLED
+            gui.getFileController().markAsEdited(gui);
+        }
+        else {
+            // THE USER MUST HAVE PRESSED CANCEL, SO
+            // WE DO NOTHING
+        }        
     }    
     
     

@@ -5,10 +5,46 @@
  */
 package wofieballdraftkit.data;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+
 /**
  *
  * @author MiChAeL
  */
 public class FantasyTeam{
+    final StringProperty owner;
+    final StringProperty teamName;
+    
+    public static final String DEFAULT_STRING = "";
+    
+    public FantasyTeam(){
+        owner = new SimpleStringProperty(DEFAULT_STRING);
+        teamName = new SimpleStringProperty(DEFAULT_STRING);
+    }
+    public String getOwner() {
+        return owner.get();
+    }
+    
+    public void setOwner(String initOwner) {
+        owner.set(initOwner);
+    }
+    
+    public StringProperty ownerProperty() {
+        return owner;
+    }
+    public String getTeamName() {
+        return teamName.get();
+    }
+    
+    public void setTeamName(String initName) {
+        teamName.set(initName);
+    }
+    
+    public StringProperty teamNameProperty() {
+        return teamName;
+    }
+    
+
     
 }

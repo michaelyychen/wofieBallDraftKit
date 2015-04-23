@@ -8,6 +8,7 @@ package wofieballdraftkit.gui;
 import static wofieballdraftkit.WBDK_StartUpConstants.*;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Collections;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.value.ChangeListener;
@@ -59,6 +60,7 @@ import wofieballdraftkit.controller.FileController;
 import wofieballdraftkit.data.Draft;
 import wofieballdraftkit.data.DraftDataManager;
 import wofieballdraftkit.data.DraftDataView;
+import wofieballdraftkit.data.FantasyTeam;
 import wofieballdraftkit.data.Pitcher;
 import wofieballdraftkit.data.Player;
 import wofieballdraftkit.file.DraftFileManager;
@@ -128,6 +130,8 @@ public class WBDK_GUI implements DraftDataView{
     Button standingButton;
     Button draftButton;
     Button MLBButton;
+    Button addButtonf;
+    Button minusButtonf;
     Button addButton;
     Button minusButton;
     
@@ -526,11 +530,13 @@ public class WBDK_GUI implements DraftDataView{
         searchTF.setEditable(true);        
         draftNamePane.getChildren().addAll(nameLabel,searchTF);
        
-        addButton = initChildButton(iconPane, WBDK_PropertyType.ADD_ICON, WBDK_PropertyType.ADD_FANTASYTEAM_TOOLTIP, false);
-        minusButton = initChildButton(iconPane, WBDK_PropertyType.MINUS_ICON, WBDK_PropertyType.REMOVE_FANTASYTEAM_TOOLTIP, false); 
+        addButtonf = initChildButton(iconPane, WBDK_PropertyType.ADD_ICON, WBDK_PropertyType.ADD_FANTASYTEAM_TOOLTIP, false);
+        minusButtonf = initChildButton(iconPane, WBDK_PropertyType.MINUS_ICON, WBDK_PropertyType.REMOVE_FANTASYTEAM_TOOLTIP, false); 
         editButton = initChildButton(iconPane, WBDK_PropertyType.PEN_ICON, WBDK_PropertyType.EDIT_TOOLTIP, false); 
         Label selectLabel = initLabel(WBDK_PropertyType.SELECT_DRAFT_LABEL, CLASS_SUBHEADING_LABEL);
         fantasyTeamComboBox = new ComboBox();
+        //loadTeamComboBox(dataManager.getDraft().getTeamList());
+
         iconPane.getChildren().addAll(selectLabel,fantasyTeamComboBox);
         
         VBox  temp = new VBox();
@@ -793,6 +799,39 @@ public class WBDK_GUI implements DraftDataView{
         
         draftController = new DraftEditController(primaryStage, dataManager.getDraft(), messageDialog, yesNoCancelDialog);
         
+        addButtonf.setOnAction(e -> {
+        
+               draftController.handleNewFantasyTeamRequest(this);
+               fantasyTeamComboBox.getItems().clear();
+               loadTeamComboBox(dataManager.getDraft().getTeamList());
+        });
+        
+        
+        minusButtonf.setOnAction(e -> {
+        
+                System.out.println(2);
+                
+        });
+        
+        editButton.setOnAction(e -> {
+        
+                draftController.handleEditFantasyTeamRequest(this,(FantasyTeam)fantasyTeamComboBox.getSelectionModel().getSelectedItem());
+                
+        });
+        
+        
+        
+        addButton.setOnAction(e -> {
+        
+                System.out.println(1);
+                
+        });
+        minusButton.setOnAction(e -> {
+        
+        System.out.println(2);
+                
+        });    
+        
         
         
         playerTable.setOnMouseClicked(e -> {
@@ -803,9 +842,6 @@ public class WBDK_GUI implements DraftDataView{
          draftController.handleEditPlayerRequest(this, l);
             }
         });
-        
-        
-        
         
         
         //switch pane mechanism
@@ -1073,7 +1109,13 @@ public class WBDK_GUI implements DraftDataView{
   return guiPool;
     }    
     
+    public void loadTeamComboBox(ArrayList<FantasyTeam> list){
+            for (FantasyTeam s : list) {
+            fantasyTeamComboBox.getItems().add(s.getTeamName());
+        }
+            fantasyTeamComboBox.getSelectionModel().selectFirst();
     
+    }
     
 //    // LOADS CHECKBOX DATA INTO A Course OBJECT REPRESENTING A CoursePage
 //    private void updatePageUsingCheckBox(CheckBox cB, Course course, CoursePage cP) {
