@@ -146,7 +146,12 @@ public class AddNewPlayerDialog extends Stage{
         SS = new CheckBox("SS");
         OF = new CheckBox("OF");
         P = new CheckBox("P");
-        
+        C.selectedProperty().addListener(new ChangeListener(){
+            @Override
+            public void changed(ObservableValue observable, Object oldValue, Object newValue) {
+                System.out.println(newValue.toString());
+            }
+        });
         
         
         
@@ -226,7 +231,7 @@ public class AddNewPlayerDialog extends Stage{
         player = new Player();
        
         // LOAD THE UI STUFF
-        if(C.isSelected()){System.out.println("C");}
+       
         
         // AND OPEN IT UP
         this.showAndWait();
