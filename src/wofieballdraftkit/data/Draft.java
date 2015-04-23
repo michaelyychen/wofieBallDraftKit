@@ -75,6 +75,30 @@ public class Draft {
         searchPool.addAll(t);
     }    
     
+    public FantasyTeam getTeamByName(String s){
+    
+        for(int i = 0;i<teamList.size();i++)
+        {
+        if(teamList.get(i).getTeamName().equalsIgnoreCase(s) ){
+            return teamList.get(i);
+                    }
+        }
+    
+    return null; 
+    }
+    
+    public void RemoveTeamByName(String s){
+    
+        for(int i = 0;i<teamList.size();i++)
+        {
+        if(teamList.get(i).getTeamName().equalsIgnoreCase(s) ){
+            teamList.remove(i);
+                    }
+        }
+    
+    
+    }    
+    
 
     
 //    public ObservableList<Player> handleSearchTF(String s) {

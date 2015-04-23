@@ -426,7 +426,21 @@ public class WBDK_GUI implements DraftDataView{
      * @param course The course to be updated using the data from the UI controls.
      */
     public void updateDraftInfo(Draft draftToEdit ) {
-
+//        course.setSubject(Subject.valueOf(courseSubjectComboBox.getSelectionModel().getSelectedItem().toString()));
+//        course.setNumber(Integer.parseInt(courseNumberTextField.getText()));
+//        course.setSemester(Semester.valueOf(courseSemesterComboBox.getSelectionModel().getSelectedItem().toString()));
+//        course.setYear((int) courseYearComboBox.getSelectionModel().getSelectedItem());
+//        course.setTitle(courseTitleTextField.getText());
+//        Instructor instructor = course.getInstructor();
+//        instructor.setName(instructorNameTextField.getText());
+//        instructor.setHomepageURL(instructorURLTextField.getText());
+//        updatePageUsingCheckBox(indexPageCheckBox, course, CoursePage.INDEX);
+//        updatePageUsingCheckBox(syllabusPageCheckBox, course, CoursePage.SYLLABUS);
+//        updatePageUsingCheckBox(schedulePageCheckBox, course, CoursePage.SCHEDULE);
+//        updatePageUsingCheckBox(hwsPageCheckBox, course, CoursePage.HWS);
+//        updatePageUsingCheckBox(projectsPageCheckBox, course, CoursePage.PROJECTS);
+//        course.setStartingMonday(startDatePicker.getValue());
+//        course.setEndingFriday(endDatePicker.getValue());
     }
 
     /****************************************************************************/
@@ -809,13 +823,15 @@ public class WBDK_GUI implements DraftDataView{
         
         minusButtonf.setOnAction(e -> {
         
-                System.out.println(2);
+              draftController.handlerDeleteFantasyTeamRequest(this,(String)fantasyTeamComboBox.getSelectionModel().getSelectedItem());
+              fantasyTeamComboBox.getItems().clear();
+              loadTeamComboBox(dataManager.getDraft().getTeamList());
                 
         });
         
         editButton.setOnAction(e -> {
         
-                draftController.handleEditFantasyTeamRequest(this,(FantasyTeam)fantasyTeamComboBox.getSelectionModel().getSelectedItem());
+                draftController.handleEditFantasyTeamRequest(this,(String)fantasyTeamComboBox.getSelectionModel().getSelectedItem());
                 
         });
         
@@ -1112,6 +1128,7 @@ public class WBDK_GUI implements DraftDataView{
     public void loadTeamComboBox(ArrayList<FantasyTeam> list){
             for (FantasyTeam s : list) {
             fantasyTeamComboBox.getItems().add(s.getTeamName());
+            
         }
             fantasyTeamComboBox.getSelectionModel().selectFirst();
     

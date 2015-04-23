@@ -6,6 +6,8 @@
 package wofieballdraftkit.controller;
 
 import javafx.stage.Stage;
+import properties_manager.PropertiesManager;
+import static wofieballdraftkit.WBDK_PropertyType.REMOVE_ITEM_MESSAGE;
 import wofieballdraftkit.data.Draft;
 import wofieballdraftkit.data.DraftDataManager;
 import wofieballdraftkit.data.FantasyTeam;
@@ -142,9 +144,12 @@ public class DraftEditController {
         }        
     }
     
-    public void handleEditFantasyTeamRequest(WBDK_GUI gui, FantasyTeam teamToEdit) {
+    public void handleEditFantasyTeamRequest(WBDK_GUI gui, String s) {
         
         DraftDataManager cdm = gui.getDataManager();
+        
+        FantasyTeam teamToEdit = cdm.getDraft().getTeamByName(s);
+        
         Draft draft = cdm.getDraft();
         ftd.showEditFantasyTeamDialog(teamToEdit);
         
@@ -168,7 +173,25 @@ public class DraftEditController {
             // THE USER MUST HAVE PRESSED CANCEL, SO
             // WE DO NOTHING
         }        
+    }
+    public void handlerDeleteFantasyTeamRequest(WBDK_GUI gui, String s) {
+        // PROMPT THE USER TO SAVE UNSAVED WORK
+        yesNoCancelDialog.show(PropertiesManager.getPropertiesManager().getProperty(REMOVE_ITEM_MESSAGE));
+        
+        // AND NOW GET THE USER'S SELECTION
+        String selection = yesNoCancelDialog.getSelection();
+
+        // IF THE USER SAID YES, THEN REMOVE IT
+        if (selection.equals(YesNoCancelDialog.YES)) { 
+            gui.getDataManager().getDraft().RemoveTeamByName(s);
+            
+            // THE COURSE IS NOW DIRTY, MEANING IT'S BEEN 
+            // CHANGED SINCE IT WAS LAST SAVED, SO MAKE SURE
+            // THE SAVE BUTTON IS ENABLED
+            gui.getFileController().markAsEdited(gui);
+        }
     }    
+    
     
     
     
