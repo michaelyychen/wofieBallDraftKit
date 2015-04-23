@@ -5,25 +5,46 @@
  */
 package wofieballdraftkit.controller;
 
+import javafx.stage.Stage;
 import wofieballdraftkit.data.Draft;
+import wofieballdraftkit.data.DraftDataManager;
+import wofieballdraftkit.data.Player;
 import wofieballdraftkit.error.ErrorHandler;
+import wofieballdraftkit.gui.AddNewPlayerDialog;
+import wofieballdraftkit.gui.EditPlayerDialog;
+import wofieballdraftkit.gui.FantasyTeamDialog;
+import wofieballdraftkit.gui.MessageDialog;
 import wofieballdraftkit.gui.WBDK_GUI;
+import wofieballdraftkit.gui.YesNoCancelDialog;
 
 /**
  *
  * @author MiChAeL
  */
 public class DraftEditController {
+
+
      // WE USE THIS TO MAKE SURE OUR PROGRAMMED UPDATES OF UI
     // VALUES DON'T THEMSELVES TRIGGER EVENTS
+    
     private boolean enabled;
+    AddNewPlayerDialog anpd;
+    EditPlayerDialog epd;
+    FantasyTeamDialog ftd;
+    MessageDialog messageDialog;
+    YesNoCancelDialog yesNoCancelDialog;
 
     /**
      * Constructor that gets this controller ready, not much to
      * initialize as the methods for this function are sent all
      * the objects they need as arguments.
      */
-    public DraftEditController() {
+    public DraftEditController(Stage initPrimaryStage, Player player, MessageDialog initMessageDialog, YesNoCancelDialog initYesNoCancelDialog) {
+        anpd = new AddNewPlayerDialog(initPrimaryStage);
+        epd = new EditPlayerDialog(initPrimaryStage,player);
+        ftd = new FantasyTeamDialog(initPrimaryStage);
+        messageDialog = initMessageDialog;
+        yesNoCancelDialog = initYesNoCancelDialog;
         enabled = true;
     }
 
@@ -62,6 +83,32 @@ public class DraftEditController {
             }
         }
     }
+    
+    
+    public  void handleEditPlayerRequest(WBDK_GUI gui, Player player) {
+        DraftDataManager cdm = gui.getDataManager();
+        Draft draft = cdm.getDraft();
+        epd.showEditPlayerDialog(player);
+        
+        // DID THE USER CONFIRM?
+        if (epd.wasCompleteSelected()) {
+            // UPDATE THE SCHEDULE ITEM
+            Player si = epd.getPlayer();
+//            player.setDescription(si.);
+//            player.setDate(si.getDate());
+//            player.setLink(si.getLink());
+            
+            // THE COURSE IS NOW DIRTY, MEANING IT'S BEEN 
+            // CHANGED SINCE IT WAS LAST SAVED, SO MAKE SURE
+            // THE SAVE BUTTON IS ENABLED
+            gui.getFileController().markAsEdited(gui);
+        }
+        else {
+            // THE USER MUST HAVE PRESSED CANCEL, SO
+            // WE DO NOTHING
+        }
+    }    
+    
     
     
     

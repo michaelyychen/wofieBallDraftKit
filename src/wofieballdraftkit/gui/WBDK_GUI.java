@@ -791,9 +791,23 @@ public class WBDK_GUI implements DraftDataView{
             fileController.handleExitRequest(this);
         });
         
-        draftController = new DraftEditController();
+        draftController = new DraftEditController(primaryStage, dataManager.getDraft().g, messageDialog, yesNoCancelDialog);
         
         
+        
+        playerTable.setOnMouseClicked(e -> {
+         if (e.getClickCount() == 2) {
+               // OPEN UP THE LECTURE EDITOR
+         Player l = (Player)playerTable.getSelectionModel().getSelectedItem();
+         DraftEditController.handleEditPlayerRequest(this, l);
+            }
+        });
+        
+        
+        
+        
+        
+        //switch pane mechanism
         fantasyButton.setOnAction(e -> {
            
         workspacePane.setCenter(fantasyPane);

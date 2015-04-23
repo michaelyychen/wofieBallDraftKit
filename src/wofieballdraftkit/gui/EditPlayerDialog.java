@@ -205,7 +205,7 @@ public class EditPlayerDialog extends Stage{
         return selection;
     }
     
-    public Player getLecture() { 
+    public Player getPlayer() { 
         return player;
     }
     
@@ -219,22 +219,23 @@ public class EditPlayerDialog extends Stage{
     
     public void loadGUIData() {
         // LOAD THE UI STUFF
-//        topicTextField.setText(lecture.getTopic());
-//        
-//        int sessionsIndex = lecture.getSessions()-1;
-//        sessionsComboBox.getSelectionModel().select(sessionsIndex);
+
     }
     
     public boolean wasCompleteSelected() {
         return selection.equals(COMPLETE);
     }
     
-    public void showEditPlayerDialog(Player player) {
+    public void showEditPlayerDialog(Player playerToEdit) {
         // SET THE DIALOG TITLE
         setTitle(EDIT_PLAYER_TITLE);
         
-        // LOAD THE LECTURE INTO OUR LOCAL OBJECT
-    
+        // LOAD INTO OUR LOCAL OBJECT
+        player.setFirstName(playerToEdit.getFirstName());
+        player.setLastName(playerToEdit.getLastName());
+        player.setNation(playerToEdit.getNation());
+        player.setPosition(playerToEdit.getPosition());
+        
         
         // AND THEN INTO OUR GUI
         loadGUIData();

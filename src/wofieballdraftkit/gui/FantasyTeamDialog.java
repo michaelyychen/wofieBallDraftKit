@@ -59,7 +59,7 @@ public class FantasyTeamDialog extends Stage {
      * 
      * @param primaryStage The owner of this modal dialog.
      */
-    public FantasyTeamDialog(Stage primaryStage, FantasyTeam team,  MessageDialog messageDialog) {       
+    public FantasyTeamDialog(Stage primaryStage) {       
         // MAKE THIS DIALOG MODAL, MEANING OTHERS WILL WAIT
         // FOR IT WHEN IT IS DISPLAYED
         initModality(Modality.WINDOW_MODAL);

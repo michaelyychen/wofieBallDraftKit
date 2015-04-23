@@ -80,7 +80,7 @@ public class AddNewPlayerDialog extends Stage{
      * 
      * @param primaryStage The owner of this modal dialog.
      */
-    public AddNewPlayerDialog(Stage primaryStage, Player player,  MessageDialog messageDialog) {       
+    public AddNewPlayerDialog(Stage primaryStage) {       
         // MAKE THIS DIALOG MODAL, MEANING OTHERS WILL WAIT
         // FOR IT WHEN IT IS DISPLAYED
         initModality(Modality.WINDOW_MODAL);
