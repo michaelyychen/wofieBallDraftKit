@@ -34,7 +34,7 @@ import static wofieballdraftkit.gui.WBDK_GUI.PRIMARY_STYLE_SHEET;
  */
 public class EditPlayerDialog extends Stage{
      // THIS IS THE OBJECT DATA BEHIND THIS UI
-    Player player = new Player();
+    Player player;
     
     // GUI CONTROLS FOR OUR DIALOG
     GridPane gridPane;
@@ -82,7 +82,7 @@ public class EditPlayerDialog extends Stage{
         // FIRST MAKE OUR LECTURE AND INITIALIZE
         // IT WITH DEFAULT VALUES
         
-        setTitle(EDIT_PLAYER_TITLE);
+        
         // MAKE THIS DIALOG MODAL, MEANING OTHERS WILL WAIT
         // FOR IT WHEN IT IS DISPLAYED
         initModality(Modality.WINDOW_MODAL);
@@ -117,14 +117,14 @@ public class EditPlayerDialog extends Stage{
 
         // AND THE NUMBER OF SESSIONS
 
-//      sessionsComboBox.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
-//            @Override
-//            public void changed(ObservableValue observable, Object oldValue, Object newValue) {
-//                int numSessions = Integer.parseInt(newValue.toString());
-//                lecture.setSessions(numSessions);
-//            }
-//            
-//        });
+      contractComboBox.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
+            @Override
+            public void changed(ObservableValue observable, Object oldValue, Object newValue) {
+                String contract = newValue.toString();
+                player.setContract(contract);
+            }
+            
+        });
 
         // AND FINALLY, THE BUTTONS
         completeButton = new Button(COMPLETE);
@@ -138,14 +138,16 @@ public class EditPlayerDialog extends Stage{
         };
         completeButton.setOnAction(completeCancelHandler);
         cancelButton.setOnAction(completeCancelHandler);
-        
+        vbox = new VBox();
+        borderPane = new BorderPane();
         
         flowPane = new FlowPane();
         flowPane.getChildren().addAll(completeButton,cancelButton);
         flowPane.setPrefWrapLength(100);
         // NOW LET'S ARRANGE THEM ALL AT ONCE
         gridPane.add(headingLabel,      0, 0, 2, 1);
-
+        gridPane.add(borderPane         , 0, 1, 1, 1);
+        gridPane.add(vbox         , 1, 1, 1, 1);    
         gridPane.add(fantasyTeamLabel,        0, 2, 1, 1);
         gridPane.add(fantasyTeamComboBox,    1, 2, 1, 1);
         gridPane.add(positionLabel,     0, 3, 1, 1);
@@ -189,36 +191,34 @@ public class EditPlayerDialog extends Stage{
     public void loadGUIData() {
         // LOAD THE UI STUFF
         
-            String pos = player.getQualifyPosition();
-            String[] parts = pos.split("_");
-            for(String s:parts){
-                {
-                  positionComboBox.getItems().add(s);
+        loadQPComboBox();    
+        Image img = new Image("file:./images/players/"+player.getFirstName()+player.getLastName()+".jpg");
+        if(img.isError())
+            {
+                img = new Image("file:./images/players/AAA_PhotoMissing.jpg");
             }
-            }
-            
-        ImageView playerPhoto = new ImageView(new Image("file:./images/players/"+player.getFirstName()+player.getLastName()+".jpg"));
+        ImageView playerPhoto = new ImageView(img);
         ImageView playerNation = new ImageView(new Image("file:./images/flags/"+player.getNation()+".png"));
         playerLabel = new Label(player.getFirstName()+" " +player.getLastName());
         playerLabel.getStyleClass().add(CLASS_PROMPT_LABEL);
         qpLabel = new Label(player.getQualifyPosition());
         qpLabel.getStyleClass().add(CLASS_PROMPT_LABEL);
         
-        vbox = new VBox();
-        borderPane = new BorderPane();
+
         borderPane.setLeft(playerPhoto);
         vbox.getChildren().addAll(playerNation,playerLabel, qpLabel);
         vbox.setSpacing(20);
-           
             
-        gridPane.add(borderPane         , 0, 1, 1, 1);
-        gridPane.add(vbox         , 1, 1, 1, 1);      
-            
-            
+          
     }
     
+
+    
+    
+    
     public boolean wasCompleteSelected() {
-        return selection.equals(COMPLETE);
+
+       return selection.equals(COMPLETE);
     }
     
     public void showEditPlayerDialog(Player playerToEdit) {
@@ -226,6 +226,7 @@ public class EditPlayerDialog extends Stage{
         setTitle(EDIT_PLAYER_TITLE);
         
         // LOAD INTO OUR LOCAL OBJECT
+        player = new Player();
         player.setFirstName(playerToEdit.getFirstName());
         player.setLastName(playerToEdit.getLastName());
         player.setNation(playerToEdit.getNation());
@@ -237,5 +238,24 @@ public class EditPlayerDialog extends Stage{
                
         // AND OPEN IT UP
         this.showAndWait();
+    }
+    public void loadQPComboBox(){
+    String pos = player.getQualifyPosition();
+    String[] parts = pos.split("_");
+        for(String s:parts){
+         {
+           positionComboBox.getItems().add(s);
+         }
+     }
+    }
+    public void clearData(){
+    borderPane.getChildren().clear();
+    vbox.getChildren().clear();
+    positionComboBox.getItems().clear();
+   
+    salaryTextField.clear();
+    
+    
+    
     }
 }

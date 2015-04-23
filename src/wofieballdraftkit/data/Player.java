@@ -63,6 +63,27 @@ public class Player {
         
     }
     
+    public void reset(){
+        
+       setFirstName(DEFAULT_NAME); 
+       setLastName(DEFAULT_NAME);
+       setFantasyTeam(DEFAULT_NAME);
+       setQualifyPosition(DEFAULT_NAME);
+       setPosition(DEFAULT_NAME);
+       setContract(DEFAULT_NAME);
+       setNation(DEFAULT_NAME);
+       setNotes(DEFAULT_NAME);
+       setBirth(DEFAULT_NAME);
+       setRW(DEFAULT_NUM);
+       setRBIK(DEFAULT_NUM);
+       setHRSV(DEFAULT_NUM);
+       setSBERA(DEFAULT_NUM);
+       setBAWHIP(DEFAULT_NUM);
+       setSalary(DEFAULT_NUM);
+    
+    
+    }
+    
     public int getSalary() {
         return salary.get();
     }

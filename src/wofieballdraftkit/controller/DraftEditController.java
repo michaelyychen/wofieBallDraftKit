@@ -89,7 +89,7 @@ public class DraftEditController {
         DraftDataManager cdm = gui.getDataManager();
         Draft draft = cdm.getDraft();
         epd.showEditPlayerDialog(player);
-        
+      
         // DID THE USER CONFIRM?
         if (epd.wasCompleteSelected()) {
               
@@ -97,13 +97,14 @@ public class DraftEditController {
             Player si = epd.getPlayer();
             
             player.setFantasyTeam(si.getFantasyTeam());
-            player.setPosition(si.getPosition());
+            player.setQualifyPosition(si.getQualifyPosition());
             player.setContract(si.getContract());
             player.setSalary(si.getSalary());
             
             // THE COURSE IS NOW DIRTY, MEANING IT'S BEEN 
             // CHANGED SINCE IT WAS LAST SAVED, SO MAKE SURE
             // THE SAVE BUTTON IS ENABLED
+            epd.clearData();
             gui.getFileController().markAsEdited(gui);
             
         }
