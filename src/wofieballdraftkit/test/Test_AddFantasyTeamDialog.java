@@ -21,7 +21,7 @@ public class Test_AddFantasyTeamDialog extends Application{
     public void start(Stage primaryStage) throws Exception {
         FantasyTeam course = new FantasyTeam();
         MessageDialog messageDialog = new MessageDialog(primaryStage, "CLOSE");
-        FantasyTeamDialog testDialog = new FantasyTeamDialog(primaryStage, course, messageDialog);
+        FantasyTeamDialog testDialog = new FantasyTeamDialog(primaryStage);
         testDialog.show();
     }
     public static void main(String[] args) {

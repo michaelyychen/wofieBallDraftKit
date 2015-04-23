@@ -18,10 +18,14 @@ import static wofieballdraftkit.data.Pitcher.DEFAULT_NUM;
  * @author MC
  */
 public class Player {
-    final StringProperty team;
+    final StringProperty fantasyTeam;
+    final StringProperty qualifyPosition;
+    final StringProperty position;
+    final StringProperty contract;
+    final IntegerProperty salary;
+    
     final StringProperty lastname;
     final StringProperty firstname;
-    final StringProperty position;
     final StringProperty nation;
     final StringProperty notes;
     final StringProperty birth;
@@ -43,12 +47,14 @@ public class Player {
     public Player(){
         firstname = new SimpleStringProperty(DEFAULT_NAME);
         lastname = new SimpleStringProperty(DEFAULT_NAME);
-        team = new SimpleStringProperty(DEFAULT_NAME);
+        fantasyTeam = new SimpleStringProperty(DEFAULT_NAME);
+        qualifyPosition = new SimpleStringProperty(DEFAULT_NAME);
         position = new SimpleStringProperty(DEFAULT_NAME);
+        contract = new SimpleStringProperty(DEFAULT_NAME);
         nation = new SimpleStringProperty(DEFAULT_NAME);
         notes = new SimpleStringProperty(DEFAULT_NAME);
         birth = new SimpleStringProperty(DEFAULT_NAME);
-        
+        salary = new SimpleIntegerProperty(DEFAULT_NUM);
         rw = new SimpleIntegerProperty(DEFAULT_NUM);
         rbik = new SimpleDoubleProperty(DEFAULT_NUM);
         hrsv = new SimpleIntegerProperty(DEFAULT_NUM);
@@ -56,7 +62,31 @@ public class Player {
         bawhip = new SimpleDoubleProperty(DEFAULT_NUM);
         
     }
+    
+    public int getSalary() {
+        return salary.get();
+    }
 
+    public void setSalary(int s) {
+        salary.set(s);
+    }
+    
+    public IntegerProperty salaryProperty(){
+    return salary;
+    }      
+    
+    public String getContract() {
+        return contract.get();
+    }
+
+    public void setContract(String s) {
+        contract.set(s);
+    }
+    
+    public StringProperty contractProperty(){
+    return contract;
+    }       
+    
     public String getPosition() {
         return position.get();
     }
@@ -67,6 +97,18 @@ public class Player {
     
     public StringProperty positionProperty(){
     return position;
+    }    
+    
+    public String getQualifyPosition() {
+        return qualifyPosition.get();
+    }
+
+    public void setQualifyPosition(String initPosition) {
+        qualifyPosition.set(initPosition);
+    }
+    
+    public StringProperty qualifypositionProperty(){
+    return qualifyPosition;
     }
 
     public String getFirstName() {
@@ -91,16 +133,16 @@ public class Player {
     public StringProperty lastnameProperty(){  
         return lastname;
     }    
-    public String getTeam() {
-        return team.get();
+    public String getFantasyTeam() {
+        return fantasyTeam.get();
     }
 
-    public void setTeam(String initTeam) {
-        team.set(initTeam);
+    public void setFantasyTeam(String initTeam) {
+        fantasyTeam.set(initTeam);
     }
     
-    public StringProperty teamProperty(){  
-        return team;
+    public StringProperty fantasyteamProperty(){  
+        return fantasyTeam;
     }
     public String getNation() {
         return nation.get();

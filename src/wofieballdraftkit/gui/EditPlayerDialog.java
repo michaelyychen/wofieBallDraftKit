@@ -34,7 +34,7 @@ import static wofieballdraftkit.gui.WBDK_GUI.PRIMARY_STYLE_SHEET;
  */
 public class EditPlayerDialog extends Stage{
      // THIS IS THE OBJECT DATA BEHIND THIS UI
-    Player player;
+    Player player = new Player();
     
     // GUI CONTROLS FOR OUR DIALOG
     GridPane gridPane;
@@ -78,7 +78,7 @@ public class EditPlayerDialog extends Stage{
      * 
      * @param primaryStage The owner of this modal dialog.
      */
-    public EditPlayerDialog(Stage primaryStage, Player player ) {
+    public EditPlayerDialog(Stage primaryStage ) {
         // FIRST MAKE OUR LECTURE AND INITIALIZE
         // IT WITH DEFAULT VALUES
         
@@ -87,9 +87,6 @@ public class EditPlayerDialog extends Stage{
         // FOR IT WHEN IT IS DISPLAYED
         initModality(Modality.WINDOW_MODAL);
         initOwner(primaryStage);
-        
-        
-        
         
         // FIRST OUR CONTAINER
         gridPane = new GridPane();
@@ -109,41 +106,13 @@ public class EditPlayerDialog extends Stage{
         positionLabel = new Label(POSITION_PROMPT);
         positionComboBox = new ComboBox();
         
-            String string = player.getPosition();
-            String[] parts = string.split("_");
-            for(String s:parts){
-                {
-                  positionComboBox.getItems().add(s);
-            }
-                 positionComboBox.getSelectionModel().select(0);
-            
-            }
-
-            
-            
-            
-        
+          
         contractLabel = new Label(CONTRACT_PROMPT);
         contractComboBox = new ComboBox();
         contractComboBox.getItems().addAll("S2","S1","X");
-        contractComboBox.getSelectionModel().select(0);
+        
         salaryLabel = new Label(SALARY_PROMPT);
         salaryTextField = new TextField();        
-        
-      
-       // ImageView playerPhoto = new ImageView("./images/players/"+ player.getLastName()+player.getFirstName()+".jpg");
-        ImageView playerPhoto = new ImageView(new Image("file:./images/players/"+player.getLastName()+player.getFirstName()+".jpg"));
-        ImageView playerNation = new ImageView(new Image("file:./images/flags/"+player.getNation()+".png"));
-        playerLabel = new Label(player.getFirstName()+" " +player.getLastName());
-        playerLabel.getStyleClass().add(CLASS_PROMPT_LABEL);
-        qpLabel = new Label(player.getPosition());
-        qpLabel.getStyleClass().add(CLASS_PROMPT_LABEL);
-        
-        vbox = new VBox();
-        borderPane = new BorderPane();
-        borderPane.setLeft(playerPhoto);
-        vbox.getChildren().addAll(playerNation,playerLabel, qpLabel);
-        vbox.setSpacing(20);
         
 
         // AND THE NUMBER OF SESSIONS
@@ -176,8 +145,7 @@ public class EditPlayerDialog extends Stage{
         flowPane.setPrefWrapLength(100);
         // NOW LET'S ARRANGE THEM ALL AT ONCE
         gridPane.add(headingLabel,      0, 0, 2, 1);
-        gridPane.add(borderPane         , 0, 1, 1, 1);
-        gridPane.add(vbox         , 1, 1, 1, 1);
+
         gridPane.add(fantasyTeamLabel,        0, 2, 1, 1);
         gridPane.add(fantasyTeamComboBox,    1, 2, 1, 1);
         gridPane.add(positionLabel,     0, 3, 1, 1);
@@ -208,6 +176,7 @@ public class EditPlayerDialog extends Stage{
     public Player getPlayer() { 
         return player;
     }
+
     
     /**
      * This method loads a custom message into the label and
@@ -219,7 +188,33 @@ public class EditPlayerDialog extends Stage{
     
     public void loadGUIData() {
         // LOAD THE UI STUFF
-
+        
+            String pos = player.getQualifyPosition();
+            String[] parts = pos.split("_");
+            for(String s:parts){
+                {
+                  positionComboBox.getItems().add(s);
+            }
+            }
+            
+        ImageView playerPhoto = new ImageView(new Image("file:./images/players/"+player.getFirstName()+player.getLastName()+".jpg"));
+        ImageView playerNation = new ImageView(new Image("file:./images/flags/"+player.getNation()+".png"));
+        playerLabel = new Label(player.getFirstName()+" " +player.getLastName());
+        playerLabel.getStyleClass().add(CLASS_PROMPT_LABEL);
+        qpLabel = new Label(player.getQualifyPosition());
+        qpLabel.getStyleClass().add(CLASS_PROMPT_LABEL);
+        
+        vbox = new VBox();
+        borderPane = new BorderPane();
+        borderPane.setLeft(playerPhoto);
+        vbox.getChildren().addAll(playerNation,playerLabel, qpLabel);
+        vbox.setSpacing(20);
+           
+            
+        gridPane.add(borderPane         , 0, 1, 1, 1);
+        gridPane.add(vbox         , 1, 1, 1, 1);      
+            
+            
     }
     
     public boolean wasCompleteSelected() {
@@ -234,7 +229,7 @@ public class EditPlayerDialog extends Stage{
         player.setFirstName(playerToEdit.getFirstName());
         player.setLastName(playerToEdit.getLastName());
         player.setNation(playerToEdit.getNation());
-        player.setPosition(playerToEdit.getPosition());
+        player.setQualifyPosition(playerToEdit.getQualifyPosition());
         
         
         // AND THEN INTO OUR GUI

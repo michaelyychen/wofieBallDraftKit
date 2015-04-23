@@ -164,7 +164,7 @@ public class WBDK_GUI implements DraftDataView{
     String tf ;
     TableView taxiDraftTable;
     TableView startingLineUpTable;
-    TableView playerTable;
+    TableView<Player> playerTable;
     TableColumn firstNameColumn;
     TableColumn lastNameColumn;
     TableColumn proTeamColumn;
@@ -666,8 +666,8 @@ public class WBDK_GUI implements DraftDataView{
            
         firstNameColumn.setCellValueFactory(new PropertyValueFactory<String, String>("firstname"));
         lastNameColumn.setCellValueFactory(new PropertyValueFactory<String, String>("lastname"));
-        proTeamColumn.setCellValueFactory(new PropertyValueFactory<String, String>("team"));
-        positionsColumn.setCellValueFactory(new PropertyValueFactory<String, String>("position"));
+        proTeamColumn.setCellValueFactory(new PropertyValueFactory<String, String>("fantasyTeam"));
+        positionsColumn.setCellValueFactory(new PropertyValueFactory<String, String>("qualifyPosition"));
         yearOfBirthColumn.setCellValueFactory(new PropertyValueFactory<String, String>("birth"));
         estimatedColumn.setCellValueFactory(new PropertyValueFactory<String, String>(""));  
         notesColumn.setCellValueFactory(new PropertyValueFactory<String, String>("notes"));
@@ -791,15 +791,16 @@ public class WBDK_GUI implements DraftDataView{
             fileController.handleExitRequest(this);
         });
         
-        draftController = new DraftEditController(primaryStage, dataManager.getDraft().g, messageDialog, yesNoCancelDialog);
+        draftController = new DraftEditController(primaryStage, dataManager.getDraft(), messageDialog, yesNoCancelDialog);
         
         
         
         playerTable.setOnMouseClicked(e -> {
          if (e.getClickCount() == 2) {
                // OPEN UP THE LECTURE EDITOR
-         Player l = (Player)playerTable.getSelectionModel().getSelectedItem();
-         DraftEditController.handleEditPlayerRequest(this, l);
+         Player l = playerTable.getSelectionModel().getSelectedItem();
+        
+         draftController.handleEditPlayerRequest(this, l);
             }
         });
         

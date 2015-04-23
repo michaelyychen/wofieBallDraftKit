@@ -195,14 +195,14 @@ public class JsonDraftFileManager implements DraftFileManager {
             
         Hitter a = new Hitter(jsonArray.getJsonObject(i).getString(JSON_LASTNAME),
                                 jsonArray.getJsonObject(i).getString(JSON_FIRSTNAME));
-        a.setTeam(jsonArray.getJsonObject(i).getString(JSON_TEAM));
+        a.setFantasyTeam(jsonArray.getJsonObject(i).getString(JSON_TEAM));
         
         double BA = Double.valueOf(jsonArray.getJsonObject(i).getString(JSON_H)) / 
                             Double.valueOf(jsonArray.getJsonObject(i).getString(JSON_AB));
                
         a.setBA(      ((double)((int)(BA*100)))/100  );
 
-        a.setPosition(jsonArray.getJsonObject(i).getString(JSON_QP));
+        a.setQualifyPosition(jsonArray.getJsonObject(i).getString(JSON_QP));
         a.setR(Integer.valueOf(jsonArray.getJsonObject(i).getString(JSON_R)));
         a.setH(Integer.valueOf(jsonArray.getJsonObject(i).getString(JSON_H)));
         a.setHR(Integer.valueOf(jsonArray.getJsonObject(i).getString(JSON_HR)));
@@ -240,7 +240,7 @@ public class JsonDraftFileManager implements DraftFileManager {
             
         Pitcher a = new Pitcher(jsonArray.getJsonObject(i).getString(JSON_LASTNAME),
                                 jsonArray.getJsonObject(i).getString(JSON_FIRSTNAME));
-        a.setTeam(jsonArray.getJsonObject(i).getString(JSON_TEAM));
+        a.setFantasyTeam(jsonArray.getJsonObject(i).getString(JSON_TEAM));
         
         double ERA = 9*(Double.valueOf(jsonArray.getJsonObject(i).getString(JSON_ER)) / 
                          Double.valueOf(jsonArray.getJsonObject(i).getString(JSON_IP)));
@@ -260,7 +260,7 @@ public class JsonDraftFileManager implements DraftFileManager {
         a.setNotes(jsonArray.getJsonObject(i).getString(JSON_NOTES));
         a.setBirth(jsonArray.getJsonObject(i).getString(JSON_BIRTH));
         a.setNation(jsonArray.getJsonObject(i).getString(JSON_NATION));
-        a.setPosition("P");
+        a.setQualifyPosition("P");
             items.add(a);
          
         }

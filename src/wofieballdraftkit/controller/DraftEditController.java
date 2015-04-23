@@ -39,9 +39,9 @@ public class DraftEditController {
      * initialize as the methods for this function are sent all
      * the objects they need as arguments.
      */
-    public DraftEditController(Stage initPrimaryStage, Player player, MessageDialog initMessageDialog, YesNoCancelDialog initYesNoCancelDialog) {
+    public DraftEditController(Stage initPrimaryStage, Draft draft, MessageDialog initMessageDialog, YesNoCancelDialog initYesNoCancelDialog) {
         anpd = new AddNewPlayerDialog(initPrimaryStage);
-        epd = new EditPlayerDialog(initPrimaryStage,player);
+        epd = new EditPlayerDialog(initPrimaryStage);
         ftd = new FantasyTeamDialog(initPrimaryStage);
         messageDialog = initMessageDialog;
         yesNoCancelDialog = initYesNoCancelDialog;
@@ -85,23 +85,27 @@ public class DraftEditController {
     }
     
     
-    public  void handleEditPlayerRequest(WBDK_GUI gui, Player player) {
+    public void handleEditPlayerRequest(WBDK_GUI gui, Player player) {
         DraftDataManager cdm = gui.getDataManager();
         Draft draft = cdm.getDraft();
         epd.showEditPlayerDialog(player);
         
         // DID THE USER CONFIRM?
         if (epd.wasCompleteSelected()) {
-            // UPDATE THE SCHEDULE ITEM
+              
+            
             Player si = epd.getPlayer();
-//            player.setDescription(si.);
-//            player.setDate(si.getDate());
-//            player.setLink(si.getLink());
+            
+            player.setFantasyTeam(si.getFantasyTeam());
+            player.setPosition(si.getPosition());
+            player.setContract(si.getContract());
+            player.setSalary(si.getSalary());
             
             // THE COURSE IS NOW DIRTY, MEANING IT'S BEEN 
             // CHANGED SINCE IT WAS LAST SAVED, SO MAKE SURE
             // THE SAVE BUTTON IS ENABLED
             gui.getFileController().markAsEdited(gui);
+            
         }
         else {
             // THE USER MUST HAVE PRESSED CANCEL, SO

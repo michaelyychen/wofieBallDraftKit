@@ -24,7 +24,7 @@ public class Test_AddPlayerDialog extends Application {
     public void start(Stage primaryStage) throws Exception {
         Player course = new Player();
         MessageDialog messageDialog = new MessageDialog(primaryStage, "CLOSE");
-        AddNewPlayerDialog testDialog = new AddNewPlayerDialog(primaryStage, course, messageDialog);
+        AddNewPlayerDialog testDialog = new AddNewPlayerDialog(primaryStage);
         testDialog.show();
     }
     public static void main(String[] args) {
