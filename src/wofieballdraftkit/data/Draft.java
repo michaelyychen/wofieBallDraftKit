@@ -92,7 +92,10 @@ public class Draft {
         for(int i = 0;i<teamList.size();i++)
         {
         if(teamList.get(i).getTeamName().equalsIgnoreCase(s) ){
+             
             teamList.remove(i);
+            teamList.trimToSize();
+            
                     }
         }
     

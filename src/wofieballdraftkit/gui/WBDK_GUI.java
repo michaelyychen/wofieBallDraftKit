@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -822,24 +823,27 @@ public class WBDK_GUI implements DraftDataView{
         
         
         minusButtonf.setOnAction(e -> {
-        
+              
               draftController.handlerDeleteFantasyTeamRequest(this,(String)fantasyTeamComboBox.getSelectionModel().getSelectedItem());
               fantasyTeamComboBox.getItems().clear();
+
               loadTeamComboBox(dataManager.getDraft().getTeamList());
                 
         });
         
         editButton.setOnAction(e -> {
-        
-                draftController.handleEditFantasyTeamRequest(this,(String)fantasyTeamComboBox.getSelectionModel().getSelectedItem());
-                
+               int temp = fantasyTeamComboBox.getSelectionModel().getSelectedIndex();
+               draftController.handleEditFantasyTeamRequest(this,(String)fantasyTeamComboBox.getSelectionModel().getSelectedItem());
+               fantasyTeamComboBox.getItems().clear();
+               loadTeamComboBox(dataManager.getDraft().getTeamList());
+               fantasyTeamComboBox.getSelectionModel().select(temp);
         });
         
         
         
         addButton.setOnAction(e -> {
         
-                System.out.println(1);
+            //  draftController.handleNewPlayerRequest(this);  
                 
         });
         minusButton.setOnAction(e -> {
@@ -1126,9 +1130,10 @@ public class WBDK_GUI implements DraftDataView{
     }    
     
     public void loadTeamComboBox(ArrayList<FantasyTeam> list){
-            for (FantasyTeam s : list) {
-            fantasyTeamComboBox.getItems().add(s.getTeamName());
-            
+            for (int i = 0; i< list.size();i++) {
+               if(!list.get(i).getTeamName().isEmpty()){
+                fantasyTeamComboBox.getItems().add(list.get(i).getTeamName());
+               }
         }
             fantasyTeamComboBox.getSelectionModel().selectFirst();
     
