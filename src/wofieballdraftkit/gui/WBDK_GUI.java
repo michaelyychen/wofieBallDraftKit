@@ -687,7 +687,7 @@ public class WBDK_GUI implements DraftDataView{
            
         firstNameColumn.setCellValueFactory(new PropertyValueFactory<String, String>("firstname"));
         lastNameColumn.setCellValueFactory(new PropertyValueFactory<String, String>("lastname"));
-        proTeamColumn.setCellValueFactory(new PropertyValueFactory<String, String>("fantasyTeam"));
+        proTeamColumn.setCellValueFactory(new PropertyValueFactory<String, String>("proTeam"));
         positionsColumn.setCellValueFactory(new PropertyValueFactory<String, String>("qualifyPosition"));
         yearOfBirthColumn.setCellValueFactory(new PropertyValueFactory<String, String>("birth"));
         estimatedColumn.setCellValueFactory(new PropertyValueFactory<String, String>(""));  
@@ -843,7 +843,7 @@ public class WBDK_GUI implements DraftDataView{
         
         addButton.setOnAction(e -> {
         
-            //  draftController.handleNewPlayerRequest(this);  
+              draftController.handleNewPlayerRequest(this);  
                 
         });
         minusButton.setOnAction(e -> {

@@ -19,6 +19,7 @@ import static wofieballdraftkit.data.Pitcher.DEFAULT_NUM;
  */
 public class Player {
     final StringProperty fantasyTeam;
+    final StringProperty proTeam;
     final StringProperty qualifyPosition;
     final StringProperty position;
     final StringProperty contract;
@@ -47,6 +48,7 @@ public class Player {
     public Player(){
         firstname = new SimpleStringProperty(DEFAULT_NAME);
         lastname = new SimpleStringProperty(DEFAULT_NAME);
+        proTeam = new SimpleStringProperty(DEFAULT_NAME);
         fantasyTeam = new SimpleStringProperty(DEFAULT_NAME);
         qualifyPosition = new SimpleStringProperty(DEFAULT_NAME);
         position = new SimpleStringProperty(DEFAULT_NAME);
@@ -74,16 +76,27 @@ public class Player {
        setNation(DEFAULT_NAME);
        setNotes(DEFAULT_NAME);
        setBirth(DEFAULT_NAME);
+       setProTeam(DEFAULT_NAME);
        setRW(DEFAULT_NUM);
        setRBIK(DEFAULT_NUM);
        setHRSV(DEFAULT_NUM);
        setSBERA(DEFAULT_NUM);
        setBAWHIP(DEFAULT_NUM);
        setSalary(DEFAULT_NUM);
-    
+       
     
     }
+    public String getProTeam() {
+        return proTeam.get();
+    }
+
+    public void setProTeam(String s) {
+        proTeam.set(s);
+    }
     
+    public StringProperty proTeamProperty(){
+    return proTeam;
+    }       
     public int getSalary() {
         return salary.get();
     }

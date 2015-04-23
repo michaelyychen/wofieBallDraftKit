@@ -195,7 +195,7 @@ public class JsonDraftFileManager implements DraftFileManager {
             
         Hitter a = new Hitter(jsonArray.getJsonObject(i).getString(JSON_LASTNAME),
                                 jsonArray.getJsonObject(i).getString(JSON_FIRSTNAME));
-        a.setFantasyTeam(jsonArray.getJsonObject(i).getString(JSON_TEAM));
+        a.setProTeam(jsonArray.getJsonObject(i).getString(JSON_TEAM));
         
         double BA = Double.valueOf(jsonArray.getJsonObject(i).getString(JSON_H)) / 
                             Double.valueOf(jsonArray.getJsonObject(i).getString(JSON_AB));
@@ -240,7 +240,7 @@ public class JsonDraftFileManager implements DraftFileManager {
             
         Pitcher a = new Pitcher(jsonArray.getJsonObject(i).getString(JSON_LASTNAME),
                                 jsonArray.getJsonObject(i).getString(JSON_FIRSTNAME));
-        a.setFantasyTeam(jsonArray.getJsonObject(i).getString(JSON_TEAM));
+        a.setProTeam(jsonArray.getJsonObject(i).getString(JSON_TEAM));
         
         double ERA = 9*(Double.valueOf(jsonArray.getJsonObject(i).getString(JSON_ER)) / 
                          Double.valueOf(jsonArray.getJsonObject(i).getString(JSON_IP)));

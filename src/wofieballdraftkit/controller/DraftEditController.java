@@ -191,6 +191,31 @@ public class DraftEditController {
             gui.getFileController().markAsEdited(gui);
         }
     }    
+
+    public void handleNewPlayerRequest(WBDK_GUI gui) {
+        DraftDataManager cdm = gui.getDataManager();
+        Draft draft = cdm.getDraft();
+        anpd.showAddPlayerDialog();
+        
+        // DID THE USER CONFIRM?
+        if (anpd.wasCompleteSelected()) {
+            // GET THE SCHEDULE ITEM
+            Player si = anpd.getPlayer();
+            
+            // AND ADD IT AS A ROW TO THE TABLE
+            
+            draft.getGuiPool().add(si);
+
+            // THE COURSE IS NOW DIRTY, MEANING IT'S BEEN 
+            // CHANGED SINCE IT WAS LAST SAVED, SO MAKE SURE
+            // THE SAVE BUTTON IS ENABLED
+            gui.getFileController().markAsEdited(gui);
+        }
+        else {
+            // THE USER MUST HAVE PRESSED CANCEL, SO
+            // WE DO NOTHING
+        } 
+    }
     
     
     

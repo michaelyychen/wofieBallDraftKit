@@ -7,6 +7,8 @@ package wofieballdraftkit.gui;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -16,6 +18,7 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Modality;
@@ -53,6 +56,7 @@ public class AddNewPlayerDialog extends Stage{
     
     
     FlowPane flow;
+    ToggleGroup group;
     
     Button completeButton;
     Button cancelButton;
@@ -102,14 +106,14 @@ public class AddNewPlayerDialog extends Stage{
         firstNameLabel.getStyleClass().add(CLASS_PROMPT_LABEL);
         firstNameTextField = new TextField();
         firstNameTextField.textProperty().addListener((observable, oldValue, newValue) -> {
-          //  scheduleItem.setDescription(newValue);
+            player.setFirstName(newValue);
         });
         
         lastNameLabel = new Label(LASTNAME_PROMPT);
         lastNameLabel.getStyleClass().add(CLASS_PROMPT_LABEL);
         lastNameTextField = new TextField();
         lastNameTextField.textProperty().addListener((observable, oldValue, newValue) -> {
-          //  scheduleItem.setDescription(newValue);
+            player.setLastName(newValue);
         });    
         
         
@@ -120,10 +124,36 @@ public class AddNewPlayerDialog extends Stage{
         proTeamComboBox = new ComboBox();
         loadProTeamComboBox(teamArray);
         
-//        urlTextField.textProperty().addListener((observable, oldValue, newValue) -> {
-//            scheduleItem.setLink(newValue);
-//        });
+         proTeamComboBox.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
+            @Override
+            public void changed(ObservableValue observable, Object oldValue, Object newValue) {
+                String s = newValue.toString();
+                player.setProTeam(s);
+            }
+            
+        });
         
+
+        
+        positionLabel = new Label(POSITION_PROMPT);
+        positionLabel.getStyleClass().add(CLASS_PROMPT_LABEL);
+        
+        flow = new FlowPane();
+        C = new CheckBox("C");
+        first = new CheckBox("1B");
+        third = new CheckBox("3B");
+        second = new CheckBox("2B");
+        SS = new CheckBox("SS");
+        OF = new CheckBox("OF");
+        P = new CheckBox("P");
+        
+        
+        
+        
+        flow.getChildren().addAll(C,first,third,second,SS,OF,P);
+        flow.setHgap(5);
+        flow.setPrefWrapLength(400);
+       
         // AND FINALLY, THE BUTTONS
         completeButton = new Button(COMPLETE);
         cancelButton = new Button(CANCEL);
@@ -136,21 +166,6 @@ public class AddNewPlayerDialog extends Stage{
         };
         completeButton.setOnAction(completeCancelHandler);
         cancelButton.setOnAction(completeCancelHandler);
-        
-        positionLabel = new Label(POSITION_PROMPT);
-        positionLabel.getStyleClass().add(CLASS_PROMPT_LABEL);
-        flow = new FlowPane();
-        C = new CheckBox("C");
-        first = new CheckBox("1B");
-        third = new CheckBox("3B");
-        second = new CheckBox("2B");
-        SS = new CheckBox("SS");
-        OF = new CheckBox("OF");
-        P = new CheckBox("P");
-        flow.getChildren().addAll(C,first,third,second,SS,OF,P);
-        flow.setHgap(5);
-        flow.setPrefWrapLength(300);
-        
 
         
         
@@ -169,7 +184,7 @@ public class AddNewPlayerDialog extends Stage{
        
     
         // AND PUT THE GRID PANE IN THE WINDOW
-        setTitle(ADD_PLAYER_TITLE);
+        
         dialogScene = new Scene(gridPane);
         dialogScene.getStylesheets().add(PRIMARY_STYLE_SHEET);
         
@@ -205,16 +220,13 @@ public class AddNewPlayerDialog extends Stage{
     public Player showAddPlayerDialog() {
         // SET THE DIALOG TITLE
      
-        
+        setTitle(ADD_PLAYER_TITLE);
         
         // RESET THE SCHEDULE ITEM OBJECT WITH DEFAULT VALUES
         player = new Player();
        
         // LOAD THE UI STUFF
-       // firstNameTextField.setText();
-       // lastNameTextField.setText(scheduleItem.getDescription());
-
-
+        if(C.isSelected()){System.out.println("C");}
         
         // AND OPEN IT UP
         this.showAndWait();
