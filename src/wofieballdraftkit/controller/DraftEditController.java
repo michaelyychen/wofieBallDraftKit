@@ -112,6 +112,7 @@ public class DraftEditController {
             
         }
         else {
+            epd.clearData();
             // THE USER MUST HAVE PRESSED CANCEL, SO
             // WE DO NOTHING
         }
@@ -132,7 +133,7 @@ public class DraftEditController {
             // AND ADD IT AS A ROW TO THE TABLE
             
             draft.getTeamList().add(si);
-
+            
             // THE COURSE IS NOW DIRTY, MEANING IT'S BEEN 
             // CHANGED SINCE IT WAS LAST SAVED, SO MAKE SURE
             // THE SAVE BUTTON IS ENABLED
@@ -205,7 +206,7 @@ public class DraftEditController {
             // AND ADD IT AS A ROW TO THE TABLE
             
             draft.getGuiPool().add(si);
-
+            
             // THE COURSE IS NOW DIRTY, MEANING IT'S BEEN 
             // CHANGED SINCE IT WAS LAST SAVED, SO MAKE SURE
             // THE SAVE BUTTON IS ENABLED

@@ -259,6 +259,9 @@ public class WBDK_GUI implements DraftDataView{
     public DraftSiteExporter getSiteExporter() {
         return siteExporter;
     }
+    
+
+    
 
     /**
      * Accessor method for the window (i.e. stage).
@@ -426,7 +429,9 @@ public class WBDK_GUI implements DraftDataView{
      * 
      * @param course The course to be updated using the data from the UI controls.
      */
-    public void updateDraftInfo(Draft draftToEdit ) {
+    public void updateDraftInfo(Draft draft ) {
+        
+          
 //        course.setSubject(Subject.valueOf(courseSubjectComboBox.getSelectionModel().getSelectedItem().toString()));
 //        course.setNumber(Integer.parseInt(courseNumberTextField.getText()));
 //        course.setSemester(Semester.valueOf(courseSemesterComboBox.getSelectionModel().getSelectedItem().toString()));
@@ -712,9 +717,7 @@ public class WBDK_GUI implements DraftDataView{
         playerTable.setPrefHeight(1000);
         
         playerPane.getChildren().add(initLabel(WBDK_PropertyType.PLAYERS_LABEL, CLASS_HEADING_LABEL));
-        playerPane.getChildren().add(searchHbox);    
-        playerPane.getChildren().add(radioHBox);
-        playerPane.getChildren().add(playerTable);
+        playerPane.getChildren().addAll(searchHbox,radioHBox,playerTable);    
         playerPane.setStyle("-fx-background-color: GhostWhite");
         playerPane.setSpacing(10);
         
@@ -844,7 +847,9 @@ public class WBDK_GUI implements DraftDataView{
         addButton.setOnAction(e -> {
         
               draftController.handleNewPlayerRequest(this);  
-                
+              
+              playerTable.scrollTo(dataManager.getDraft().getGuiPool().size()-1);
+              playerTable.getSelectionModel().selectLast();
         });
         minusButton.setOnAction(e -> {
         

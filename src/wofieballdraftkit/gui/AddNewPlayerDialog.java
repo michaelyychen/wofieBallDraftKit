@@ -54,7 +54,8 @@ public class AddNewPlayerDialog extends Stage{
     CheckBox OF;
     CheckBox P;
     
-    
+    String s = "";
+    String pos ="";
     FlowPane flow;
     ToggleGroup group;
     
@@ -63,18 +64,19 @@ public class AddNewPlayerDialog extends Stage{
     
     // THIS IS FOR KEEPING TRACK OF WHICH BUTTON THE USER PRESSED
     String selection;
+    
     ArrayList<String> teamArray = new ArrayList(
                     Arrays.asList("ATL", "AZ", "CHC", "CIN", "COL", "LAD", "MIA", "MIL",
                                 "NYM", "PHI", "PIT", "SD", "SF", "STL", "WAS"));
    
-            
+      ArrayList<String> posArray = new ArrayList();        
     // CONSTANTS FOR OUR UI
     public static final String COMPLETE = "Complete";
     public static final String CANCEL = "Cancel";
     public static final String FIRSTNAME_PROMPT = "First Name: ";
     public static final String LASTNAME_PROMPT = "Last Name:";
     public static final String PROTEAM_PROMPT = "Pro Team:";
-     public static final String POSITION_PROMPT = "Positions:";
+    public static final String POSITION_PROMPT = "Positions:";
     public static final String PLAYER_HEADING = "Player Details";
     public static final String ADD_PLAYER_TITLE = "Add New Player";
    
@@ -127,6 +129,7 @@ public class AddNewPlayerDialog extends Stage{
          proTeamComboBox.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
             @Override
             public void changed(ObservableValue observable, Object oldValue, Object newValue) {
+             //   System.out.println(newValue.toString());
                 String s = newValue.toString();
                 player.setProTeam(s);
             }
@@ -146,14 +149,65 @@ public class AddNewPlayerDialog extends Stage{
         SS = new CheckBox("SS");
         OF = new CheckBox("OF");
         P = new CheckBox("P");
-        C.selectedProperty().addListener(new ChangeListener(){
-            @Override
-            public void changed(ObservableValue observable, Object oldValue, Object newValue) {
-                System.out.println(newValue.toString());
+
+        
+        EventHandler<ActionEvent> checkBoxHandler = e -> {{
+        if (P.isSelected()&& !pos.contains("P")) {
+           pos = pos.concat("P");
+           C.setSelected(false);
+           first.setSelected(false);
+           third.setSelected(false);
+           second.setSelected(false);
+           SS.setSelected(false);
+           OF.setSelected(false);
+          
+        } else{
+            
+            
+            if(C.isSelected()&& !pos.contains("C")){
+                pos = pos.concat("C_");    
+             }else if (!C.isSelected()&& pos.contains("C")) {
+                pos = pos.replace("C_", "");
             }
-        });
+            if(first.isSelected()&& !pos.contains("1B")){
+                pos = pos.concat("1B_");
+            }else if (!first.isSelected()&& pos.contains("1B")) {
+                pos = pos.replace("1B_", "");
+            }
+            if(third.isSelected()&& !pos.contains("3B")){
+                pos = pos.concat("3B_"); 
+           }else if (!third.isSelected()&& pos.contains("3B")) {
+                pos = pos.replace("3B_", "");
+            }
+            if(second.isSelected()&& !pos.contains("2B")){
+               pos = pos.concat("2B_"); 
+            }else if (!second.isSelected()&& pos.contains("2B")) {
+                pos = pos.replace("2B_", "");
+            }
+            if(SS.isSelected()&& !pos.contains("SS")){
+                 pos = pos.concat("SS_");
+            }else if (!SS.isSelected()&& pos.contains("SS")) {
+                pos = pos.replace("SS_", "");
+            }   
+            if(OF.isSelected()&& !pos.contains("OF")){
+               pos = pos.concat("OF_");  
+            }else if (!OF.isSelected()&& pos.contains("OF")) {
+                pos = pos.replace("OF_", "");
+            }
+            
+          }
+        }
+        //System.out.println(pos);
+        };
+        C.setOnAction(checkBoxHandler);
+        first.setOnAction(checkBoxHandler);
+        third.setOnAction(checkBoxHandler);
+        second.setOnAction(checkBoxHandler);
+        SS.setOnAction(checkBoxHandler);
+        OF.setOnAction(checkBoxHandler);
+        P.setOnAction(checkBoxHandler);
         
-        
+//        player.setQualifyPosition(pos);
         
         flow.getChildren().addAll(C,first,third,second,SS,OF,P);
         flow.setHgap(5);
@@ -171,8 +225,9 @@ public class AddNewPlayerDialog extends Stage{
         };
         completeButton.setOnAction(completeCancelHandler);
         cancelButton.setOnAction(completeCancelHandler);
-
+       
         
+//        player.setQualifyPosition(temp);
         
         // NOW LET'S ARRANGE THEM ALL AT ONCE
         gridPane.add(headingLabel, 0, 0, 2, 1);
@@ -229,22 +284,38 @@ public class AddNewPlayerDialog extends Stage{
         
         // RESET THE SCHEDULE ITEM OBJECT WITH DEFAULT VALUES
         player = new Player();
-       
+        player.setBirth("N/A");
+        player.setProTeam("ATL");
         // LOAD THE UI STUFF
+       firstNameTextField.setText(player.getFirstName());
+       lastNameTextField.setText(player.getLastName()); 
+       proTeamComboBox.getSelectionModel().select(0);
+       C.setSelected(false);
+       first.setSelected(false);
+       third.setSelected(false);
+       second.setSelected(false);
+       SS.setSelected(false);
+       OF.setSelected(false);       
+       P.setSelected(false);  
        
-        
+       
+       
+       
         // AND OPEN IT UP
         this.showAndWait();
+        
+        
+        if(pos.endsWith("_")){
+        player.setQualifyPosition(pos.substring(0, pos.length()-1));
+        }
+        else{
+            player.setQualifyPosition(pos);
+        }
+        
         
         return player;
     }
     
-    public void loadGUIData() {
-        // LOAD THE UI STUFF
-      //  descriptionTextField.setText(scheduleItem.getDescription());
-     //   datePicker.setValue(scheduleItem.getDate());
-     //   urlTextField.setText(scheduleItem.getLink());       
-    }
     
     public boolean wasCompleteSelected() {
         return selection.equals(COMPLETE);
@@ -254,10 +325,8 @@ public class AddNewPlayerDialog extends Stage{
             for (String s : proTeams) {
                 proTeamComboBox.getItems().add(s);
             }
-         proTeamComboBox.getSelectionModel().select(0);
+         
         }    
-    
-    
-    
- 
+
+     
 }

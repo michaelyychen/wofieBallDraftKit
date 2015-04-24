@@ -138,6 +138,7 @@ public class EditPlayerDialog extends Stage{
         };
         completeButton.setOnAction(completeCancelHandler);
         cancelButton.setOnAction(completeCancelHandler);
+        
         vbox = new VBox();
         borderPane = new BorderPane();
         
@@ -209,12 +210,7 @@ public class EditPlayerDialog extends Stage{
         vbox.getChildren().addAll(playerNation,playerLabel, qpLabel);
         vbox.setSpacing(20);
             
-          
-    }
-    
-
-    
-    
+    }   
     
     public boolean wasCompleteSelected() {
 
@@ -252,10 +248,7 @@ public class EditPlayerDialog extends Stage{
     borderPane.getChildren().clear();
     vbox.getChildren().clear();
     positionComboBox.getItems().clear();
-   
     salaryTextField.clear();
-    
-    
     
     }
 }
