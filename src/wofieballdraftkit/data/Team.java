@@ -5,16 +5,33 @@
  */
 package wofieballdraftkit.data;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 /**
  *
  * @author MC
  */
 public class Team {
+    ObservableList<Player> teamPlayer;
     
     String teamName;
     String teamOwner;
     int money;
     int numPlayer;
+    public Team(){
+        
+    teamPlayer = FXCollections.observableArrayList();
+    }
+    
+    public ObservableList<Player> getTeamPlayer() {
+        return teamPlayer;
+    }
+    public void setTeamPlayer(ObservableList<Player> pool) {
+        this.teamPlayer = pool;
+    }    
+    
+    
     
     
     public String getTeamName() {

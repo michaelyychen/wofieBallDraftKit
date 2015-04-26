@@ -5,6 +5,7 @@
  */
 package wofieballdraftkit.gui;
 
+import java.util.ArrayList;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -23,6 +24,8 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import wofieballdraftkit.data.DraftDataManager;
+import wofieballdraftkit.data.FantasyTeam;
 import wofieballdraftkit.data.Player;
 import static wofieballdraftkit.gui.WBDK_GUI.CLASS_HEADING_LABEL;
 import static wofieballdraftkit.gui.WBDK_GUI.CLASS_PROMPT_LABEL;
@@ -35,7 +38,7 @@ import static wofieballdraftkit.gui.WBDK_GUI.PRIMARY_STYLE_SHEET;
 public class EditPlayerDialog extends Stage{
      // THIS IS THE OBJECT DATA BEHIND THIS UI
     Player player;
-    
+    ArrayList<FantasyTeam> clist;
     // GUI CONTROLS FOR OUR DIALOG
     GridPane gridPane;
     Scene dialogScene;
@@ -78,7 +81,7 @@ public class EditPlayerDialog extends Stage{
      * 
      * @param primaryStage The owner of this modal dialog.
      */
-    public EditPlayerDialog(Stage primaryStage ) {
+    public EditPlayerDialog(Stage primaryStage) {
         // FIRST MAKE OUR LECTURE AND INITIALIZE
         // IT WITH DEFAULT VALUES
         
@@ -102,6 +105,9 @@ public class EditPlayerDialog extends Stage{
         // NOW THE TOPIC 
         fantasyTeamLabel = new Label(FANTASY_PROMPT);
         fantasyTeamComboBox = new ComboBox();
+        
+        
+        
         
         positionLabel = new Label(POSITION_PROMPT);
         positionComboBox = new ComboBox();
@@ -191,7 +197,7 @@ public class EditPlayerDialog extends Stage{
     
     public void loadGUIData() {
         // LOAD THE UI STUFF
-        
+        loadFTComboBox();
         loadQPComboBox();    
         Image img = new Image("file:./images/players/"+player.getFirstName()+player.getLastName()+".jpg");
         if(img.isError())
@@ -217,10 +223,10 @@ public class EditPlayerDialog extends Stage{
        return selection.equals(COMPLETE);
     }
     
-    public void showEditPlayerDialog(Player playerToEdit) {
+    public void showEditPlayerDialog(Player playerToEdit, ArrayList<FantasyTeam> list) {
         // SET THE DIALOG TITLE
         setTitle(EDIT_PLAYER_TITLE);
-        
+        clist = list;
         // LOAD INTO OUR LOCAL OBJECT
         player = new Player();
         player.setFirstName(playerToEdit.getFirstName());
@@ -235,6 +241,21 @@ public class EditPlayerDialog extends Stage{
         // AND OPEN IT UP
         this.showAndWait();
     }
+    
+    
+    
+    public void loadFTComboBox(){
+    
+    String name ="";
+    for(int i = 0; i<clist.size();i++){
+        name = clist.get(i).getTeamName();
+        fantasyTeamComboBox.getItems().add(name);
+    
+    }
+    }    
+    
+    
+    
     public void loadQPComboBox(){
     String pos = player.getQualifyPosition();
     String[] parts = pos.split("_");
@@ -248,6 +269,7 @@ public class EditPlayerDialog extends Stage{
     borderPane.getChildren().clear();
     vbox.getChildren().clear();
     positionComboBox.getItems().clear();
+    fantasyTeamComboBox.getItems().clear();
     salaryTextField.clear();
     
     }

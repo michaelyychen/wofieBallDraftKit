@@ -7,6 +7,8 @@ package wofieballdraftkit.data;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 /**
  *
@@ -15,13 +17,23 @@ import javafx.beans.property.StringProperty;
 public class FantasyTeam{
     final StringProperty owner;
     final StringProperty teamName;
-    
+    ObservableList<Player> teamPlayer;
     public static final String DEFAULT_STRING = "";
     
     public FantasyTeam(){
         owner = new SimpleStringProperty(DEFAULT_STRING);
         teamName = new SimpleStringProperty(DEFAULT_STRING);
+        teamPlayer = FXCollections.observableArrayList();
     }
+    public ObservableList<Player> getTeamPlayer() {
+        return teamPlayer;
+    }
+    public void setTeamPlayer(ObservableList<Player> pool) {
+        this.teamPlayer = pool;
+    }        
+    
+    
+    
     public String getOwner() {
         return owner.get();
     }

@@ -578,6 +578,8 @@ public class WBDK_GUI implements DraftDataView{
         
         startingLineUpTable.getColumns().addAll(positionColumn,firstNameColumn,lastNameColumn,proTeamColumn, positionsColumn
         , RWColumn, HRSVColumn, RBIKColumn, SBERAColumn, BAWHIPColumn, estimatedColumn, contractColumn,salaryColumn);  
+        
+       
         startingLineUpTable.setPrefHeight(800);
         
 
@@ -853,7 +855,7 @@ public class WBDK_GUI implements DraftDataView{
         });
         minusButton.setOnAction(e -> {
         
-        System.out.println(2);
+        draftController.handleDeletePlayerRequest(this, playerTable.getSelectionModel().getSelectedItem());
                 
         });    
         
@@ -865,6 +867,7 @@ public class WBDK_GUI implements DraftDataView{
          Player l = playerTable.getSelectionModel().getSelectedItem();
         
          draftController.handleEditPlayerRequest(this, l);
+          startingLineUpTable.setItems(dataManager.getDraft().getTeamByName((String)fantasyTeamComboBox.getSelectionModel().getSelectedItem()).getTeamPlayer());
             }
         });
         

@@ -27,8 +27,8 @@ public class Test_EditPlayerDialog extends Application{
         course.setNation("Colombia");
         course.setPosition("C_U");
         MessageDialog messageDialog = new MessageDialog(primaryStage, "CLOSE");
-        EditPlayerDialog testDialog = new EditPlayerDialog(primaryStage);
-        testDialog.show();
+      //  EditPlayerDialog testDialog = new EditPlayerDialog(primaryStage);
+      //  testDialog.show();
     }
     public static void main(String[] args) {
             launch(args);

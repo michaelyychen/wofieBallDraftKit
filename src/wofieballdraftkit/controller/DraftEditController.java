@@ -91,7 +91,7 @@ public class DraftEditController {
     public void handleEditPlayerRequest(WBDK_GUI gui, Player player) {
         DraftDataManager cdm = gui.getDataManager();
         Draft draft = cdm.getDraft();
-        epd.showEditPlayerDialog(player);
+        epd.showEditPlayerDialog(player,cdm.getDraft().getTeamList());
       
         // DID THE USER CONFIRM?
         if (epd.wasCompleteSelected()) {
@@ -104,6 +104,8 @@ public class DraftEditController {
             player.setContract(si.getContract());
             player.setSalary(si.getSalary());
             
+            cdm.getDraft().getTeamByName(si.getFantasyTeam()).getTeamPlayer().add(player);
+            cdm.getDraft().getDataPool().remove(player);
             // THE COURSE IS NOW DIRTY, MEANING IT'S BEEN 
             // CHANGED SINCE IT WAS LAST SAVED, SO MAKE SURE
             // THE SAVE BUTTON IS ENABLED
@@ -217,6 +219,26 @@ public class DraftEditController {
             // WE DO NOTHING
         } 
     }
+    public void handleDeletePlayerRequest(WBDK_GUI gui, Player p) {
+        // PROMPT THE USER TO SAVE UNSAVED WORK
+        yesNoCancelDialog.show(PropertiesManager.getPropertiesManager().getProperty(REMOVE_ITEM_MESSAGE));
+        
+        // AND NOW GET THE USER'S SELECTION
+        String selection = yesNoCancelDialog.getSelection();
+
+        // IF THE USER SAID YES, THEN REMOVE IT
+        if (selection.equals(YesNoCancelDialog.YES)) { 
+            gui.getDataManager().getDraft().getGuiPool().remove(p);
+            gui.getDataManager().getDraft().getDataPool().remove(p);
+            gui.getDataManager().getDraft().getSearchPool().remove(p);
+            // THE COURSE IS NOW DIRTY, MEANING IT'S BEEN 
+            // CHANGED SINCE IT WAS LAST SAVED, SO MAKE SURE
+            // THE SAVE BUTTON IS ENABLED
+            gui.getFileController().markAsEdited(gui);
+        }
+    }     
+    
+    
     
     
     
