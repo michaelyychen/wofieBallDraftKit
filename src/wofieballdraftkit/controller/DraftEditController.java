@@ -7,6 +7,7 @@ package wofieballdraftkit.controller;
 
 import javafx.stage.Stage;
 import properties_manager.PropertiesManager;
+import wofieballdraftkit.WBDK_PropertyType;
 import static wofieballdraftkit.WBDK_PropertyType.REMOVE_ITEM_MESSAGE;
 import wofieballdraftkit.data.Draft;
 import wofieballdraftkit.data.DraftDataManager;
@@ -91,8 +92,9 @@ public class DraftEditController {
     public void handleEditPlayerRequest(WBDK_GUI gui, Player player) {
         DraftDataManager cdm = gui.getDataManager();
         Draft draft = cdm.getDraft();
+        epd.clearData(); 
         epd.showEditPlayerDialog(player,draft.getTeamList());
-      
+         
         // DID THE USER CONFIRM?
         if (epd.wasCompleteSelected()) {
               
@@ -104,18 +106,26 @@ public class DraftEditController {
             player.setContract(si.getContract());
             player.setSalary(si.getSalary());
             
-            System.out.println(player.getPosition());
-            draft.getTeamByName(player.getFantasyTeam()).getTeamPlayer().add(player);
+            if(player.getPosition().isEmpty()){
+            PropertiesManager props = PropertiesManager.getPropertiesManager();
+            messageDialog.show(props.getProperty(WBDK_PropertyType.ILLEGAL_SELECTION));
+
+            }else{
             
+            draft.getTeamByName(player.getFantasyTeam()).getTeamPlayer().add(player);
+            draft.getDataPool().remove(player);
+            draft.getGuiPool().remove(player);
+            draft.getSearchPool().remove(player);
+        }
             // THE COURSE IS NOW DIRTY, MEANING IT'S BEEN 
             // CHANGED SINCE IT WAS LAST SAVED, SO MAKE SURE
             // THE SAVE BUTTON IS ENABLED
            
             gui.getFileController().markAsEdited(gui);
-            epd.clearData(); 
+            
         }
         else {
-            epd.clearData();
+         
             
             // THE USER MUST HAVE PRESSED CANCEL, SO
             // WE DO NOTHING

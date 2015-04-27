@@ -28,34 +28,7 @@ public class FantasyTeam{
         owner = new SimpleStringProperty(DEFAULT_STRING);
         teamName = new SimpleStringProperty(DEFAULT_STRING);
         teamPlayer = FXCollections.observableArrayList();
-//        for(int i = 0; i<23; i ++){
-//        Player p = new Player();
-//        teamPlayer.add(p);
-//        }
-        posTemplate = new ArrayList();
-        posTemplate.add("C");
-        posTemplate.add("C");
-        posTemplate.add("1B");
-        posTemplate.add("CI");
-        posTemplate.add("3B");
-        posTemplate.add("2B");
-        posTemplate.add("MI");
-        posTemplate.add("SS");
-        posTemplate.add("U");
-        posTemplate.add("OF");
-        posTemplate.add("OF");
-        posTemplate.add("OF");
-        posTemplate.add("OF");
-        posTemplate.add("OF");
-        posTemplate.add("P");
-        posTemplate.add("P");
-        posTemplate.add("P");
-        posTemplate.add("P");
-        posTemplate.add("P");
-        posTemplate.add("P");
-        posTemplate.add("P");
-        posTemplate.add("P");
-        posTemplate.add("P");
+
         
     }
     public ArrayList<String> getTemplate(){

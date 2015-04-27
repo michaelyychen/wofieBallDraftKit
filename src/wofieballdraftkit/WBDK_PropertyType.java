@@ -73,6 +73,7 @@ public enum WBDK_PropertyType {
         // ERROR DIALOG MESSAGES
         CLOSE_BUTTON_TEXT,
         ILLEGAL_SELECTION,
+        ILLEGAL_SALARY,
         
         // AND VERIFICATION MESSAGES
         NEW_DRAFT_CREATED_MESSAGE,

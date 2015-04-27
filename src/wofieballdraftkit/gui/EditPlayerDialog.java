@@ -24,6 +24,9 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import properties_manager.PropertiesManager;
+import wofieballdraftkit.WBDK_PropertyType;
+import static wofieballdraftkit.WBDK_StartUpConstants.CLOSE_BUTTON_LABEL;
 import wofieballdraftkit.data.DraftDataManager;
 import wofieballdraftkit.data.FantasyTeam;
 import wofieballdraftkit.data.Player;
@@ -37,6 +40,7 @@ import static wofieballdraftkit.gui.WBDK_GUI.PRIMARY_STYLE_SHEET;
  */
 public class EditPlayerDialog extends Stage{
      // THIS IS THE OBJECT DATA BEHIND THIS UI
+    MessageDialog messageDialog;
     DraftDataManager ddm;
     Player player;
     ArrayList<FantasyTeam> clist;
@@ -85,7 +89,7 @@ public class EditPlayerDialog extends Stage{
     public EditPlayerDialog(Stage primaryStage) {
         // FIRST MAKE OUR LECTURE AND INITIALIZE
         // IT WITH DEFAULT VALUES
-        
+        messageDialog = new MessageDialog(primaryStage, CLOSE_BUTTON_LABEL);
         
         // MAKE THIS DIALOG MODAL, MEANING OTHERS WILL WAIT
         // FOR IT WHEN IT IS DISPLAYED
@@ -123,27 +127,34 @@ public class EditPlayerDialog extends Stage{
         positionComboBox = new ComboBox();
         positionComboBox.getSelectionModel().selectedItemProperty().addListener((ObservableValue observable, Object oldValue, Object newValue) -> {
             if(newValue!=null){
+                
             player.setPosition((String)newValue);
+            
             }
         }); 
           
         contractLabel = new Label(CONTRACT_PROMPT);
         contractComboBox = new ComboBox();
-        contractComboBox.getItems().addAll("S2","S1","X");
+      
         contractComboBox.getSelectionModel().selectedItemProperty().addListener((ObservableValue observable, Object oldValue, Object newValue) -> {
-        
+        if(newValue!=null){
         player.setContract(newValue.toString());
-        System.out.println(newValue.toString());
-        
+      
+        }
         });
         
         salaryLabel = new Label(SALARY_PROMPT);
         salaryTextField = new TextField();        
         salaryTextField.textProperty().addListener((observable, oldValue, newValue) -> {
           if(!newValue.isEmpty()){
+              if(ifNumeric(newValue)){
            int salary = Integer.valueOf(newValue);
            player.setSalary(salary);
-          }
+          }else{
+               PropertiesManager props = PropertiesManager.getPropertiesManager();
+            messageDialog.show(props.getProperty(WBDK_PropertyType.ILLEGAL_SALARY));   
+                  
+              }}
         });
 
         // AND THE NUMBER OF SESSIONS
@@ -236,7 +247,7 @@ public class EditPlayerDialog extends Stage{
     public void loadGUIData() {
         // LOAD THE UI STUFF
         loadFTComboBox();
-       
+        contractComboBox.getItems().addAll("S2","S1","X");
         Image img = new Image("file:./images/players/"+player.getFirstName()+player.getLastName()+".jpg");
         if(img.isError())
             {
@@ -257,9 +268,10 @@ public class EditPlayerDialog extends Stage{
     }   
     
     public boolean wasCompleteSelected() {
-       return selection.equals("Complete");
+
+            return selection.equals("Complete");
+       
     }
-    
     public void showEditPlayerDialog(Player playerToEdit, ArrayList<FantasyTeam> list) {
         // SET THE DIALOG TITLE
         setTitle(EDIT_PLAYER_TITLE);
@@ -293,6 +305,7 @@ public class EditPlayerDialog extends Stage{
     }    
     
     public void loadQPComboBox(Player p,FantasyTeam t){
+    positionComboBox.getItems().clear();
     String pos = p.getQualifyPosition();
     String[] parts = pos.split("_");
     ArrayList<String> qp = new ArrayList();  // this has a player's qualify pos
@@ -317,9 +330,19 @@ public class EditPlayerDialog extends Stage{
     borderPane.getChildren().clear();
     vbox.getChildren().clear();
     positionComboBox.getItems().clear();
-   // contractComboBox.getItems().clear();
+    contractComboBox.getItems().clear();
     fantasyTeamComboBox.getItems().clear();
     salaryTextField.clear();
     
     }
+    public static boolean ifNumeric(String s)
+    {
+        for (char c : s.toCharArray())
+        {
+            if (!Character.isDigit(c)) return false;
+        }
+        return true;
+    }    
+    
+    
 }

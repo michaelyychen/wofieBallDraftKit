@@ -167,8 +167,8 @@ public class WBDK_GUI implements DraftDataView{
     
     
     String tf ;
-    TableView taxiDraftTable;
-    TableView startingLineUpTable;
+    TableView<Player> taxiDraftTable;
+    TableView<Player> startingLineUpTable;
     TableView<Player> playerTable;
     TableColumn firstNameColumn;
     TableColumn lastNameColumn;
@@ -843,6 +843,7 @@ public class WBDK_GUI implements DraftDataView{
                draftController.handleNewFantasyTeamRequest(this);
                fantasyTeamComboBox.getItems().clear();
                loadTeamComboBox(dataManager.getDraft().getTeamList());
+             
            
         });
         
@@ -890,7 +891,16 @@ public class WBDK_GUI implements DraftDataView{
           
             }
         });
-        
+        startingLineUpTable.setOnMouseClicked(e -> {
+            
+         if (e.getClickCount() == 2) {
+               // OPEN UP THE LECTURE EDITOR
+         Player l = startingLineUpTable.getSelectionModel().getSelectedItem();
+     
+         draftController.handleEditPlayerRequest(this, l);
+          
+            }
+        });
         
         //switch pane mechanism
         fantasyButton.setOnAction(e -> {
