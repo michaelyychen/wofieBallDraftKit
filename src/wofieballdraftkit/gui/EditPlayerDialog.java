@@ -51,7 +51,7 @@ public class EditPlayerDialog extends Stage{
     Label salaryLabel;
     Label nameLabel;
     Label qpLabel;
-    FantasyTeam FT;
+    FantasyTeam FT = new FantasyTeam();
     ComboBox fantasyTeamComboBox;
     ComboBox positionComboBox;
     ComboBox contractComboBox;
@@ -106,19 +106,14 @@ public class EditPlayerDialog extends Stage{
         // NOW THE TOPIC 
         fantasyTeamLabel = new Label(FANTASY_PROMPT);
         fantasyTeamComboBox = new ComboBox();
-        fantasyTeamComboBox.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
-          @Override
-        public void changed(ObservableValue observable, Object oldValue, Object newValue) {
-        
-
-          player.setFantasyTeam((String)newValue);
-          FantasyTeam t = findTeam((String)newValue);
-          ArrayList<String> template = t.getTemplate();
-          
-          loadQPComboBox(player,t,template);    
-          
-            }
-            
+        fantasyTeamComboBox.getSelectionModel().selectedItemProperty().addListener((ObservableValue observable, Object oldValue, Object newValue) -> {
+       
+             player.setFantasyTeam(newValue.toString());
+            FT = findTeam(newValue.toString());
+         ArrayList<String> template = FT.getTemplate();
+          FT.getTeamPlayer().add(player);
+          loadQPComboBox(player,FT,template);    
+         // System.out.println(t.toString());
         });    
         
         
@@ -130,6 +125,11 @@ public class EditPlayerDialog extends Stage{
         contractLabel = new Label(CONTRACT_PROMPT);
         contractComboBox = new ComboBox();
         contractComboBox.getItems().addAll("S2","S1","X");
+        contractComboBox.getSelectionModel().selectedItemProperty().addListener((ObservableValue observable, Object oldValue, Object newValue) -> {
+        
+        player.setContract(newValue.toString());
+        System.out.println(newValue.toString());
+        });
         
         salaryLabel = new Label(SALARY_PROMPT);
         salaryTextField = new TextField();        
@@ -206,12 +206,12 @@ public class EditPlayerDialog extends Stage{
     }
 
     public FantasyTeam findTeam(String s){
-    FantasyTeam a = new FantasyTeam();
+    
     for(int i = 0; i< clist.size(); i++){
     
     if(clist.get(i).getTeamName().equalsIgnoreCase(s))
-        a = clist.get(i);
-         return a;
+        FT = clist.get(i);
+         return FT;
     }
     return null;
     

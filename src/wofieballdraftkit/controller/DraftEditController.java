@@ -105,21 +105,22 @@ public class DraftEditController {
             player.setSalary(si.getSalary());
             
             
-            cdm.getDraft().getTeamByName(player.getFantasyTeam()).getTeamPlayer().add(player);
-            cdm.getDraft().getDataPool().remove(player);
+//            cdm.getDraft().getTeamByName(player.getFantasyTeam()).getTeamPlayer().add(player);
+//            cdm.getDraft().getDataPool().remove(player);
             // THE COURSE IS NOW DIRTY, MEANING IT'S BEEN 
             // CHANGED SINCE IT WAS LAST SAVED, SO MAKE SURE
             // THE SAVE BUTTON IS ENABLED
-            epd.clearData();
+           
             gui.getFileController().markAsEdited(gui);
-            
+             
         }
         else {
-            epd.clearData();
             
+            epd.clearData();
             // THE USER MUST HAVE PRESSED CANCEL, SO
             // WE DO NOTHING
         }
+ //       
     }    
 
     public void handleNewFantasyTeamRequest(WBDK_GUI gui) {
