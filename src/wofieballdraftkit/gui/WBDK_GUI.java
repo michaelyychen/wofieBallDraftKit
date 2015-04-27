@@ -576,6 +576,21 @@ public class WBDK_GUI implements DraftDataView{
         contractColumn = new TableColumn(COL_CONTRACT);
         salaryColumn = new TableColumn(COL_SALARY);
         
+        positionColumn.setCellValueFactory(new PropertyValueFactory<String, String>("position"));
+        firstNameColumn.setCellValueFactory(new PropertyValueFactory<String, String>("firstname"));
+        lastNameColumn.setCellValueFactory(new PropertyValueFactory<String, String>("lastname"));
+        proTeamColumn.setCellValueFactory(new PropertyValueFactory<String, String>("proTeam"));
+        positionsColumn.setCellValueFactory(new PropertyValueFactory<String, String>("qualifyPosition"));
+        estimatedColumn.setCellValueFactory(new PropertyValueFactory<String, String>(""));       
+        RWColumn.setCellValueFactory(new PropertyValueFactory<Integer, String>("rw"));
+        HRSVColumn.setCellValueFactory(new PropertyValueFactory<Integer, String>("hrsv"));
+        RBIKColumn.setCellValueFactory(new PropertyValueFactory<Double, String>("rbik"));
+        SBERAColumn.setCellValueFactory(new PropertyValueFactory<Double, String>("sbera"));
+        BAWHIPColumn.setCellValueFactory(new PropertyValueFactory<Double, String>("bawhip"));
+        contractColumn.setCellValueFactory(new PropertyValueFactory<String, String>("contract"));        
+        salaryColumn.setCellValueFactory(new PropertyValueFactory<String, Integer>("salary"));   
+        
+        
         startingLineUpTable.getColumns().addAll(positionColumn,firstNameColumn,lastNameColumn,proTeamColumn, positionsColumn
         , RWColumn, HRSVColumn, RBIKColumn, SBERAColumn, BAWHIPColumn, estimatedColumn, contractColumn,salaryColumn);  
         
@@ -865,7 +880,7 @@ public class WBDK_GUI implements DraftDataView{
          if (e.getClickCount() == 2) {
                // OPEN UP THE LECTURE EDITOR
          Player l = playerTable.getSelectionModel().getSelectedItem();
-        
+     
          draftController.handleEditPlayerRequest(this, l);
           startingLineUpTable.setItems(dataManager.getDraft().getTeamByName((String)fantasyTeamComboBox.getSelectionModel().getSelectedItem()).getTeamPlayer());
             }

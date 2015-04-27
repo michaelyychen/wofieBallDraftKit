@@ -37,6 +37,7 @@ import static wofieballdraftkit.gui.WBDK_GUI.PRIMARY_STYLE_SHEET;
  */
 public class EditPlayerDialog extends Stage{
      // THIS IS THE OBJECT DATA BEHIND THIS UI
+    DraftDataManager ddm;
     Player player;
     ArrayList<FantasyTeam> clist;
     // GUI CONTROLS FOR OUR DIALOG
@@ -50,7 +51,7 @@ public class EditPlayerDialog extends Stage{
     Label salaryLabel;
     Label nameLabel;
     Label qpLabel;
-    
+    FantasyTeam FT;
     ComboBox fantasyTeamComboBox;
     ComboBox positionComboBox;
     ComboBox contractComboBox;
@@ -105,7 +106,20 @@ public class EditPlayerDialog extends Stage{
         // NOW THE TOPIC 
         fantasyTeamLabel = new Label(FANTASY_PROMPT);
         fantasyTeamComboBox = new ComboBox();
+        fantasyTeamComboBox.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
+          @Override
+        public void changed(ObservableValue observable, Object oldValue, Object newValue) {
         
+
+          player.setFantasyTeam((String)newValue);
+          FantasyTeam t = findTeam((String)newValue);
+          ArrayList<String> template = t.getTemplate();
+          
+          loadQPComboBox(player,t,template);    
+          
+            }
+            
+        });    
         
         
         
@@ -119,7 +133,12 @@ public class EditPlayerDialog extends Stage{
         
         salaryLabel = new Label(SALARY_PROMPT);
         salaryTextField = new TextField();        
-        
+        salaryTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+          if(!newValue.isEmpty()){
+           int salary = Integer.valueOf(newValue);
+           player.setSalary(salary);
+          }
+        });
 
         // AND THE NUMBER OF SESSIONS
 
@@ -186,7 +205,17 @@ public class EditPlayerDialog extends Stage{
         return player;
     }
 
+    public FantasyTeam findTeam(String s){
+    FantasyTeam a = new FantasyTeam();
+    for(int i = 0; i< clist.size(); i++){
     
+    if(clist.get(i).getTeamName().equalsIgnoreCase(s))
+        a = clist.get(i);
+         return a;
+    }
+    return null;
+    
+    }
     /**
      * This method loads a custom message into the label and
      * then pops open the dialog.
@@ -198,7 +227,7 @@ public class EditPlayerDialog extends Stage{
     public void loadGUIData() {
         // LOAD THE UI STUFF
         loadFTComboBox();
-        loadQPComboBox();    
+       
         Image img = new Image("file:./images/players/"+player.getFirstName()+player.getLastName()+".jpg");
         if(img.isError())
             {
@@ -219,8 +248,7 @@ public class EditPlayerDialog extends Stage{
     }   
     
     public boolean wasCompleteSelected() {
-
-       return selection.equals(COMPLETE);
+       return selection.equals("Complete");
     }
     
     public void showEditPlayerDialog(Player playerToEdit, ArrayList<FantasyTeam> list) {
@@ -246,24 +274,38 @@ public class EditPlayerDialog extends Stage{
     
     public void loadFTComboBox(){
     
-    String name ="";
+    FantasyTeam t ;
     for(int i = 0; i<clist.size();i++){
-        name = clist.get(i).getTeamName();
-        fantasyTeamComboBox.getItems().add(name);
-    
+        t = clist.get(i);
+        fantasyTeamComboBox.getItems().add(t.getTeamName());
+        
     }
     }    
     
-    
-    
-    public void loadQPComboBox(){
-    String pos = player.getQualifyPosition();
+    public void loadQPComboBox(Player p,FantasyTeam t, ArrayList<String> template){
+    String pos = p.getQualifyPosition();
     String[] parts = pos.split("_");
-        for(String s:parts){
+    ArrayList<String> qp = new ArrayList();
+        
+        for(String s:parts)
          {
-           positionComboBox.getItems().add(s);
+           qp.add(s);
          }
-     }
+        int i = 0;
+        while( i < qp.size()){
+        
+        for(int k =0;k<template.size();k++){
+        if(qp.get(i).equalsIgnoreCase(template.get(k))){
+                if(t.getTeamPlayer().get(k).getFirstName().isEmpty()){
+                    positionComboBox.getItems().add(qp.get(i));
+                }
+            }        
+        }  
+            
+            i++;
+        }    
+            
+     
     }
     public void clearData(){
     borderPane.getChildren().clear();

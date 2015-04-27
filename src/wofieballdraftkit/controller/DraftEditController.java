@@ -91,7 +91,7 @@ public class DraftEditController {
     public void handleEditPlayerRequest(WBDK_GUI gui, Player player) {
         DraftDataManager cdm = gui.getDataManager();
         Draft draft = cdm.getDraft();
-        epd.showEditPlayerDialog(player,cdm.getDraft().getTeamList());
+        epd.showEditPlayerDialog(player,draft.getTeamList());
       
         // DID THE USER CONFIRM?
         if (epd.wasCompleteSelected()) {
@@ -104,7 +104,8 @@ public class DraftEditController {
             player.setContract(si.getContract());
             player.setSalary(si.getSalary());
             
-            cdm.getDraft().getTeamByName(si.getFantasyTeam()).getTeamPlayer().add(player);
+            
+            cdm.getDraft().getTeamByName(player.getFantasyTeam()).getTeamPlayer().add(player);
             cdm.getDraft().getDataPool().remove(player);
             // THE COURSE IS NOW DIRTY, MEANING IT'S BEEN 
             // CHANGED SINCE IT WAS LAST SAVED, SO MAKE SURE
@@ -115,6 +116,7 @@ public class DraftEditController {
         }
         else {
             epd.clearData();
+            
             // THE USER MUST HAVE PRESSED CANCEL, SO
             // WE DO NOTHING
         }
