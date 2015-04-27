@@ -113,13 +113,12 @@ public class EditPlayerDialog extends Stage{
         fantasyTeamComboBox.getSelectionModel().selectedItemProperty().addListener((ObservableValue observable, Object oldValue, Object newValue) -> {
             if(newValue!=null){
             player.setFantasyTeam(newValue.toString());
-            System.out.println(newValue.toString());
+            
             loadQPComboBox(player,findTeam(newValue.toString()));
-//            FT = findTeam(newValue.toString());
-//            FT.getTeamPlayer().add(player);
+           
+
             }
-         // System.out.println(t.toString());
-        });    
+          });    
         
         
         
@@ -226,12 +225,12 @@ public class EditPlayerDialog extends Stage{
     }
 
     public FantasyTeam findTeam(String s){
-    
+    FantasyTeam t = new FantasyTeam();
     for(int i = 0; i< clist.size(); i++){
     
     if(clist.get(i).getTeamName().equalsIgnoreCase(s))
-        FT = clist.get(i);
-         return FT;
+        t = clist.get(i);
+         return t;
     }
     return null;
     
