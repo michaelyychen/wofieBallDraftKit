@@ -107,12 +107,13 @@ public class EditPlayerDialog extends Stage{
         fantasyTeamLabel = new Label(FANTASY_PROMPT);
         fantasyTeamComboBox = new ComboBox();
         fantasyTeamComboBox.getSelectionModel().selectedItemProperty().addListener((ObservableValue observable, Object oldValue, Object newValue) -> {
-       
-             player.setFantasyTeam(newValue.toString());
-            FT = findTeam(newValue.toString());
-         ArrayList<String> template = FT.getTemplate();
-          FT.getTeamPlayer().add(player);
-          loadQPComboBox(player,FT,template);    
+            if(newValue!=null){
+            player.setFantasyTeam(newValue.toString());
+            System.out.println(newValue.toString());
+            loadQPComboBox(player,findTeam(newValue.toString()));
+//            FT = findTeam(newValue.toString());
+//            FT.getTeamPlayer().add(player);
+            }
          // System.out.println(t.toString());
         });    
         
@@ -120,7 +121,11 @@ public class EditPlayerDialog extends Stage{
         
         positionLabel = new Label(POSITION_PROMPT);
         positionComboBox = new ComboBox();
-        
+        positionComboBox.getSelectionModel().selectedItemProperty().addListener((ObservableValue observable, Object oldValue, Object newValue) -> {
+            if(newValue!=null){
+            player.setPosition((String)newValue);
+            }
+        }); 
           
         contractLabel = new Label(CONTRACT_PROMPT);
         contractComboBox = new ComboBox();
@@ -129,6 +134,7 @@ public class EditPlayerDialog extends Stage{
         
         player.setContract(newValue.toString());
         System.out.println(newValue.toString());
+        
         });
         
         salaryLabel = new Label(SALARY_PROMPT);
@@ -145,8 +151,11 @@ public class EditPlayerDialog extends Stage{
       contractComboBox.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
             @Override
             public void changed(ObservableValue observable, Object oldValue, Object newValue) {
+                
+                if(newValue!=null){
                 String contract = newValue.toString();
                 player.setContract(contract);
+                }
             }
             
         });
@@ -259,6 +268,7 @@ public class EditPlayerDialog extends Stage{
         player = new Player();
         player.setFirstName(playerToEdit.getFirstName());
         player.setLastName(playerToEdit.getLastName());
+        player.setProTeam(playerToEdit.getProTeam());
         player.setNation(playerToEdit.getNation());
         player.setQualifyPosition(playerToEdit.getQualifyPosition());
         
@@ -282,26 +292,22 @@ public class EditPlayerDialog extends Stage{
     }
     }    
     
-    public void loadQPComboBox(Player p,FantasyTeam t, ArrayList<String> template){
+    public void loadQPComboBox(Player p,FantasyTeam t){
     String pos = p.getQualifyPosition();
     String[] parts = pos.split("_");
-    ArrayList<String> qp = new ArrayList();
-        
+    ArrayList<String> qp = new ArrayList();  // this has a player's qualify pos
+    ArrayList<String> added = new ArrayList(); // this is keeping track of what inside of comboBox    
         for(String s:parts)
          {
            qp.add(s);
          }
         int i = 0;
         while( i < qp.size()){
-        
-        for(int k =0;k<template.size();k++){
-        if(qp.get(i).equalsIgnoreCase(template.get(k))){
-                if(t.getTeamPlayer().get(k).getFirstName().isEmpty()){
-                    positionComboBox.getItems().add(qp.get(i));
-                }
-            }        
-        }  
             
+            if(t.positionCount(qp.get(i)))
+            {
+            positionComboBox.getItems().add(qp.get(i));
+            }
             i++;
         }    
             
@@ -311,6 +317,7 @@ public class EditPlayerDialog extends Stage{
     borderPane.getChildren().clear();
     vbox.getChildren().clear();
     positionComboBox.getItems().clear();
+   // contractComboBox.getItems().clear();
     fantasyTeamComboBox.getItems().clear();
     salaryTextField.clear();
     

@@ -28,10 +28,10 @@ public class FantasyTeam{
         owner = new SimpleStringProperty(DEFAULT_STRING);
         teamName = new SimpleStringProperty(DEFAULT_STRING);
         teamPlayer = FXCollections.observableArrayList();
-        for(int i = 0; i<23; i ++){
-        Player p = new Player();
-        teamPlayer.add(p);
-        }
+//        for(int i = 0; i<23; i ++){
+//        Player p = new Player();
+//        teamPlayer.add(p);
+//        }
         posTemplate = new ArrayList();
         posTemplate.add("C");
         posTemplate.add("C");
@@ -61,6 +61,28 @@ public class FantasyTeam{
     public ArrayList<String> getTemplate(){
     return posTemplate;
     
+    }
+    
+    public boolean positionCount(String Pos){
+    
+    int count=0;    
+    for(int i =0; i<teamPlayer.size();i++){
+    
+    if(teamPlayer.get(i).getPosition().equalsIgnoreCase(Pos))
+        count++;
+    }       
+    if (Pos.equalsIgnoreCase("C")&&count<2){return true;}
+    else if (Pos.equalsIgnoreCase("1B")&&count<1){return true;}
+    else if (Pos.equalsIgnoreCase("CI")&&count<1){return true;}
+    else if (Pos.equalsIgnoreCase("3B")&&count<1){return true;}
+    else if (Pos.equalsIgnoreCase("2B")&&count<1){return true;}
+    else if (Pos.equalsIgnoreCase("MI")&&count<1){return true;}
+    else if (Pos.equalsIgnoreCase("SS")&&count<1){return true;}
+    else if (Pos.equalsIgnoreCase("U")&&count<1){return true;}
+    else if (Pos.equalsIgnoreCase("OF")&&count<5){return true;}
+    else if (Pos.equalsIgnoreCase("P")&&count<9){return true;}
+    
+    else return false;
     }
 
     

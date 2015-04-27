@@ -555,8 +555,12 @@ public class WBDK_GUI implements DraftDataView{
         editButton = initChildButton(iconPane, WBDK_PropertyType.PEN_ICON, WBDK_PropertyType.EDIT_TOOLTIP, false); 
         Label selectLabel = initLabel(WBDK_PropertyType.SELECT_DRAFT_LABEL, CLASS_SUBHEADING_LABEL);
         fantasyTeamComboBox = new ComboBox();
-        //loadTeamComboBox(dataManager.getDraft().getTeamList());
-
+        fantasyTeamComboBox.getSelectionModel().selectedItemProperty().addListener((ObservableValue observable, Object oldValue, Object newValue) -> {
+           if(newValue!=null){
+        
+            startingLineUpTable.setItems(dataManager.getDraft().getTeamByName(newValue.toString()).getTeamPlayer());
+           }
+        }); 
         iconPane.getChildren().addAll(selectLabel,fantasyTeamComboBox);
         
         VBox  temp = new VBox();
@@ -839,6 +843,7 @@ public class WBDK_GUI implements DraftDataView{
                draftController.handleNewFantasyTeamRequest(this);
                fantasyTeamComboBox.getItems().clear();
                loadTeamComboBox(dataManager.getDraft().getTeamList());
+           
         });
         
         
@@ -882,7 +887,7 @@ public class WBDK_GUI implements DraftDataView{
          Player l = playerTable.getSelectionModel().getSelectedItem();
      
          draftController.handleEditPlayerRequest(this, l);
-          startingLineUpTable.setItems(dataManager.getDraft().getTeamByName((String)fantasyTeamComboBox.getSelectionModel().getSelectedItem()).getTeamPlayer());
+          
             }
         });
         
@@ -1040,6 +1045,7 @@ public class WBDK_GUI implements DraftDataView{
         String s="";
         String s2 = "";
         String k;
+        //this is the sorted list
         ObservableList<Player> temp = dataManager.getDraft().getGuiPool();
         
         
@@ -1065,7 +1071,7 @@ public class WBDK_GUI implements DraftDataView{
         else if(selection.equals(P)){
    
             for(int i = 0;  i<text.size(); i ++){
-            if(text.get(i).getPosition().contains("P")){
+            if(text.get(i).getQualifyPosition().contains("P")){
             temp.add(text.get(i));
                         }
                 }
@@ -1097,7 +1103,7 @@ public class WBDK_GUI implements DraftDataView{
                        
             if(selection.equals(U)){
             for(int i = 0;  i<text.size(); i ++){
-            if(!text.get(i).getPosition().contains("P")){
+            if(!text.get(i).getQualifyPosition().contains("P")){
             temp.add(text.get(i));
                 }   
             }
@@ -1106,8 +1112,8 @@ public class WBDK_GUI implements DraftDataView{
             if(selection.equals(CI)){ s="1B"; s2="3B";  }
             else{s="2B"; s2="SS";}
             for(int i = 0;  i<text.size(); i ++){
-            if(text.get(i).getPosition().contains(s) 
-                    ||text.get(i).getPosition().contains(s2) ){
+            if(text.get(i).getQualifyPosition().contains(s) 
+                    ||text.get(i).getQualifyPosition().contains(s2) ){
             temp.add(text.get(i));
                      }   
                  }
@@ -1115,7 +1121,7 @@ public class WBDK_GUI implements DraftDataView{
             else {
              
             for(int i = 0;  i<text.size(); i ++){
-            if(text.get(i).getPosition().contains(s)){
+            if(text.get(i).getQualifyPosition().contains(s)){
             temp.add(text.get(i));
                 }   
             }
