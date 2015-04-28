@@ -167,6 +167,7 @@ public class WBDK_GUI implements DraftDataView{
     
     
     String tf ;
+    String tfo ;
     TableView<Player> taxiDraftTable;
     TableView<Player> startingLineUpTable;
     TableView<Player> playerTable;
@@ -187,7 +188,7 @@ public class WBDK_GUI implements DraftDataView{
     TableColumn salaryColumn; 
 
     TextField searchTF;
-    String tfo;
+    FantasyTeam currentTeam;
     final ToggleGroup group = new ToggleGroup();
     ComboBox fantasyTeamComboBox;
     
@@ -555,11 +556,18 @@ public class WBDK_GUI implements DraftDataView{
         editButton = initChildButton(iconPane, WBDK_PropertyType.PEN_ICON, WBDK_PropertyType.EDIT_TOOLTIP, false); 
         Label selectLabel = initLabel(WBDK_PropertyType.SELECT_DRAFT_LABEL, CLASS_SUBHEADING_LABEL);
         fantasyTeamComboBox = new ComboBox();
-        fantasyTeamComboBox.getSelectionModel().selectedItemProperty().addListener((ObservableValue observable, Object oldValue, Object newValue) -> {
-           if(newValue!=null){
-        
-            startingLineUpTable.setItems(dataManager.getDraft().getTeamByName(newValue.toString()).getTeamPlayer());
-           }
+        fantasyTeamComboBox.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
+
+            public void changed(ObservableValue observable, Object oldValue, Object newValue) {
+                if(newValue!=null){
+                    
+                    FXCollections.sort(dataManager.getDraft().getTeamByName(newValue.toString()).getTeamPlayer(), new PositionComparator());
+                    currentTeam = dataManager.getDraft().getTeamByName(newValue.toString());
+                    startingLineUpTable.setItems(dataManager.getDraft().getTeamByName(newValue.toString()).getTeamPlayer());
+                    
+                }
+              
+            }
         }); 
         iconPane.getChildren().addAll(selectLabel,fantasyTeamComboBox);
         
@@ -898,7 +906,7 @@ public class WBDK_GUI implements DraftDataView{
          Player l = startingLineUpTable.getSelectionModel().getSelectedItem();
      
          draftController.handleEditPlayerRequest(this, l);
-          
+        
             }
         });
         
