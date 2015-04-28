@@ -92,7 +92,9 @@ public class DraftEditController {
     public void handleEditPlayerRequest(WBDK_GUI gui, Player player) {
         DraftDataManager cdm = gui.getDataManager();
         Draft draft = cdm.getDraft();
-        epd.clearData(); 
+        
+        //epd.clearData(); 
+        
         epd.showEditPlayerDialog(player,draft.getTeamList());
          
         // DID THE USER CONFIRM?
@@ -109,7 +111,7 @@ public class DraftEditController {
             if(player.getPosition().isEmpty()){
             PropertiesManager props = PropertiesManager.getPropertiesManager();
             messageDialog.show(props.getProperty(WBDK_PropertyType.ILLEGAL_SELECTION));
-
+            
             }else{
             
             draft.getTeamByName(player.getFantasyTeam()).addByPos(player);
@@ -122,13 +124,14 @@ public class DraftEditController {
             // THE SAVE BUTTON IS ENABLED
            
             gui.getFileController().markAsEdited(gui);
-            
+             
         }
         else {
          
             
             // THE USER MUST HAVE PRESSED CANCEL, SO
             // WE DO NOTHING
+              
         }
            
     }    
@@ -192,6 +195,12 @@ public class DraftEditController {
     }
     public void handlerDeleteFantasyTeamRequest(WBDK_GUI gui, String s) {
         // PROMPT THE USER TO SAVE UNSAVED WORK
+        if(s == null){
+            
+            PropertiesManager props = PropertiesManager.getPropertiesManager();
+            messageDialog.show(props.getProperty(WBDK_PropertyType.NOTHING_TO_DELETE));
+        }
+        else{
         yesNoCancelDialog.show(PropertiesManager.getPropertiesManager().getProperty(REMOVE_ITEM_MESSAGE));
         
         // AND NOW GET THE USER'S SELECTION
@@ -205,6 +214,7 @@ public class DraftEditController {
             // CHANGED SINCE IT WAS LAST SAVED, SO MAKE SURE
             // THE SAVE BUTTON IS ENABLED
             gui.getFileController().markAsEdited(gui);
+        }
         }
     }    
 

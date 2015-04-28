@@ -863,12 +863,12 @@ public class WBDK_GUI implements DraftDataView{
         
         
         minusButtonf.setOnAction(e -> {
-              
+
               draftController.handlerDeleteFantasyTeamRequest(this,(String)fantasyTeamComboBox.getSelectionModel().getSelectedItem());
               fantasyTeamComboBox.getItems().clear();
 
               loadTeamComboBox(dataManager.getDraft().getTeamList());
-                
+              
         });
         
         editButton.setOnAction(e -> {

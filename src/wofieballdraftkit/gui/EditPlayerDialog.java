@@ -66,7 +66,8 @@ public class EditPlayerDialog extends Stage{
     FlowPane flowPane;
     BorderPane borderPane;
     VBox vbox;
-    
+    ImageView playerNation;
+    ImageView playerPhoto;
     // THIS IS FOR KEEPING TRACK OF WHICH BUTTON THE USER PRESSED
     String selection;
     
@@ -97,6 +98,7 @@ public class EditPlayerDialog extends Stage{
         initOwner(primaryStage);
         
         // FIRST OUR CONTAINER
+        
         gridPane = new GridPane();
         gridPane.setPadding(new Insets(10, 20, 20, 20));
         gridPane.setHgap(10);
@@ -106,7 +108,9 @@ public class EditPlayerDialog extends Stage{
         // ON WHETHER WE'RE ADDING OR EDITING
         headingLabel = new Label(PLAYER_HEADING);
         headingLabel.getStyleClass().add(CLASS_HEADING_LABEL);
-    
+        
+        gridPane.getChildren().remove(positionComboBox);
+        
         // NOW THE TOPIC 
         fantasyTeamLabel = new Label(FANTASY_PROMPT);
         fantasyTeamComboBox = new ComboBox();
@@ -115,9 +119,7 @@ public class EditPlayerDialog extends Stage{
             player.setFantasyTeam(newValue.toString());
             
             loadQPComboBox(player,findTeam(newValue.toString()));
-           
-
-            }
+                        }
           });    
         
         
@@ -151,7 +153,7 @@ public class EditPlayerDialog extends Stage{
            player.setSalary(salary);
           }else{
                PropertiesManager props = PropertiesManager.getPropertiesManager();
-            messageDialog.show(props.getProperty(WBDK_PropertyType.ILLEGAL_SALARY));   
+               messageDialog.show(props.getProperty(WBDK_PropertyType.ILLEGAL_SALARY));   
                   
               }}
         });
@@ -245,6 +247,11 @@ public class EditPlayerDialog extends Stage{
     
     public void loadGUIData() {
         // LOAD THE UI STUFF
+
+        vbox.getChildren().removeAll(playerNation,playerLabel, qpLabel);
+        borderPane.getChildren().remove(playerPhoto);
+        
+        
         loadFTComboBox();
         contractComboBox.getItems().addAll("S2","S1","X");
         Image img = new Image("file:./images/players/"+player.getFirstName()+player.getLastName()+".jpg");
@@ -252,8 +259,8 @@ public class EditPlayerDialog extends Stage{
             {
                 img = new Image("file:./images/players/AAA_PhotoMissing.jpg");
             }
-        ImageView playerPhoto = new ImageView(img);
-        ImageView playerNation = new ImageView(new Image("file:./images/flags/"+player.getNation()+".png"));
+        playerPhoto = new ImageView(img);
+        playerNation = new ImageView(new Image("file:./images/flags/"+player.getNation()+".png"));
         playerLabel = new Label(player.getFirstName()+" " +player.getLastName());
         playerLabel.getStyleClass().add(CLASS_PROMPT_LABEL);
         qpLabel = new Label(player.getQualifyPosition());
@@ -276,7 +283,22 @@ public class EditPlayerDialog extends Stage{
         setTitle(EDIT_PLAYER_TITLE);
         clist = list;
         // LOAD INTO OUR LOCAL OBJECT
+        
         player = new Player();
+        
+        salaryTextField.setText("");
+        
+        contractComboBox.getItems().clear();
+        fantasyTeamComboBox.getItems().clear();
+        positionComboBox.getItems().clear();
+        positionComboBox.getSelectionModel().clearSelection();
+        contractComboBox.getSelectionModel().clearSelection();
+        fantasyTeamComboBox.getSelectionModel().clearSelection();
+       
+        positionComboBox.valueProperty().setValue(null);
+        contractComboBox.valueProperty().setValue(null);
+        fantasyTeamComboBox.valueProperty().setValue(null);
+        
         player.setFirstName(playerToEdit.getFirstName());
         player.setLastName(playerToEdit.getLastName());
         player.setProTeam(playerToEdit.getProTeam());
@@ -286,6 +308,7 @@ public class EditPlayerDialog extends Stage{
         
         // AND THEN INTO OUR GUI
         loadGUIData();
+       
                
         // AND OPEN IT UP
         this.showAndWait();
@@ -304,7 +327,10 @@ public class EditPlayerDialog extends Stage{
     }    
     
     public void loadQPComboBox(Player p,FantasyTeam t){
-    positionComboBox.getItems().clear();
+//    gridPane.getChildren().remove(positionComboBox);
+//    positionComboBox = new ComboBox();
+    
+    
     String pos = p.getQualifyPosition();
     String[] parts = pos.split("_");
     ArrayList<String> qp = new ArrayList();  // this has a player's qualify pos
@@ -318,22 +344,23 @@ public class EditPlayerDialog extends Stage{
             
             if(t.positionCount(qp.get(i)))
             {
+
             positionComboBox.getItems().add(qp.get(i));
             }
             i++;
         }    
-            
+//         gridPane.add(positionComboBox,  1, 3, 1, 1);
      
     }
-    public void clearData(){
-    borderPane.getChildren().clear();
-    vbox.getChildren().clear();
-    positionComboBox.getItems().clear();
-    contractComboBox.getItems().clear();
-    fantasyTeamComboBox.getItems().clear();
-    salaryTextField.clear();
-    
-    }
+//    public void clearData(){
+//    borderPane.getChildren().clear();
+//    vbox.getChildren().clear();
+//    positionComboBox.getItems().clear();
+//    contractComboBox.getItems().clear();
+//    fantasyTeamComboBox.getItems().clear();
+//    
+//    
+//    }
     public static boolean ifNumeric(String s)
     {
         for (char c : s.toCharArray())
