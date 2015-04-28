@@ -902,39 +902,7 @@ public class WBDK_GUI implements DraftDataView{
          Player l = playerTable.getSelectionModel().getSelectedItem();
      
          draftController.handleEditPlayerRequest(this, l);
-//         startingLineUpTable.sortPolicyProperty().set( new Callback<TableView<Player>, Boolean>(){
-//
-//            @Override
-//            public Boolean call(TableView<Player> param) {
-//                 Comparator<Player> comparator = new Comparator<Player>() {
-//
-//                     @Override
-//                     public int compare(Player o1, Player o2) {
-//                          System.out.println("p1 pos:"+o1.calculatePos()+"p2 pos:"+o2.calculatePos());
-//                            if (o1.calculatePos()>=o2.calculatePos()){
-//                                return -1;
-//                                }
-//                                else if (o1.calculatePos()<=o2.calculatePos()){
-//                                return 1;
-//                                }
-//                                else {
-//                                return 0;
-//                                }
-//                            
-//                           
-//                     }
-//                     
-//                 };
-//                
-//                
-//              currentTeam.getTeamPlayer().sort(comparator);
-//              return true;   
-//                
-//            }
-//        }); 
-         
-         
-            }
+         }
         });
         startingLineUpTable.setOnMouseClicked(e -> {
             
@@ -1122,6 +1090,7 @@ public class WBDK_GUI implements DraftDataView{
         RBIKColumn.setText(COL_RBIK);
         SBERAColumn.setText(COL_SBERA);
         BAWHIPColumn.setText(COL_BAWHIP);
+        temp.sort(new NameComparator());
         }
         
         else if(selection.equals(P)){
