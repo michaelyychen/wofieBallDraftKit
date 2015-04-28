@@ -112,7 +112,7 @@ public class DraftEditController {
 
             }else{
             
-            draft.getTeamByName(player.getFantasyTeam()).getTeamPlayer().add(player);
+            draft.getTeamByName(player.getFantasyTeam()).addByPos(player);
             draft.getDataPool().remove(player);
             draft.getGuiPool().remove(player);
             draft.getSearchPool().remove(player);

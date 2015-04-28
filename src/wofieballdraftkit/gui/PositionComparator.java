@@ -16,10 +16,10 @@ public class PositionComparator implements Comparator<Player> {
      int temp1 = getValue(o1);
      int temp2 = getValue(o2);
     if (temp1>=temp2){
-    return 1;
+    return -1;
     }
     else if (temp1 <= temp2){
-    return -1;
+    return 1;
     }
     else {
     return 0;

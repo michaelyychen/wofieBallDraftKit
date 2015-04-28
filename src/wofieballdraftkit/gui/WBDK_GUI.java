@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.value.ChangeListener;
@@ -561,10 +562,10 @@ public class WBDK_GUI implements DraftDataView{
             public void changed(ObservableValue observable, Object oldValue, Object newValue) {
                 if(newValue!=null){
                     
-                    FXCollections.sort(dataManager.getDraft().getTeamByName(newValue.toString()).getTeamPlayer(), new PositionComparator());
+                   // FXCollections.sort(dataManager.getDraft().getTeamByName(newValue.toString()).getTeamPlayer(), new PositionComparator());
                     currentTeam = dataManager.getDraft().getTeamByName(newValue.toString());
                     startingLineUpTable.setItems(dataManager.getDraft().getTeamByName(newValue.toString()).getTeamPlayer());
-                    
+                    dataManager.getDraft().getTeamByName(newValue.toString()).getTeamPlayer().sort(new  PositionComparator());
                 }
               
             }
@@ -741,7 +742,12 @@ public class WBDK_GUI implements DraftDataView{
         playerTable.setItems(dataManager.getDraft().getGuiPool());
         
        // firstNameColumn.setSortType(TableColumn.SortType.ASCENDING);
-        FXCollections.sort(dataManager.getDraft().getGuiPool(), new NameComparator());
+        
+        	
+
+
+        dataManager.getDraft().getGuiPool().sort(new NameComparator());
+        //FXCollections.sort(dataManager.getDraft().getGuiPool(), new NameComparator());
         
         playerTable.setPrefHeight(1000);
         
@@ -896,7 +902,38 @@ public class WBDK_GUI implements DraftDataView{
          Player l = playerTable.getSelectionModel().getSelectedItem();
      
          draftController.handleEditPlayerRequest(this, l);
-          
+//         startingLineUpTable.sortPolicyProperty().set( new Callback<TableView<Player>, Boolean>(){
+//
+//            @Override
+//            public Boolean call(TableView<Player> param) {
+//                 Comparator<Player> comparator = new Comparator<Player>() {
+//
+//                     @Override
+//                     public int compare(Player o1, Player o2) {
+//                          System.out.println("p1 pos:"+o1.calculatePos()+"p2 pos:"+o2.calculatePos());
+//                            if (o1.calculatePos()>=o2.calculatePos()){
+//                                return -1;
+//                                }
+//                                else if (o1.calculatePos()<=o2.calculatePos()){
+//                                return 1;
+//                                }
+//                                else {
+//                                return 0;
+//                                }
+//                            
+//                           
+//                     }
+//                     
+//                 };
+//                
+//                
+//              currentTeam.getTeamPlayer().sort(comparator);
+//              return true;   
+//                
+//            }
+//        }); 
+         
+         
             }
         });
         startingLineUpTable.setOnMouseClicked(e -> {
@@ -904,9 +941,10 @@ public class WBDK_GUI implements DraftDataView{
          if (e.getClickCount() == 2) {
                // OPEN UP THE LECTURE EDITOR
          Player l = startingLineUpTable.getSelectionModel().getSelectedItem();
-     
+         
          draftController.handleEditPlayerRequest(this, l);
-        
+
+
             }
         });
         

@@ -11,6 +11,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import wofieballdraftkit.gui.PositionComparator;
 
 /**
  *
@@ -56,6 +57,12 @@ public class FantasyTeam{
     else if (Pos.equalsIgnoreCase("P")&&count<9){return true;}
     
     else return false;
+    }
+    
+    public void addByPos(Player p){
+    teamPlayer.add(p);
+    teamPlayer.sort(new PositionComparator());
+    
     }
 
     

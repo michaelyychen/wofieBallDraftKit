@@ -267,7 +267,26 @@ public class Player {
     return bawhip;
     }       
     
-    
+    public int calculatePos(){
+    int i = 0;
+       if(!position.getValue().isEmpty()) {
+            if (getPosition().equalsIgnoreCase("C")){i = 10;}
+            if (getPosition().equalsIgnoreCase("1B")){i = 9;}
+            if (getPosition().equalsIgnoreCase("CI")){i = 8;}
+            if (getPosition().equalsIgnoreCase("3B")){i = 7;}
+            if (getPosition().equalsIgnoreCase("2B")){i = 6;}
+            if (getPosition().equalsIgnoreCase("MI")){i = 5;}
+            if (getPosition().equalsIgnoreCase("SS")){i = 4;}
+            if (getPosition().equalsIgnoreCase("OF")){i = 3;}
+            if (getPosition().equalsIgnoreCase("U")){i = 2;}
+            if (getPosition().equalsIgnoreCase("P")){i = 1;}
+       
+       
+       
+       
+       }
+    return i;
+    }
     
     
     
