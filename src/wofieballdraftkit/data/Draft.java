@@ -7,6 +7,8 @@ package wofieballdraftkit.data;
 
 import java.util.ArrayList;
 import java.util.List;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Toggle;
@@ -17,6 +19,8 @@ import wofieballdraftkit.gui.WBDK_GUI;
  * @author MC
  */
 public class Draft {
+    
+    StringProperty draftName;
     List<Hitter> hitterList;
     List<Pitcher> pitcherList;
     ArrayList<FantasyTeam> teamList;
@@ -35,10 +39,20 @@ public class Draft {
     
     searchPool =FXCollections.observableArrayList(initPool); 
     guiPool =FXCollections.observableArrayList(initPool); 
-
+    draftName = new SimpleStringProperty();
     
     }
+    public String getDraftName() {
+      return draftName.get();
+    }
+
+    public void setDraftName(String s) {
+        draftName.set(s);
+    }
     
+    public StringProperty draftNameProperty(){
+    return draftName;
+    }     
     public ArrayList<FantasyTeam> getTeamList(){
         return teamList;
     } 

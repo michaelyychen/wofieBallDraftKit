@@ -89,20 +89,28 @@ public class DraftEditController {
     }
     
     
-    public void handleEditPlayerRequest(WBDK_GUI gui, Player player) {
+    public void handleEditPlayerRequest(WBDK_GUI gui, Player player,boolean s) {
         DraftDataManager cdm = gui.getDataManager();
         Draft draft = cdm.getDraft();
         
         //epd.clearData(); 
         
-        epd.showEditPlayerDialog(player,draft.getTeamList());
+        epd.showEditPlayerDialog(player,draft.getTeamList(),s);
          
         // DID THE USER CONFIRM?
         if (epd.wasCompleteSelected()) {
               
-            
             Player si = epd.getPlayer();
             
+            //put the player back in the pool
+            if("Free Agent".equals(si.getFantasyTeam())){
+                System.out.println("here");
+            draft.getTeamByName(player.getFantasyTeam()).getTeamPlayer().remove(player);
+            draft.getDataPool().add(player);
+            draft.getGuiPool().add(player);
+            draft.getSearchPool().add(player);
+            }           
+            else{
             player.setPosition(si.getPosition());
             player.setFantasyTeam(si.getFantasyTeam());
             player.setContract(si.getContract());
@@ -111,7 +119,6 @@ public class DraftEditController {
             if(player.getPosition().isEmpty()){
             PropertiesManager props = PropertiesManager.getPropertiesManager();
             messageDialog.show(props.getProperty(WBDK_PropertyType.ILLEGAL_SELECTION));
-            
             }else{
             
             draft.getTeamByName(player.getFantasyTeam()).addByPos(player);
@@ -119,6 +126,11 @@ public class DraftEditController {
             draft.getGuiPool().remove(player);
             draft.getSearchPool().remove(player);
         }
+            
+            }
+            
+            
+           
             // THE COURSE IS NOW DIRTY, MEANING IT'S BEEN 
             // CHANGED SINCE IT WAS LAST SAVED, SO MAKE SURE
             // THE SAVE BUTTON IS ENABLED

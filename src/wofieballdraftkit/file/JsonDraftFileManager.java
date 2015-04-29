@@ -69,55 +69,55 @@ public class JsonDraftFileManager implements DraftFileManager {
 //     */
     @Override
     public void saveDraft(Draft draftToSave) throws IOException {
-//        // BUILD THE FILE PATH
-//        String courseListing = "" + courseToSave.getSubject() + courseToSave.getNumber();
-//        String jsonFilePath = PATH_COURSES + SLASH + courseListing + JSON_EXT;
-//        
-//        // INIT THE WRITER
-//        OutputStream os = new FileOutputStream(jsonFilePath);
-//        JsonWriter jsonWriter = Json.createWriter(os);  
-//        
-//        // MAKE A JSON ARRAY FOR THE PAGES ARRAY
-//        JsonArray pagesJsonArray = makePagesJsonArray(courseToSave.getPages());
-//        
-//        // AND AN OBJECT FOR THE INSTRUCTOR
-//        JsonObject instructorJsonObject = makeInstructorJsonObject(courseToSave.getInstructor());
-//        
-//        // ONE FOR EACH OF OUR DATES
-//        JsonObject startingMondayJsonObject = makeLocalDateJsonObject(courseToSave.getStartingMonday());
-//        JsonObject endingFridayJsonObject = makeLocalDateJsonObject(courseToSave.getEndingFriday());
-//        
-//        // THE LECTURE DAYS ARRAY
-//        JsonArray lectureDaysJsonArray = makeLectureDaysJsonArray(courseToSave.getLectureDays());
-//        
-//        // THE SCHEDULE ITEMS ARRAY
-//        JsonArray scheduleItemsJsonArray = makeScheduleItemsJsonArray(courseToSave.getScheduleItems());
-//        
-//        // THE LECTURES ARRAY
-//        JsonArray lecturesJsonArray = makeLecturesJsonArray(courseToSave.getLectures());
-//        
-//        // THE HWS ARRAY
-//        JsonArray hwsJsonArray = makeHWsJsonArray(courseToSave.getAssignments());
-//        
-//        // NOW BUILD THE COURSE USING EVERYTHING WE'VE ALREADY MADE
-//        JsonObject courseJsonObject = Json.createObjectBuilder()
-//                                    .add(JSON_SUBJECT, courseToSave.getSubject().toString())
-//                                    .add(JSON_NUMBER, courseToSave.getNumber())
-//                                    .add(JSON_TITLE, courseToSave.getTitle())
-//                                    .add(JSON_SEMESTER, courseToSave.getSemester().toString())
-//                                    .add(JSON_YEAR, courseToSave.getYear())
-//                                    .add(JSON_PAGES, pagesJsonArray)
-//                                    .add(JSON_INSTRUCTOR, instructorJsonObject)
-//                                    .add(JSON_STARTING_MONDAY, startingMondayJsonObject)
-//                                    .add(JSON_ENDING_FRIDAY, endingFridayJsonObject)
-//                                    .add(JSON_LECTURE_DAYS, lectureDaysJsonArray)
-//                                    .add(JSON_SCHEDULE_ITEMS, scheduleItemsJsonArray)
-//                                    .add(JSON_LECTURES, lecturesJsonArray)
-//                                    .add(JSON_HWS, hwsJsonArray)
-//                .build();
-//        
-//        // AND SAVE EVERYTHING AT ONCE
-//        jsonWriter.writeObject(courseJsonObject);
+        // BUILD THE FILE PATH
+        
+        String jsonFilePath = ""+draftToSave.getDraftName() + JSON_EXT;
+        
+        // INIT THE WRITER
+        OutputStream os = new FileOutputStream(jsonFilePath);
+        JsonWriter jsonWriter = Json.createWriter(os);  
+        
+        // MAKE A JSON ARRAY FOR THE PAGES ARRAY
+        JsonArray pagesJsonArray = makePagesJsonArray(courseToSave.getPages());
+        
+        // AND AN OBJECT FOR THE INSTRUCTOR
+        JsonObject instructorJsonObject = makeInstructorJsonObject(courseToSave.getInstructor());
+        
+        // ONE FOR EACH OF OUR DATES
+        JsonObject startingMondayJsonObject = makeLocalDateJsonObject(courseToSave.getStartingMonday());
+        JsonObject endingFridayJsonObject = makeLocalDateJsonObject(courseToSave.getEndingFriday());
+        
+        // THE LECTURE DAYS ARRAY
+        JsonArray lectureDaysJsonArray = makeLectureDaysJsonArray(courseToSave.getLectureDays());
+        
+        // THE SCHEDULE ITEMS ARRAY
+        JsonArray scheduleItemsJsonArray = makeScheduleItemsJsonArray(courseToSave.getScheduleItems());
+        
+        // THE LECTURES ARRAY
+        JsonArray lecturesJsonArray = makeLecturesJsonArray(courseToSave.getLectures());
+        
+        // THE HWS ARRAY
+        JsonArray hwsJsonArray = makeHWsJsonArray(courseToSave.getAssignments());
+        
+        // NOW BUILD THE COURSE USING EVERYTHING WE'VE ALREADY MADE
+        JsonObject courseJsonObject = Json.createObjectBuilder()
+                                    .add(JSON_SUBJECT, courseToSave.getSubject().toString())
+                                    .add(JSON_NUMBER, courseToSave.getNumber())
+                                    .add(JSON_TITLE, courseToSave.getTitle())
+                                    .add(JSON_SEMESTER, courseToSave.getSemester().toString())
+                                    .add(JSON_YEAR, courseToSave.getYear())
+                                    .add(JSON_PAGES, pagesJsonArray)
+                                    .add(JSON_INSTRUCTOR, instructorJsonObject)
+                                    .add(JSON_STARTING_MONDAY, startingMondayJsonObject)
+                                    .add(JSON_ENDING_FRIDAY, endingFridayJsonObject)
+                                    .add(JSON_LECTURE_DAYS, lectureDaysJsonArray)
+                                    .add(JSON_SCHEDULE_ITEMS, scheduleItemsJsonArray)
+                                    .add(JSON_LECTURES, lecturesJsonArray)
+                                    .add(JSON_HWS, hwsJsonArray)
+                .build();
+        
+        // AND SAVE EVERYTHING AT ONCE
+        jsonWriter.writeObject(courseJsonObject);
     }
     
     /**

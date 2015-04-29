@@ -189,6 +189,7 @@ public class WBDK_GUI implements DraftDataView{
     TableColumn salaryColumn; 
 
     TextField searchTF;
+    TextField searchTFF;
     FantasyTeam currentTeam;
     final ToggleGroup group = new ToggleGroup();
     ComboBox fantasyTeamComboBox;
@@ -210,7 +211,7 @@ public class WBDK_GUI implements DraftDataView{
     static final String COL_CONTRACT = "Contract";
     static final String COL_SALARY = "Salary";
     
-    
+    String fileTitle = "";
     // HERE ARE OUR DIALOGS
     MessageDialog messageDialog;
     YesNoCancelDialog yesNoCancelDialog;
@@ -370,8 +371,9 @@ public class WBDK_GUI implements DraftDataView{
         draftController.enable(false);
 
         // FIRST LOAD ALL THE BASIC COURSE INFO
-
+            
           searchTF.setText("" );
+          searchTFF.setText("" );
           group.selectToggle(all);
 //        courseYearComboBox.setValue(courseToReload.getYear());
 //        courseTitleTextField.setText(courseToReload.getTitle());
@@ -546,10 +548,17 @@ public class WBDK_GUI implements DraftDataView{
         
         
         Label nameLabel = initLabel(WBDK_PropertyType.DRAFT_NAME_LABEL, CLASS_SUBHEADING_LABEL);
-        searchTF = new TextField();
-        searchTF.setPrefColumnCount(20);
-        searchTF.setText("");
-        searchTF.setEditable(true);        
+        searchTFF = new TextField();
+        searchTFF.setPrefColumnCount(20);
+        searchTFF.setText("");
+        searchTFF.setEditable(true);  
+        searchTFF.textProperty().addListener((observable, oldValue, newValue) -> {
+        
+            if(newValue!=null){
+                dataManager.getDraft().setDraftName(newValue);
+            }      
+        });
+        
         draftNamePane.getChildren().addAll(nameLabel,searchTF);
        
         addButtonf = initChildButton(iconPane, WBDK_PropertyType.ADD_ICON, WBDK_PropertyType.ADD_FANTASYTEAM_TOOLTIP, false);
@@ -728,6 +737,12 @@ public class WBDK_GUI implements DraftDataView{
         estimatedColumn.setCellValueFactory(new PropertyValueFactory<String, String>(""));  
         notesColumn.setCellValueFactory(new PropertyValueFactory<String, String>("notes"));
         notesColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        notesColumn.setOnEditCommit(new EventHandler<CellEditEvent<Player, String>>() {
+            @Override
+            public void handle(CellEditEvent<Player, String> p) {
+                ((Player) p.getTableView().getItems().get(p.getTablePosition().getRow())).setNotes(p.getNewValue());
+            }
+        });
         playerTable.setEditable(true);
         notesColumn.setEditable(true); 
        
@@ -901,7 +916,7 @@ public class WBDK_GUI implements DraftDataView{
                // OPEN UP THE LECTURE EDITOR
          Player l = playerTable.getSelectionModel().getSelectedItem();
      
-         draftController.handleEditPlayerRequest(this, l);
+         draftController.handleEditPlayerRequest(this, l,false);
          }
         });
         startingLineUpTable.setOnMouseClicked(e -> {
@@ -910,7 +925,7 @@ public class WBDK_GUI implements DraftDataView{
                // OPEN UP THE LECTURE EDITOR
          Player l = startingLineUpTable.getSelectionModel().getSelectedItem();
          
-         draftController.handleEditPlayerRequest(this, l);
+         draftController.handleEditPlayerRequest(this, l,true);
 
 
             }
