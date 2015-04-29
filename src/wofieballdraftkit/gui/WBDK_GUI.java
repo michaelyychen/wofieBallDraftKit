@@ -559,7 +559,7 @@ public class WBDK_GUI implements DraftDataView{
             }      
         });
         
-        draftNamePane.getChildren().addAll(nameLabel,searchTF);
+        draftNamePane.getChildren().addAll(nameLabel,searchTFF);
        
         addButtonf = initChildButton(iconPane, WBDK_PropertyType.ADD_ICON, WBDK_PropertyType.ADD_FANTASYTEAM_TOOLTIP, false);
         minusButtonf = initChildButton(iconPane, WBDK_PropertyType.MINUS_ICON, WBDK_PropertyType.REMOVE_FANTASYTEAM_TOOLTIP, false); 
