@@ -241,7 +241,7 @@ public class DraftEditController {
             Player si = anpd.getPlayer();
             
             // AND ADD IT AS A ROW TO THE TABLE
-            
+            draft.getExtraPlayerList().add(si);
             draft.getGuiPool().add(si);
             
             // THE COURSE IS NOW DIRTY, MEANING IT'S BEEN 
@@ -263,6 +263,9 @@ public class DraftEditController {
 
         // IF THE USER SAID YES, THEN REMOVE IT
         if (selection.equals(YesNoCancelDialog.YES)) { 
+            if(p.getBirth().equalsIgnoreCase("N/A")){
+            gui.getDataManager().getDraft().getExtraPlayerList().remove(p);
+            }
             gui.getDataManager().getDraft().getGuiPool().remove(p);
             gui.getDataManager().getDraft().getDataPool().remove(p);
             gui.getDataManager().getDraft().getSearchPool().remove(p);

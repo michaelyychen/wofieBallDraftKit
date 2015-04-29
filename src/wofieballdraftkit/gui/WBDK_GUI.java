@@ -857,8 +857,13 @@ public class WBDK_GUI implements DraftDataView{
         });
         loadButton.setOnAction(e -> {
             fileController.handleLoadRequest(this);
-            fantasyTeamComboBox.setVisible(false);
-            fantasyTeamComboBox.setVisible(true);
+            
+            
+            fantasyTeamComboBox.getItems().clear();
+            loadTeamComboBox(dataManager.getDraft().getTeamList());
+            
+            deleteRedundantPlayer();
+            
         });
         saveButton.setOnAction(e -> {
             fileController.handleSaveRequest(this, dataManager.getDraft());
@@ -1212,15 +1217,23 @@ public class WBDK_GUI implements DraftDataView{
             fantasyTeamComboBox.getSelectionModel().selectFirst();
     
     }
+    public void deleteRedundantPlayer(){
+    ArrayList<FantasyTeam> temp = dataManager.getDraft().getTeamList();
+    ObservableList<Player> gui =dataManager.getDraft().getGuiPool();
+    ObservableList<Player> data =dataManager.getDraft().getDataPool();
+    ObservableList<Player> search =dataManager.getDraft().getSearchPool();
     
-//    // LOADS CHECKBOX DATA INTO A Course OBJECT REPRESENTING A CoursePage
-//    private void updatePageUsingCheckBox(CheckBox cB, Course course, CoursePage cP) {
-//        if (cB.isSelected()) {
-//            course.selectPage(cP);
-//        } else {
-//            course.unselectPage(cP);
-//        }
-//    }    
+        for (FantasyTeam t : temp) {
+            for(int i = 0; i < t.getTeamPlayer().size(); i++){
+             Player p = t.getTeamPlayer().get(i);
+             
+             dataManager.getDraft().RemovePlayerByName(gui, p);
+             dataManager.getDraft().RemovePlayerByName(data, p);
+             dataManager.getDraft().RemovePlayerByName(search, p);
+           
+            }
+        }
+    
+    }   
 
-    
 }

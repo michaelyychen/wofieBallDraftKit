@@ -25,18 +25,19 @@ public class Draft {
     List<Pitcher> pitcherList;
     ArrayList<FantasyTeam> teamList;
     
+    ArrayList<Player> extraPlayerList;
     ObservableList<Player> dataPool;
     ObservableList<Player> guiPool;
     ObservableList<Player> searchPool;
     
-    int current;
+   
     
     public Draft(List<Player> initPool){
     
 
     dataPool = FXCollections.observableArrayList(initPool); 
     teamList = new ArrayList();
-    
+    extraPlayerList = new ArrayList();
     searchPool =FXCollections.observableArrayList(initPool); 
     guiPool =FXCollections.observableArrayList(initPool); 
     draftName = new SimpleStringProperty();
@@ -56,6 +57,10 @@ public class Draft {
     public ArrayList<FantasyTeam> getTeamList(){
         return teamList;
     } 
+    public ArrayList<Player> getExtraPlayerList(){
+        return extraPlayerList;
+    } 
+    
     public void setTeamList(ArrayList<FantasyTeam> list){
         this.teamList = list;
     }        
@@ -116,10 +121,20 @@ public class Draft {
     
     public void clearTeamList(){
      teamList.clear();
-    }  
+    }
+    
+    public void RemovePlayerByName(List<Player>pool, Player playerToRemove){
+    
+        for(int i =0; i <pool.size(); i++){
+         Player temp = pool.get(i);
+         
+         if(temp.getFirstName().equalsIgnoreCase(playerToRemove.getFirstName())
+                 &&temp.getLastName().equalsIgnoreCase(playerToRemove.getLastName()))
+             pool.remove(i);
         
+        }  
     
-    
+        }
     }    
     
 
