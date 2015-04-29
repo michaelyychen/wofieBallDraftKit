@@ -24,7 +24,7 @@ public class Hitter extends Player{
     final IntegerProperty h;
     final IntegerProperty sb;
 
-    final DoubleProperty rbi;
+    final IntegerProperty rbi;
     final DoubleProperty ba;
     
     final StringProperty qp;
@@ -43,7 +43,7 @@ public class Hitter extends Player{
    h = new SimpleIntegerProperty(DEFAULT_NUM);
    sb = new SimpleIntegerProperty(DEFAULT_NUM);
    
-   rbi = new SimpleDoubleProperty(DEFAULT_NUM);
+   rbi = new SimpleIntegerProperty(DEFAULT_NUM);
    ba = new SimpleDoubleProperty(DEFAULT_NUM);   
    
    qp = new SimpleStringProperty(DEFAULT_NAME);
@@ -61,16 +61,16 @@ public class Hitter extends Player{
     public StringProperty qpProperty(){
     return qp;
     } 
-    public double getRBI() {
+    public int getRBI() {
         return rbi.get();
     }
 
-    public void setRBI(double initRBI) {
+    public void setRBI(int initRBI) {
         this.rbik.set(initRBI);
         rbi.set(initRBI);
     }
     
-    public DoubleProperty rbiProperty(){
+    public IntegerProperty rbiProperty(){
     return rbi;
     }     
     public double getBA() {

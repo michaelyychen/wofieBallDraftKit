@@ -19,6 +19,7 @@ import wofieballdraftkit.data.Player;
  */
 public interface DraftFileManager {
     public void                              saveDraft(Draft draftToSave) throws IOException;
+    public void                              loadDraft(Draft draftToload, String coursePath) throws IOException;
     public ArrayList<Pitcher>                loadPitcherData(String filePath, String arrayName)throws IOException;
     public ArrayList<Hitter>                 loadHitterData(String filePath, String arrayName) throws IOException;
 

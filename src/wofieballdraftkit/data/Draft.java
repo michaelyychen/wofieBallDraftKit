@@ -112,6 +112,12 @@ public class Draft {
             
                     }
         }
+    }
+    
+    public void clearTeamList(){
+     teamList.clear();
+    }  
+        
     
     
     }    
@@ -138,4 +144,4 @@ public class Draft {
 //    }
     
 
-}
+

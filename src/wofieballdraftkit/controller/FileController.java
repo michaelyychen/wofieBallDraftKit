@@ -160,7 +160,7 @@ public class FileController {
             // IF THE USER REALLY WANTS TO OPEN A Course
             if (continueToOpen) {
                 // GO AHEAD AND PROCEED LOADING A Course
-//                promptToOpen(gui);
+                promptToOpen(gui);
             }
         } catch (IOException ioe) {
             // SOMETHING WENT WRONG
@@ -307,28 +307,28 @@ public class FileController {
      * the open process, nothing is done. If an error occurs loading the file, a
      * message is displayed, but nothing changes.
      */
-//    private void promptToOpen(WBDK_GUI gui) {
-//        // AND NOW ASK THE USER FOR THE COURSE TO OPEN
-//        FileChooser draftFileChooser = new FileChooser();
-//        draftFileChooser.setInitialDirectory(new File(PATH_DRAFT));
-//        File selectedFile = draftFileChooser.showOpenDialog(gui.getWindow());
-//
-//        // ONLY OPEN A NEW FILE IF THE USER SAYS OK
-//        if (selectedFile != null) {
-//            try {
-//                Draft draftToLoad = gui.getDataManager().getDraft();
-//                draftIO.loadDraft(draftToLoad, selectedFile.getAbsolutePath());
-//                gui.reloadDraft(draftToLoad);
-//                saved = true;
-//                gui.updateToolbarControls(saved);
-//                
-//               
-//            } catch (Exception e) {
-//                ErrorHandler eH = ErrorHandler.getErrorHandler();
-//                eH.handleLoadCourseError();
-//            }
-//        }
-//    }
+    private void promptToOpen(WBDK_GUI gui) {
+        // AND NOW ASK THE USER FOR THE COURSE TO OPEN
+        FileChooser draftFileChooser = new FileChooser();
+        draftFileChooser.setInitialDirectory(new File(PATH_DRAFT));
+        File selectedFile = draftFileChooser.showOpenDialog(gui.getWindow());
+
+        // ONLY OPEN A NEW FILE IF THE USER SAYS OK
+        if (selectedFile != null) {
+            try {
+                Draft draftToLoad = gui.getDataManager().getDraft();
+                draftIO.loadDraft(draftToLoad, selectedFile.getAbsolutePath());
+                gui.reloadDraft(draftToLoad);
+                saved = true;
+                gui.updateToolbarControls(saved);
+                
+               
+            } catch (Exception e) {
+                ErrorHandler eH = ErrorHandler.getErrorHandler();
+                eH.handleLoadCourseError();
+            }
+        }
+        }
     
     
     

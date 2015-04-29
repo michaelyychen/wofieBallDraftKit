@@ -10,6 +10,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.math.BigDecimal;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -59,10 +60,21 @@ public class JsonDraftFileManager implements DraftFileManager {
     String JSON_EXT = ".json";
     String SLASH = "/";
     String JSON_FANTASYTEAM = "FANTASY_TEAM";
+    String JSON_FANTASYTEAMS = "FANTASY_TEAMS";
     String JSON_CONTRACT = "CONTRACT";
     String JSON_POSITION = "POSITION";
     String JSON_SALARY = "SALARY";
     String JSON_OWNER = "OWNER";
+    String JSON_DRAFT = "DRAFT";
+    String JSON_PLAYERS = "PLAYERS";
+    String JSON_PROTEAM = "PRO_TEAM";
+    String JSON_POSITIONS = "POSITIONS";
+    String JSON_RW = "RW";
+    String JSON_HRSV = "HRSV";
+    String JSON_RBIK = "RBIK";
+    String JSON_SBERA = "SBERA";
+    String JSON_BAWHIP = "BAWHIP";
+    String JSON_ESTIMATED = "ESTIMATED";
 
     /**
      * This method saves all the data associated with a course to
@@ -89,14 +101,59 @@ public class JsonDraftFileManager implements DraftFileManager {
         
         // NOW BUILD THE COURSE USING EVERYTHING WE'VE ALREADY MADE
         JsonObject courseJsonObject = Json.createObjectBuilder()
-                                    .add("draft:", draftToSave.getDraftName())
-                                    .add("fantasyteams: ", teamsJsonArray)
-                                    .add("players: ",playerJsonArray )
+                                    .add(JSON_DRAFT, draftToSave.getDraftName())
+                                    .add(JSON_FANTASYTEAMS, teamsJsonArray)
+                                    .add(JSON_PLAYERS ,playerJsonArray )
                                         
                 .build();
         
         // AND SAVE EVERYTHING AT ONCE
         jsonWriter.writeObject(courseJsonObject);
+    }    
+    
+    @Override
+    public void loadDraft(Draft draftToload, String jsonFilePath) throws IOException {
+         // LOAD THE JSON FILE WITH ALL THE DATA
+        JsonObject json = loadJSONFile(jsonFilePath);
+        
+        // NOW LOAD THE DRAFT
+        draftToload.setDraftName(json.getString(JSON_DRAFT));
+               
+        // GET THE FantasyTeams TO INCLUDE 
+        draftToload.clearTeamList();
+        JsonArray jsonFTeamArray = json.getJsonArray(JSON_FANTASYTEAMS);
+        for (int i = 0; i < jsonFTeamArray.size(); i++){
+            JsonObject jso = jsonFTeamArray.getJsonObject(i);
+            FantasyTeam team = new FantasyTeam();
+            team.setTeamName(jso.getString(JSON_FANTASYTEAM));
+            team.setOwner(jso.getString(JSON_OWNER));
+            draftToload.getTeamList().add(team);
+                   }
+        
+        JsonArray jsonPlayersArray = json.getJsonArray(JSON_PLAYERS);
+        for (int i = 0; i < jsonPlayersArray.size(); i++){
+            JsonObject jso = jsonPlayersArray.getJsonObject(i);
+            Player p = new Player();
+            p.setFantasyTeam(jso.getString(JSON_FANTASYTEAM));
+            p.setPosition(jso.getString(JSON_POSITION));
+            p.setFirstName(jso.getString(JSON_FIRSTNAME));
+            p.setLastName(jso.getString(JSON_LASTNAME));
+            p.setProTeam(jso.getString(JSON_PROTEAM));
+            p.setQualifyPosition(jso.getString(JSON_POSITIONS));
+            
+            p.setRW(Integer.valueOf(jso.getString(JSON_RW)));
+            p.setHRSV(Integer.valueOf(jso.getString(JSON_HRSV)));
+            p.setRBIK(Integer.valueOf(jso.getString(JSON_RBIK)));
+            p.setSBERA(Double.valueOf(jso.getString(JSON_SBERA)));
+            p.setBAWHIP(Double.valueOf(jso.getString(JSON_BAWHIP)));
+            
+            
+            p.setEstimated(jso.getString(JSON_LASTNAME));
+            p.setContract(jso.getString(JSON_CONTRACT));
+            p.setSalary(jso.getInt(JSON_SALARY));
+        
+            draftToload.getTeamByName(p.getFantasyTeam()).getTeamPlayer().add(p);
+        }                                       
     }
         
     @Override
@@ -237,10 +294,19 @@ public class JsonDraftFileManager implements DraftFileManager {
     
     
     private JsonObject makePlayerObejct(Player p) {
+  
         JsonObject jso = Json.createObjectBuilder().add(JSON_FANTASYTEAM,p.getFantasyTeam())
                                             .add(JSON_POSITION,p.getPosition())    
                                             .add(JSON_FIRSTNAME,p.getFirstName())
                                             .add(JSON_LASTNAME,p.getLastName())
+                                            .add(JSON_PROTEAM, p.getProTeam())
+                                            .add(JSON_POSITIONS, p.getQualifyPosition())
+                                            .add(JSON_RW, Integer.toString(p.getRW()))
+                                            .add(JSON_HRSV, Integer.toString(p.getHRSV()))
+                                            .add(JSON_RBIK, Integer.toString(p.getRBIK()))
+                                            .add(JSON_SBERA, Double.toString(p.getSBERA()))
+                                            .add(JSON_BAWHIP, Double.toString(p.getBAWHIP()))
+                                            .add(JSON_ESTIMATED, p.getEstimated())
                                             .add(JSON_CONTRACT,p.getContract())
                                             .add(JSON_SALARY,p.getSalary()).build();
                 return jso;
@@ -258,7 +324,11 @@ public class JsonDraftFileManager implements DraftFileManager {
         }
         JsonArray jA = jsb.build();
         return jA;        
-    }    
+    }
+
+
+    
+    
     
     
 }

@@ -33,11 +33,11 @@ public class Player {
     
     final IntegerProperty rw;
     final IntegerProperty hrsv;
-    final DoubleProperty rbik;
+    final IntegerProperty rbik;
     final DoubleProperty sbera;
     final DoubleProperty bawhip;    
     
-    
+    final StringProperty estimated;
     
    
   
@@ -46,6 +46,7 @@ public class Player {
     public static final int DEFAULT_NUM = 0 ;
     
     public Player(){
+        estimated = new SimpleStringProperty(DEFAULT_NAME);
         firstname = new SimpleStringProperty(DEFAULT_NAME);
         lastname = new SimpleStringProperty(DEFAULT_NAME);
         proTeam = new SimpleStringProperty(DEFAULT_NAME);
@@ -56,10 +57,13 @@ public class Player {
         nation = new SimpleStringProperty(DEFAULT_NAME);
         notes = new SimpleStringProperty(DEFAULT_NAME);
         birth = new SimpleStringProperty(DEFAULT_NAME);
+        
+        
         salary = new SimpleIntegerProperty(DEFAULT_NUM);
-        rw = new SimpleIntegerProperty(DEFAULT_NUM);
-        rbik = new SimpleDoubleProperty(DEFAULT_NUM);
-        hrsv = new SimpleIntegerProperty(DEFAULT_NUM);
+        rw = new SimpleIntegerProperty(DEFAULT_NUM);       
+        hrsv = new SimpleIntegerProperty(DEFAULT_NUM);       
+        rbik = new SimpleIntegerProperty(DEFAULT_NUM);
+        
         sbera = new SimpleDoubleProperty(DEFAULT_NUM);
         bawhip = new SimpleDoubleProperty(DEFAULT_NUM);
         
@@ -83,9 +87,23 @@ public class Player {
        setSBERA(DEFAULT_NUM);
        setBAWHIP(DEFAULT_NUM);
        setSalary(DEFAULT_NUM);
-       
+       setEstimated(DEFAULT_NAME);
     
     }
+    public String getEstimated() {
+        return estimated.get();
+    }
+
+    public void setEstimated(String s) {
+        estimated.set(s);
+    }
+    
+    public StringProperty estimatedProperty(){
+    return estimated;
+    }        
+    
+    
+    
     public String getProTeam() {
         return proTeam.get();
     }
@@ -233,7 +251,7 @@ public class Player {
     public IntegerProperty hrsvProperty(){
     return hrsv;
     } 
-     public double getRBIK() {
+     public int getRBIK() {
         return rbik.get();
     }
 
@@ -241,14 +259,14 @@ public class Player {
         rbik.set(initRBIK);
     }
     
-    public DoubleProperty rbikProperty(){
+    public IntegerProperty rbikProperty(){
     return rbik;
     }   
     public double getSBERA() {
         return sbera.get();
     }
 
-    public void setSBERA(int initSV) {
+    public void setSBERA(double initSV) {
         sbera.set(initSV);
     }
     
@@ -259,7 +277,7 @@ public class Player {
         return bawhip.get();
     }
 
-    public void setBAWHIP(int initBAWHIP) {
+    public void setBAWHIP(double initBAWHIP) {
         bawhip.set(initBAWHIP);
     }
     

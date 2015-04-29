@@ -372,9 +372,12 @@ public class WBDK_GUI implements DraftDataView{
 
         // FIRST LOAD ALL THE BASIC COURSE INFO
             
-          searchTF.setText("" );
-          searchTFF.setText("" );
-          group.selectToggle(all);
+        searchTF.setText("" );
+        searchTFF.setText("" );
+        group.selectToggle(all);
+        fantasyTeamComboBox.getItems().clear();
+        startingLineUpTable.getItems().clear();
+        
 //        courseYearComboBox.setValue(courseToReload.getYear());
 //        courseTitleTextField.setText(courseToReload.getTitle());
 //        instructorNameTextField.setText(courseToReload.getInstructor().getName());
@@ -854,6 +857,8 @@ public class WBDK_GUI implements DraftDataView{
         });
         loadButton.setOnAction(e -> {
             fileController.handleLoadRequest(this);
+            fantasyTeamComboBox.setVisible(false);
+            fantasyTeamComboBox.setVisible(true);
         });
         saveButton.setOnAction(e -> {
             fileController.handleSaveRequest(this, dataManager.getDraft());
