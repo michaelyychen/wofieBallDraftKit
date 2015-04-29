@@ -40,7 +40,7 @@ public class Draft {
     extraPlayerList = new ArrayList();
     searchPool =FXCollections.observableArrayList(initPool); 
     guiPool =FXCollections.observableArrayList(initPool); 
-    draftName = new SimpleStringProperty();
+    draftName = new SimpleStringProperty("");
     
     }
     public String getDraftName() {

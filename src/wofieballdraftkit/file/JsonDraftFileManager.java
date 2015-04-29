@@ -152,7 +152,11 @@ public class JsonDraftFileManager implements DraftFileManager {
             p.setEstimated(jso.getString(JSON_LASTNAME));
             p.setContract(jso.getString(JSON_CONTRACT));
             p.setSalary(jso.getInt(JSON_SALARY));
-        
+            
+            p.setNotes(jso.getString(JSON_NOTES));
+            p.setBirth(jso.getString(JSON_BIRTH));
+            p.setNation(jso.getString(JSON_NATION));
+            
             draftToload.getTeamByName(p.getFantasyTeam()).getTeamPlayer().add(p);
             
         }
@@ -339,7 +343,11 @@ public class JsonDraftFileManager implements DraftFileManager {
                                             .add(JSON_BAWHIP, Double.toString(p.getBAWHIP()))
                                             .add(JSON_ESTIMATED, p.getEstimated())
                                             .add(JSON_CONTRACT,p.getContract())
+                                            .add(JSON_BIRTH, p.getBirth())
+                                            .add(JSON_NOTES, p.getNotes())
+                                            .add(JSON_NATION, p.getNation())
                                             .add(JSON_SALARY,p.getSalary()).build();
+                                            
                 return jso;
     }
     private JsonArray makesFantasyPlayerArray(ArrayList<FantasyTeam> teamList) {

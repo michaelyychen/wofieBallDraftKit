@@ -378,7 +378,7 @@ public class WBDK_GUI implements DraftDataView{
         fantasyTeamComboBox.getItems().clear();
         startingLineUpTable.getItems().clear();
         
-//        courseYearComboBox.setValue(courseToReload.getYear());
+        searchTFF.setText(draftToReload.getDraftName());
 //        courseTitleTextField.setText(courseToReload.getTitle());
 //        instructorNameTextField.setText(courseToReload.getInstructor().getName());
 //        instructorURLTextField.setText(courseToReload.getInstructor().getHomepageURL());
@@ -863,7 +863,8 @@ public class WBDK_GUI implements DraftDataView{
             loadTeamComboBox(dataManager.getDraft().getTeamList());
             
             deleteRedundantPlayer();
-            
+          
+           
         });
         saveButton.setOnAction(e -> {
             fileController.handleSaveRequest(this, dataManager.getDraft());
@@ -937,7 +938,7 @@ public class WBDK_GUI implements DraftDataView{
          
          draftController.handleEditPlayerRequest(this, l,true);
 
-
+          FXCollections.sort(dataManager.getDraft().getGuiPool(), new NameComparator());
             }
         });
         
