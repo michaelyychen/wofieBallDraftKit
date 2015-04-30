@@ -222,8 +222,19 @@ public class DraftEditController {
         String selection = yesNoCancelDialog.getSelection();
 
         // IF THE USER SAID YES, THEN REMOVE IT
-        if (selection.equals(YesNoCancelDialog.YES)) { 
-            gui.getDataManager().getDraft().RemoveTeamByName(s);
+        if (selection.equals(YesNoCancelDialog.YES)) {
+            FantasyTeam temp = gui.getDataManager().getDraft().getTeamByName(s);
+            
+            for(Player p: temp.getTeamPlayer()){
+                
+                gui.getDataManager().getDraft().getDataPool().add(p);
+                gui.getDataManager().getDraft().getSearchPool().add(p);
+                gui.getDataManager().getDraft().getGuiPool().add(p);
+            }
+            
+            temp.getTeamPlayer().clear();
+            
+            gui.getDataManager().getDraft().RemoveTeamByName(temp.getTeamName());
             
             // THE COURSE IS NOW DIRTY, MEANING IT'S BEEN 
             // CHANGED SINCE IT WAS LAST SAVED, SO MAKE SURE

@@ -882,6 +882,7 @@ public class WBDK_GUI implements DraftDataView{
         
                draftController.handleNewFantasyTeamRequest(this);
                fantasyTeamComboBox.getItems().clear();
+               
                loadTeamComboBox(dataManager.getDraft().getTeamList());
              
            
@@ -892,7 +893,7 @@ public class WBDK_GUI implements DraftDataView{
 
               draftController.handlerDeleteFantasyTeamRequest(this,(String)fantasyTeamComboBox.getSelectionModel().getSelectedItem());
               fantasyTeamComboBox.getItems().clear();
-
+              fantasyTeamComboBox.valueProperty().setValue(null);
               loadTeamComboBox(dataManager.getDraft().getTeamList());
               
         });
