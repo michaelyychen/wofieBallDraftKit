@@ -244,7 +244,7 @@ public class DraftEditController {
         }
     }    
 
-    public void handleNewPlayerRequest(WBDK_GUI gui) {
+    public Player handleNewPlayerRequest(WBDK_GUI gui) {
         DraftDataManager cdm = gui.getDataManager();
         Draft draft = cdm.getDraft();
         anpd.showAddPlayerDialog();
@@ -256,17 +256,22 @@ public class DraftEditController {
             
             // AND ADD IT AS A ROW TO THE TABLE
             draft.getExtraPlayerList().add(si);
+            
             draft.getGuiPool().add(si);
+            draft.getDataPool().add(si);
+            draft.getSearchPool().add(si);
             
             // THE COURSE IS NOW DIRTY, MEANING IT'S BEEN 
             // CHANGED SINCE IT WAS LAST SAVED, SO MAKE SURE
             // THE SAVE BUTTON IS ENABLED
             gui.getFileController().markAsEdited(gui);
+            return si;
         }
         else {
             // THE USER MUST HAVE PRESSED CANCEL, SO
             // WE DO NOTHING
         } 
+        return null;
     }
     public void handleDeletePlayerRequest(WBDK_GUI gui, Player p) {
         // PROMPT THE USER TO SAVE UNSAVED WORK

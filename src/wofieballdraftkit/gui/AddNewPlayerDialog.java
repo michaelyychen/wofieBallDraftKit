@@ -160,8 +160,26 @@ public class AddNewPlayerDialog extends Stage{
            second.setSelected(false);
            SS.setSelected(false);
            OF.setSelected(false);
-          
-        } else{
+           
+           C.setDisable(true);
+           first.setDisable(true);
+           third.setDisable(true);
+           second.setDisable(true);
+           SS.setDisable(true);
+           OF.setDisable(true);
+           
+           
+        }
+           else if (!P.isSelected()&& pos.contains("P")) {
+           pos = pos.replace("P", "");
+            C.setDisable(false);
+           first.setDisable(false);
+           third.setDisable(false);
+           second.setDisable(false);
+           SS.setDisable(false);
+           OF.setDisable(false);
+           }
+         else
             
             
             if(C.isSelected()&& !pos.contains("C")){
@@ -194,11 +212,11 @@ public class AddNewPlayerDialog extends Stage{
             }else if (!OF.isSelected()&& pos.contains("OF")) {
                 pos = pos.replace("OF_", "");
             }
-            
-          }
         }
+        } ;
+        
         //System.out.println(pos);
-        };
+        
         C.setOnAction(checkBoxHandler);
         first.setOnAction(checkBoxHandler);
         third.setOnAction(checkBoxHandler);

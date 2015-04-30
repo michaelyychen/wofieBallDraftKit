@@ -910,10 +910,12 @@ public class WBDK_GUI implements DraftDataView{
         
         addButton.setOnAction(e -> {
         
-              draftController.handleNewPlayerRequest(this);  
+            Player p =  draftController.handleNewPlayerRequest(this);  
               
-              playerTable.scrollTo(dataManager.getDraft().getGuiPool().size()-1);
-              playerTable.getSelectionModel().selectLast();
+              FXCollections.sort(dataManager.getDraft().getGuiPool(), new NameComparator());
+              
+              playerTable.getSelectionModel().select(p);
+              playerTable.scrollTo(p);
         });
         minusButton.setOnAction(e -> {
         
