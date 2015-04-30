@@ -104,7 +104,7 @@ public class DraftEditController {
             
             //put the player back in the pool
             if("Free Agent".equals(si.getFantasyTeam())){
-                System.out.println("here");
+               
             draft.getTeamByName(player.getFantasyTeam()).getTeamPlayer().remove(player);
             draft.getDataPool().add(player);
             draft.getGuiPool().add(player);
@@ -112,6 +112,9 @@ public class DraftEditController {
             }           
             else{
             player.setPosition(si.getPosition());
+            if(!player.getFantasyTeam().isEmpty()){
+            draft.getTeamByName(player.getFantasyTeam()).getTeamPlayer().remove(player);
+            }
             player.setFantasyTeam(si.getFantasyTeam());
             player.setContract(si.getContract());
             player.setSalary(si.getSalary());
@@ -125,7 +128,7 @@ public class DraftEditController {
             draft.getDataPool().remove(player);
             draft.getGuiPool().remove(player);
             draft.getSearchPool().remove(player);
-        }
+            }
             
             }
             
