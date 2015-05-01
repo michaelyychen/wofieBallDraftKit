@@ -161,6 +161,7 @@ public class FileController {
             if (continueToOpen) {
                 // GO AHEAD AND PROCEED LOADING A Course
                 promptToOpen(gui);
+                saved = false;
             }
         } catch (IOException ioe) {
             // SOMETHING WENT WRONG
