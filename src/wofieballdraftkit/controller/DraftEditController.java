@@ -180,6 +180,13 @@ public class DraftEditController {
     
     public void handleEditFantasyTeamRequest(WBDK_GUI gui, String s) {
         
+        if(s==null){
+              
+            PropertiesManager props = PropertiesManager.getPropertiesManager();
+            messageDialog.show(props.getProperty(WBDK_PropertyType.NOTHING_TO_EDIT));
+        
+        }else{
+        
         DraftDataManager cdm = gui.getDataManager();
         
         FantasyTeam teamToEdit = cdm.getDraft().getTeamByName(s);
@@ -206,7 +213,8 @@ public class DraftEditController {
         else {
             // THE USER MUST HAVE PRESSED CANCEL, SO
             // WE DO NOTHING
-        }        
+        } 
+       }       
     }
     public void handlerDeleteFantasyTeamRequest(WBDK_GUI gui, String s) {
         // PROMPT THE USER TO SAVE UNSAVED WORK

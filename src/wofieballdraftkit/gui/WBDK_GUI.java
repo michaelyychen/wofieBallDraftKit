@@ -352,9 +352,9 @@ public class WBDK_GUI implements DraftDataView{
             
             workspacePane.setCenter(fantasyPane);
             workspacePane.setBottom(switcherPane);
-            wbdkPane.setCenter(workspacePane);
+          //  wbdkPane.setCenter(workspaceScrollPane);
             
-            //wbdkPane.setCenter(fantasyPane);
+            wbdkPane.setCenter(workspacePane);
             workspaceActivated = true;
         }
     }
@@ -517,23 +517,15 @@ public class WBDK_GUI implements DraftDataView{
         // ADD THE COMPONENTS WE'VE JUST INITIALIZED
         workspacePane = new BorderPane();
         
-        workspacePane.setCenter(wbdkPane);
+   //     workspacePane.setCenter(wbdkPane);
         workspacePane.getStyleClass().add(CLASS_BORDERED_PANE);
         
         // AND NOW PUT IT IN THE WORKSPACE
         workspaceScrollPane = new ScrollPane();
         workspaceScrollPane.setContent(workspacePane);
         workspaceScrollPane.setFitToWidth(true);
-        workspaceScrollPane.setFitToHeight(true);
         
-        
-        workSpaceStackPane = new StackPane();
-        workSpaceStackPane.getChildren().add(workspacePane);
-        workSpaceStackPane.setPrefSize(600, 600);
-        
-        
-     
-        
+         
         
 
         // NOTE THAT WE HAVE NOT PUT THE WORKSPACE INTO THE WINDOW,
@@ -620,7 +612,7 @@ public class WBDK_GUI implements DraftDataView{
         , RWColumn, HRSVColumn, RBIKColumn, SBERAColumn, BAWHIPColumn, estimatedColumn, contractColumn,salaryColumn);  
         
        
-        startingLineUpTable.setPrefHeight(800);
+        startingLineUpTable.setPrefHeight(500);
         
 
       
@@ -642,7 +634,7 @@ public class WBDK_GUI implements DraftDataView{
         
         taxiDraftTable.getColumns().addAll(positionColumn,firstNameColumn,lastNameColumn,proTeamColumn, positionsColumn
         , RWColumn, HRSVColumn, RBIKColumn, SBERAColumn, BAWHIPColumn, estimatedColumn, contractColumn,salaryColumn);  
-        taxiDraftTable.setPrefHeight(800);
+        taxiDraftTable.setPrefHeight(500);
         
         temp.setSpacing(5);
         temp.setPadding(new Insets(10,20,20,20));

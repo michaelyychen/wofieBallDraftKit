@@ -82,5 +82,6 @@ public enum WBDK_PropertyType {
         SITE_EXPORTED_MESSAGE,
         SAVE_UNSAVED_WORK_MESSAGE,
         REMOVE_ITEM_MESSAGE,
-        NOTHING_TO_DELETE
+        NOTHING_TO_DELETE,
+        NOTHING_TO_EDIT
 }
