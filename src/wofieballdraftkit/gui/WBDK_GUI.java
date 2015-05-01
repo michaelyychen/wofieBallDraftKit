@@ -349,8 +349,8 @@ public class WBDK_GUI implements DraftDataView{
     public void activateWorkspace() {
         if (!workspaceActivated) {
             // PUT THE WORKSPACE IN THE GUI
-            
-            workspacePane.setCenter(fantasyPane);
+            workspacePane.setCenter(workspaceScrollPane);
+          //  workspacePane.setCenter(fantasyPane);
             workspacePane.setBottom(switcherPane);
           //  wbdkPane.setCenter(workspaceScrollPane);
             
@@ -507,12 +507,6 @@ public class WBDK_GUI implements DraftDataView{
      //   initBasicCourseInfoControls();
 
 
-        // THE TOP WORKSPACE HOLDS BOTH THE BASIC COURSE INFO
-        // CONTROLS AS WELL AS THE PAGE SELECTION CONTROLS
-      
-
-      
-
         // THIS HOLDS ALL OUR WORKSPACE COMPONENTS, SO NOW WE MUST
         // ADD THE COMPONENTS WE'VE JUST INITIALIZED
         workspacePane = new BorderPane();
@@ -522,12 +516,10 @@ public class WBDK_GUI implements DraftDataView{
         
         // AND NOW PUT IT IN THE WORKSPACE
         workspaceScrollPane = new ScrollPane();
-        workspaceScrollPane.setContent(workspacePane);
+        workspaceScrollPane.setContent(fantasyPane);
         workspaceScrollPane.setFitToWidth(true);
         
          
-        
-
         // NOTE THAT WE HAVE NOT PUT THE WORKSPACE INTO THE WINDOW,
         // THAT WILL BE DONE WHEN THE USER EITHER CREATES A NEW
         // COURSE OR LOADS AN EXISTING ONE FOR EDITING
@@ -921,8 +913,12 @@ public class WBDK_GUI implements DraftDataView{
          if (e.getClickCount() == 2) {
                // OPEN UP THE LECTURE EDITOR
          Player l = playerTable.getSelectionModel().getSelectedItem();
-     
+         if(l==null){
+         int i = playerTable.getSelectionModel().getSelectedIndex()+1;
+          l = playerTable.getItems().get(i);
+         }
          draftController.handleEditPlayerRequest(this, l,false);
+         
          }
         });
         startingLineUpTable.setOnMouseClicked(e -> {
@@ -930,9 +926,13 @@ public class WBDK_GUI implements DraftDataView{
          if (e.getClickCount() == 2) {
                // OPEN UP THE LECTURE EDITOR
          Player l = startingLineUpTable.getSelectionModel().getSelectedItem();
+         if(l==null){
+         int i = startingLineUpTable.getSelectionModel().getSelectedIndex()+1;
+          l = startingLineUpTable.getItems().get(i);
+         }
          
          draftController.handleEditPlayerRequest(this, l,true);
-
+        
           FXCollections.sort(dataManager.getDraft().getGuiPool(), new NameComparator());
             }
         });
@@ -940,7 +940,7 @@ public class WBDK_GUI implements DraftDataView{
         //switch pane mechanism
         fantasyButton.setOnAction(e -> {
            
-        workspacePane.setCenter(fantasyPane);
+        workspacePane.setCenter(workspaceScrollPane);
 
         });
         playerButton.setOnAction(e -> {

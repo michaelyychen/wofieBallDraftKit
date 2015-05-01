@@ -60,7 +60,7 @@
         
         <!-- ERROR MESSAGES -->
 
-        <property name="ILLEGAL_SELECTION"                       value="Player cannot be added w/o a position"></property>
+        <property name="ILLEGAL_SELECTION"                       value="Player input incorrect"></property>
         <property name="ILLEGAL_SALARY"                       value="Please re-enter salary with numbers"></property>
         <property name="CLOSE_BUTTON_TEXT"                          value="Close"></property>
 

@@ -116,6 +116,9 @@ public class EditPlayerDialog extends Stage{
         fantasyTeamLabel = new Label(FANTASY_PROMPT);
         fantasyTeamComboBox = new ComboBox();
         fantasyTeamComboBox.getSelectionModel().selectedItemProperty().addListener((ObservableValue observable, Object oldValue, Object newValue) -> {
+            
+            positionComboBox.getItems().clear();
+            
             if(newValue!=null){
               if(newValue.toString().equalsIgnoreCase("Free Agent")){
               player.setFantasyTeam("Free Agent");
@@ -124,6 +127,7 @@ public class EditPlayerDialog extends Stage{
               else{ 
             selected= false;
             player.setFantasyTeam(newValue.toString());
+        
             loadQPComboBox(player,findTeam(newValue.toString()));
               }
                         }
@@ -303,6 +307,8 @@ public class EditPlayerDialog extends Stage{
         contractComboBox.valueProperty().setValue(null);
         fantasyTeamComboBox.valueProperty().setValue(null);
         
+      
+           
         player.setFirstName(playerToEdit.getFirstName());
         player.setLastName(playerToEdit.getLastName());
         player.setProTeam(playerToEdit.getProTeam());
@@ -341,7 +347,7 @@ public class EditPlayerDialog extends Stage{
     String pos = p.getQualifyPosition();
     String[] parts = pos.split("_");
     ArrayList<String> qp = new ArrayList();  // this has a player's qualify pos
-    ArrayList<String> added = new ArrayList(); // this is keeping track of what inside of comboBox    
+      
         for(String s:parts)
          {
            qp.add(s);
@@ -351,11 +357,13 @@ public class EditPlayerDialog extends Stage{
             
             if(t.positionCount(qp.get(i)))
             {
-
             positionComboBox.getItems().add(qp.get(i));
             }
             i++;
-        }    
+        }
+        if(!qp.contains("P")&&t.positionCount("U")){
+         positionComboBox.getItems().add("U");
+        }
 //         gridPane.add(positionComboBox,  1, 3, 1, 1);
      
     }
@@ -372,7 +380,8 @@ public class EditPlayerDialog extends Stage{
     {
         for (char c : s.toCharArray())
         {
-            if (!Character.isDigit(c)) return false;
+            if (!Character.isDigit(c)) 
+                return false;
         }
         return true;
     }    

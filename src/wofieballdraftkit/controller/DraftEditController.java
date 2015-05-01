@@ -119,10 +119,12 @@ public class DraftEditController {
             player.setContract(si.getContract());
             player.setSalary(si.getSalary());
             
-            if(player.getPosition().isEmpty()){
+            if(player.getPosition().isEmpty()||player.getContract().isEmpty()){
             PropertiesManager props = PropertiesManager.getPropertiesManager();
             messageDialog.show(props.getProperty(WBDK_PropertyType.ILLEGAL_SELECTION));
-            }else{
+            }
+            
+            else{
             
             draft.getTeamByName(player.getFantasyTeam()).addByPos(player);
             draft.getDataPool().remove(player);
