@@ -71,7 +71,7 @@ public class EditPlayerDialog extends Stage{
     // THIS IS FOR KEEPING TRACK OF WHICH BUTTON THE USER PRESSED
     String selection;
     Boolean freeAgent;
-    Boolean selected;
+   
     // CONSTANTS FOR OUR UI
     public static final String COMPLETE = "Complete";
     public static final String CANCEL = "Cancel";
@@ -118,32 +118,30 @@ public class EditPlayerDialog extends Stage{
         fantasyTeamComboBox.getSelectionModel().selectedItemProperty().addListener((ObservableValue observable, Object oldValue, Object newValue) -> {
             
             positionComboBox.getItems().clear();
+            //positionComboBox.getSelectionModel().clearSelection();
+            positionComboBox.valueProperty().setValue(null);
             
             if(newValue!=null){
               if(newValue.toString().equalsIgnoreCase("Free Agent")){
               player.setFantasyTeam("Free Agent");
-              selected = true;
-              } 
+              }
               else{ 
-            selected= false;
+          
             player.setFantasyTeam(newValue.toString());
-        
-            loadQPComboBox(player,findTeam(newValue.toString()));
+            FantasyTeam temp = findTeam(newValue.toString());
+            loadQPComboBox(player,temp);
               }
                         }
           });    
-        
         
         
         positionLabel = new Label(POSITION_PROMPT);
         positionComboBox = new ComboBox();
         positionComboBox.getSelectionModel().selectedItemProperty().addListener((ObservableValue observable, Object oldValue, Object newValue) -> {
             if(newValue!=null){
-              if(selected==true){
              
-              }else{ 
             player.setPosition((String)newValue);
-              }
+              
             }
         }); 
           
@@ -152,20 +150,16 @@ public class EditPlayerDialog extends Stage{
       
         contractComboBox.getSelectionModel().selectedItemProperty().addListener((ObservableValue observable, Object oldValue, Object newValue) -> {
         if(newValue!=null){
-         if(selected == true){
-           
-              } else{
+        
         player.setContract(newValue.toString());
-         }
+         
         }
         });
         
         salaryLabel = new Label(SALARY_PROMPT);
         salaryTextField = new TextField();        
         salaryTextField.textProperty().addListener((observable, oldValue, newValue) -> {
-            if(selected == true){
-           
-            }else{
+                       
           if(!newValue.isEmpty()){
               if(ifNumeric(newValue)){
            int salary = Integer.valueOf(newValue);
@@ -175,7 +169,7 @@ public class EditPlayerDialog extends Stage{
                messageDialog.show(props.getProperty(WBDK_PropertyType.ILLEGAL_SALARY));   
                   
               }}
-        }});
+        });
 
 
 
@@ -234,12 +228,14 @@ public class EditPlayerDialog extends Stage{
     }
 
     public FantasyTeam findTeam(String s){
-    FantasyTeam t = new FantasyTeam();
+    FantasyTeam team = new FantasyTeam();
+    
     for(int i = 0; i< clist.size(); i++){
     
-    if(clist.get(i).getTeamName().equalsIgnoreCase(s))
-        t = clist.get(i);
-         return t;
+    if(clist.get(i).getTeamName().equalsIgnoreCase(s)==true){
+        team = clist.get(i);
+         return team;
+        }
     }
     return null;
     
@@ -306,7 +302,7 @@ public class EditPlayerDialog extends Stage{
         positionComboBox.valueProperty().setValue(null);
         contractComboBox.valueProperty().setValue(null);
         fantasyTeamComboBox.valueProperty().setValue(null);
-        
+    
       
            
         player.setFirstName(playerToEdit.getFirstName());
@@ -318,7 +314,13 @@ public class EditPlayerDialog extends Stage{
         
         // AND THEN INTO OUR GUI
         loadGUIData();
-       
+            
+        if(freeAgent == true){
+        contractComboBox.getSelectionModel().select(playerToEdit.getContract());
+        fantasyTeamComboBox.getSelectionModel().select(playerToEdit.getFantasyTeam());
+        positionComboBox.getSelectionModel().select(playerToEdit.getPosition());
+        salaryTextField.setText(Integer.toString(playerToEdit.getSalary()));
+        }
                
         // AND OPEN IT UP
         this.showAndWait();
@@ -361,10 +363,17 @@ public class EditPlayerDialog extends Stage{
             }
             i++;
         }
+
+        
+        if(!qp.contains("P")&&(qp.contains("1B")||qp.contains("3B"))&&t.positionCount("CI")){
+         positionComboBox.getItems().add("CI");
+        }
+        if(!qp.contains("P")&&(qp.contains("2B")||qp.contains("SS"))&&t.positionCount("MI")){
+         positionComboBox.getItems().add("MI");
+        }
         if(!qp.contains("P")&&t.positionCount("U")){
          positionComboBox.getItems().add("U");
         }
-//         gridPane.add(positionComboBox,  1, 3, 1, 1);
      
     }
 //    public void clearData(){

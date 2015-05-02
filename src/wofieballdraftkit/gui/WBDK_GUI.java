@@ -925,15 +925,18 @@ public class WBDK_GUI implements DraftDataView{
             
          if (e.getClickCount() == 2) {
                // OPEN UP THE LECTURE EDITOR
+            
          Player l = startingLineUpTable.getSelectionModel().getSelectedItem();
+            
          if(l==null){
-         int i = startingLineUpTable.getSelectionModel().getSelectedIndex()+1;
+          int i = startingLineUpTable.getSelectionModel().getSelectedIndex()+1;
           l = startingLineUpTable.getItems().get(i);
          }
          
          draftController.handleEditPlayerRequest(this, l,true);
         
           FXCollections.sort(dataManager.getDraft().getGuiPool(), new NameComparator());
+          startingLineUpTable.getSelectionModel().select(l);
             }
         });
         
