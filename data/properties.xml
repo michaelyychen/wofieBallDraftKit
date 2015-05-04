@@ -57,7 +57,7 @@
         <property name="TAXISQUAD_LABEL"                       value="Taxi Squad "></property>
         <property name="SEARCH_LABEL"                       value="Search: "></property>
         <property name="SELECT_DRAFT_LABEL"                       value="Select Fantasy Team: "></property>    
-        
+        <property name="SEARCHMLB_LABEL"                       value="Select Pro Team: "></property>    
         <!-- ERROR MESSAGES -->
 
         <property name="ILLEGAL_SELECTION"                       value="Player input incorrect"></property>

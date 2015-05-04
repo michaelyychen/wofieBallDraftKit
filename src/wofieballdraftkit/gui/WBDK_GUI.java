@@ -9,6 +9,7 @@ import static wofieballdraftkit.WBDK_StartUpConstants.*;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -21,6 +22,7 @@ import javafx.event.EventHandler;
 import javafx.event.EventType;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -109,7 +111,7 @@ public class WBDK_GUI implements DraftDataView{
     VBox playerPane;
     BorderPane standingPane;
     BorderPane draftPane;
-    BorderPane MLBPane;
+    GridPane MLBPane;
     
 
     // THIS PANE ORGANIZES THE BIG PICTURE CONTAINERS FOR THE
@@ -136,10 +138,11 @@ public class WBDK_GUI implements DraftDataView{
     Button minusButtonf;
     Button addButton;
     Button minusButton;
-    
-    
     Button editButton;
-
+    
+    ArrayList<String> teamArray = new ArrayList(
+                    Arrays.asList("ATL", "AZ", "CHC", "CIN", "COL", "LAD", "MIA", "MIL",
+                                "NYM", "PHI", "PIT", "SD", "SF", "STL", "WAS"));
     // WE'LL ORGANIZE OUR WORKSPACE COMPONENTS USING A BORDER PANE
     
     BorderPane workspacePane;
@@ -187,7 +190,7 @@ public class WBDK_GUI implements DraftDataView{
     TableColumn notesColumn;
     TableColumn contractColumn; 
     TableColumn salaryColumn; 
-
+    ComboBox proTeamComboBox;
     TextField searchTF;
     TextField searchTFF;
     FantasyTeam currentTeam;
@@ -649,7 +652,7 @@ public class WBDK_GUI implements DraftDataView{
                
         FlowPane searchHbox = new FlowPane();
         FlowPane radioHBox = new FlowPane();
-        //  BorderPane wrapper = new BorderPane();
+     
         
         addButton = initChildButton(searchHbox, WBDK_PropertyType.ADD_ICON, WBDK_PropertyType.ADD_PLAYER_TOOLTIP, false);
         minusButton = initChildButton(searchHbox, WBDK_PropertyType.MINUS_ICON, WBDK_PropertyType.REMOVE_PLAYER_TOOLTIP, false); 
@@ -788,15 +791,61 @@ public class WBDK_GUI implements DraftDataView{
     }    
     private void initMLBPane() {
         // HERE'S THE SPLIT PANE, ADD THE TWO GROUPS OF CONTROLS
-        MLBPane = new BorderPane();
-        GridPane a = new GridPane();
-             
-        a.add(initLabel(WBDK_PropertyType.MLB_LABEL, CLASS_HEADING_LABEL), 0, 0);
-        a.setStyle("-fx-background-color: GhostWhite");
+        MLBPane = new GridPane();
+        FlowPane topicHBox = new FlowPane();
+        proTeamComboBox = new ComboBox();     
+        ObservableList<Player> temp = FXCollections.observableArrayList();
+        ObservableList<Player> data = dataManager.getDraft().getDataPool();
+        Label searchLabel = initLabel(WBDK_PropertyType.SEARCHMLB_LABEL, CLASS_SUBHEADING_LABEL);
+        
+        for (String s : teamArray) {
+                proTeamComboBox.getItems().add(s);
+           }
+        topicHBox.getChildren().addAll(searchLabel,proTeamComboBox);
+        
+        
+        proTeamComboBox.getSelectionModel().selectedItemProperty().addListener((ObservableValue observable, Object oldValue, Object newValue) -> {
+            //   System.out.println(newValue.toString());
+            temp.clear();
+            String s = newValue.toString();
+           for(int i = 0; i < data.size();i++){
+           if(data.get(i).getProTeam().equalsIgnoreCase(s)){
+           temp.add(data.get(i));
+           }
+           }
            
-        MLBPane.setCenter(a);
-      //  MLBPane.setBottom(switcherPane);
+           
+        });
+        
+        
+        TableView proTeamTable = new TableView();
+        
+        firstNameColumn = new TableColumn(COL_FIRST);
+        lastNameColumn = new TableColumn(COL_LAST);
+        positionsColumn = new TableColumn(COL_POSITIONS);
+        
+        firstNameColumn.setCellValueFactory(new PropertyValueFactory<String, String>("firstname"));
+        lastNameColumn.setCellValueFactory(new PropertyValueFactory<String, String>("lastname"));
+        positionsColumn.setCellValueFactory(new PropertyValueFactory<String, String>("qualifyPosition"));
+        
+        proTeamTable.getColumns().addAll(firstNameColumn,lastNameColumn,positionsColumn);
+        proTeamTable.setItems(temp);
+        proTeamTable.setMinHeight(700);
+       
+        
+        
+        
+        MLBPane.setAlignment(Pos.CENTER);
+     
+        MLBPane.setVgap(5);
+        MLBPane.add(initLabel(WBDK_PropertyType.MLB_LABEL, CLASS_HEADING_LABEL),0,0,1,1);
+        MLBPane.setStyle("-fx-background-color: GhostWhite");
+        MLBPane.add(topicHBox,0,1,1,1);
+        MLBPane.add(proTeamTable,0,2,1,1);
+        
+       // MLBPane.getChildren().addAll(topicHBox,proTeamTable );
          
+        
     }
    
 
@@ -1233,6 +1282,7 @@ public class WBDK_GUI implements DraftDataView{
             }
         }
     
-    }   
+    }
+ 
 
 }
