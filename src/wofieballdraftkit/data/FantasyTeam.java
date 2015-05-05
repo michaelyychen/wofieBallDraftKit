@@ -368,7 +368,7 @@ public class FantasyTeam{
      setHR(hr);
      setRBI(rbi);
      setSB(sb);
-     setBA(((double)((int)(ba*100)))/100);
+     setBA(((double)((int)(ba*1000)))/1000);
     }    
     }
     

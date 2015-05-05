@@ -134,7 +134,167 @@ public class Draft {
         }  
     
         }
-    }    
+    
+    
+    public void calculateEstimate(){
+        
+        for(int i =0; i<dataPool.size();i++){
+            Player p = dataPool.get(i);
+            if(p.getPosition().equalsIgnoreCase("P")){
+            
+                
+                
+                
+                
+                
+                
+                
+            
+            
+            
+            
+            }
+            else{
+            
+            
+            
+            } 
+            
+        
+        
+        
+            
+            
+            
+        
+        }
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    public void calculatePts(){
+        int count = 1;
+        int count1 = 1;
+        int count2 = 1;
+        int count3 = 1;
+        int count4 = 1;
+        int count5 = 1;
+        int count6 = 1;
+        int count7 = 1;
+        int count8 = 1;
+        int count9 = 1;
+    
+    for(int i =0; i<teamList.size();i++){
+        
+        FantasyTeam t = teamList.get(i);
+        // find how t ranks among  teams
+        for(int j =0; j<teamList.size();j++){  
+            if(!teamList.get(j).equals(t)){
+                if(teamList.get(j).getR()<t.getR()){
+                count ++;
+                }
+               
+            }
+         
+        }
+          for(int j =0; j<teamList.size();j++){  
+            if(!teamList.get(j).equals(t)){
+                if(teamList.get(j).getHR()<t.getHR()){
+                count1 ++;
+                }
+               
+            }
+         
+        }
+          for(int j =0; j<teamList.size();j++){  
+            if(!teamList.get(j).equals(t)){
+                if(teamList.get(j).getRBI()<t.getRBI()){
+                count2 ++;
+                }
+               
+            }
+         
+        }
+          for(int j =0; j<teamList.size();j++){  
+            if(!teamList.get(j).equals(t)){
+                if(teamList.get(j).getSB()<t.getSB()){
+                count3 ++;
+                }
+               
+            }
+         
+        }
+          for(int j =0; j<teamList.size();j++){  
+            if(!teamList.get(j).equals(t)){
+                if(teamList.get(j).getBA()<t.getBA()){
+                count4 ++;
+                }
+               
+            }
+         
+        }
+          for(int j =0; j<teamList.size();j++){  
+            if(!teamList.get(j).equals(t)){
+                if(teamList.get(j).getW()<t.getW()){
+                count5 ++;
+                }
+               
+            }
+         
+        }
+          for(int j =0; j<teamList.size();j++){  
+            if(!teamList.get(j).equals(t)){
+                if(teamList.get(j).getSV()<t.getSV()){
+                count6 ++;
+                }
+               
+            }
+         
+        }
+          for(int j =0; j<teamList.size();j++){  
+            if(!teamList.get(j).equals(t)){
+                if(teamList.get(j).getK()<t.getK()){
+                count7 ++;
+                }
+               
+            }
+         
+        }
+        
+          for(int j =0; j<teamList.size();j++){  
+            if(!teamList.get(j).equals(t)){
+                if(teamList.get(j).getERA()<t.getERA()){
+                count8 ++;
+                }
+               
+            }
+         
+        }
+          for(int j =0; j<teamList.size();j++){  
+            if(!teamList.get(j).equals(t)){
+                if(teamList.get(j).getWHIP()<t.getWHIP()){
+                count9 ++;
+                }
+               
+            }
+         
+        }
+          
+        int sum = count +count1+count2+count3+count4
+                +count5+count6+count7+count8+count9;    
+         t.setPTS(sum);
+        }  
+    
+    
+    } 
+    
+    }
+        
     
 
     

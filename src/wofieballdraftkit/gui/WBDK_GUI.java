@@ -1064,6 +1064,7 @@ public class WBDK_GUI implements DraftDataView{
             p.updateMoney();
             p.updateStats();
             }
+            dataManager.getDraft().calculatePts();
             workspacePane.setCenter(standingPane);
             
         });
