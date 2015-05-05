@@ -30,7 +30,7 @@ public class Pitcher extends Player {
    
    public static final int DEFAULT_NUM = 0 ;
    
-   public Pitcher(String initFirstname, String initLastname){
+   public Pitcher(String initLastname, String initFirstname){
    super();
    
    this.firstname.set(initFirstname);

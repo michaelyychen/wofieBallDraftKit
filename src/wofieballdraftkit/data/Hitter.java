@@ -32,7 +32,7 @@ public class Hitter extends Player{
     public static final String DEFAULT_NAME = "";
     public static final int DEFAULT_NUM = 0 ;
     
-    public Hitter(String initFirstname, String initLastname){
+    public Hitter(String initLastname, String initFirstname){
    super();
    
    this.firstname.set(initFirstname);

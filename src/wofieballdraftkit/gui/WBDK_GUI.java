@@ -810,11 +810,24 @@ public class WBDK_GUI implements DraftDataView{
             String s = newValue.toString();
            for(int i = 0; i < data.size();i++){
            if(data.get(i).getProTeam().equalsIgnoreCase(s)){
-           temp.add(data.get(i));
+               Player p = new Player();
+               p.setFirstName(data.get(i).getFirstName());
+               p.setLastName(data.get(i).getLastName());
+               String pos = data.get(i).getQualifyPosition();
+               if(pos.contains("1B")||pos.contains("3B")){
+               pos = pos.concat("_CI");
+               }
+               if(pos.contains("2B")||pos.contains("SS")){
+               pos = pos.concat("_MI");
+               }
+               if(!pos.contains("P")){
+               pos = pos.concat("_U");
+               }
+               p.setQualifyPosition(pos);
+               temp.add(p);
            }
            }
-           
-           
+           FXCollections.sort(temp, new NameComparator());
         });
         
         
