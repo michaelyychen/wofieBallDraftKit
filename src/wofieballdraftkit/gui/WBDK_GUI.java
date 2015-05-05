@@ -790,9 +790,28 @@ public class WBDK_GUI implements DraftDataView{
         
         playersColumn.setPrefWidth(100);
         
+        teamColumn.setCellValueFactory(new PropertyValueFactory<String, String>("teamName"));
+        playersColumn.setCellValueFactory(new PropertyValueFactory<Integer, String>("playerCount"));
+        moneyColumn.setCellValueFactory(new PropertyValueFactory<Integer, String>("moneyLeft"));
+        moneyPPColumn.setCellValueFactory(new PropertyValueFactory<Integer, String>("PP"));
+        R.setCellValueFactory(new PropertyValueFactory<Integer, String>("R"));
+        HR.setCellValueFactory(new PropertyValueFactory<Integer, String>("HR"));  
+        RBI.setCellValueFactory(new PropertyValueFactory<Integer, String>("RBI"));
+        SB.setCellValueFactory(new PropertyValueFactory<Integer, String>("SB"));
+        BA.setCellValueFactory(new PropertyValueFactory<Double, String>("BA"));  
+        W.setCellValueFactory(new PropertyValueFactory<Double, String>("W"));
+        SV.setCellValueFactory(new PropertyValueFactory<Integer, String>("SV"));
+        K.setCellValueFactory(new PropertyValueFactory<Integer, String>("K"));  
+        ERA.setCellValueFactory(new PropertyValueFactory<Double, String>("ERA"));
+        WHIP.setCellValueFactory(new PropertyValueFactory<Double, String>("WHIP"));
+        PtsColumn.setCellValueFactory(new PropertyValueFactory<Integer, String>("PTS"));
+        
         standingTable.getColumns().addAll(teamColumn,playersColumn,moneyColumn
                     ,moneyPPColumn,R,HR,RBI,SB,BA,W,SV,K,ERA,WHIP,PtsColumn);
         
+       
+        
+    //    standingTable.setItems(temp);
         standingTable.setMinHeight(700);
         standingPane.getChildren().add(initLabel(WBDK_PropertyType.STANDING_LABEL, CLASS_HEADING_LABEL));
         standingPane.setStyle("-fx-background-color: GhostWhite");
