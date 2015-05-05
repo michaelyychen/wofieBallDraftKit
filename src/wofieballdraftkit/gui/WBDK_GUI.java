@@ -811,7 +811,7 @@ public class WBDK_GUI implements DraftDataView{
         
        
         
-    //    standingTable.setItems(temp);
+        standingTable.setItems(dataManager.getDraft().getTeamList());
         standingTable.setMinHeight(700);
         standingPane.getChildren().add(initLabel(WBDK_PropertyType.STANDING_LABEL, CLASS_HEADING_LABEL));
         standingPane.setStyle("-fx-background-color: GhostWhite");
@@ -1313,7 +1313,7 @@ public class WBDK_GUI implements DraftDataView{
   return guiPool;
     }    
     
-    public void loadTeamComboBox(ArrayList<FantasyTeam> list){
+    public void loadTeamComboBox(ObservableList<FantasyTeam> list){
             for (int i = 0; i< list.size();i++) {
                if(!list.get(i).getTeamName().isEmpty()){
                 fantasyTeamComboBox.getItems().add(list.get(i).getTeamName());
@@ -1323,7 +1323,7 @@ public class WBDK_GUI implements DraftDataView{
     
     }
     public void deleteRedundantPlayer(){
-    ArrayList<FantasyTeam> temp = dataManager.getDraft().getTeamList();
+    ObservableList<FantasyTeam> temp = dataManager.getDraft().getTeamList();
     ObservableList<Player> gui =dataManager.getDraft().getGuiPool();
     ObservableList<Player> data =dataManager.getDraft().getDataPool();
     ObservableList<Player> search =dataManager.getDraft().getSearchPool();

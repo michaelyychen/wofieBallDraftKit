@@ -8,6 +8,7 @@ package wofieballdraftkit.gui;
 import java.util.ArrayList;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -43,7 +44,7 @@ public class EditPlayerDialog extends Stage{
     MessageDialog messageDialog;
     DraftDataManager ddm;
     Player player;
-    ArrayList<FantasyTeam> clist;
+    ObservableList<FantasyTeam> clist;
     // GUI CONTROLS FOR OUR DIALOG
     GridPane gridPane;
     Scene dialogScene;
@@ -281,7 +282,7 @@ public class EditPlayerDialog extends Stage{
             return selection.equals("Complete");
        
     }
-    public void showEditPlayerDialog(Player playerToEdit, ArrayList<FantasyTeam> list, boolean s) {
+    public void showEditPlayerDialog(Player playerToEdit, ObservableList<FantasyTeam> list, boolean s) {
         // SET THE DIALOG TITLE
         setTitle(EDIT_PLAYER_TITLE);
         clist = list;

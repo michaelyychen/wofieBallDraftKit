@@ -317,7 +317,7 @@ public class JsonDraftFileManager implements DraftFileManager {
                                              .add(JSON_OWNER,t.getOwner()).build();
                 return jso;
     }    
-    private JsonArray makeTeamsJsonArray(ArrayList<FantasyTeam> teamList) {
+    private JsonArray makeTeamsJsonArray(ObservableList<FantasyTeam> teamList) {
      JsonArrayBuilder jsb = Json.createArrayBuilder();
         for (FantasyTeam t : teamList) {
            jsb.add(makeTeamsObject(t));
@@ -350,7 +350,7 @@ public class JsonDraftFileManager implements DraftFileManager {
                                             
                 return jso;
     }
-    private JsonArray makesFantasyPlayerArray(ArrayList<FantasyTeam> teamList) {
+    private JsonArray makesFantasyPlayerArray(ObservableList<FantasyTeam> teamList) {
      JsonArrayBuilder jsb = Json.createArrayBuilder();
      
         for (FantasyTeam t : teamList) {

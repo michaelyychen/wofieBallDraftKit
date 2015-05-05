@@ -23,7 +23,7 @@ public class Draft {
     StringProperty draftName;
     List<Hitter> hitterList;
     List<Pitcher> pitcherList;
-    ArrayList<FantasyTeam> teamList;
+    ObservableList<FantasyTeam> teamList;
     
     ArrayList<Player> extraPlayerList;
     ObservableList<Player> dataPool;
@@ -36,7 +36,7 @@ public class Draft {
     
 
     dataPool = FXCollections.observableArrayList(initPool); 
-    teamList = new ArrayList();
+    teamList =  FXCollections.observableArrayList(); 
     extraPlayerList = new ArrayList();
     searchPool =FXCollections.observableArrayList(initPool); 
     guiPool =FXCollections.observableArrayList(initPool); 
@@ -54,14 +54,14 @@ public class Draft {
     public StringProperty draftNameProperty(){
     return draftName;
     }     
-    public ArrayList<FantasyTeam> getTeamList(){
+    public ObservableList<FantasyTeam> getTeamList(){
         return teamList;
     } 
     public ArrayList<Player> getExtraPlayerList(){
         return extraPlayerList;
     } 
     
-    public void setTeamList(ArrayList<FantasyTeam> list){
+    public void setTeamList(ObservableList<FantasyTeam> list){
         this.teamList = list;
     }        
     
@@ -113,8 +113,7 @@ public class Draft {
         if(teamList.get(i).getTeamName().equalsIgnoreCase(s) ){
              
             teamList.remove(i);
-            teamList.trimToSize();
-            
+            //teamList.
                     }
         }
     }
