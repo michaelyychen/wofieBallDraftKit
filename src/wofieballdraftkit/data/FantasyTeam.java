@@ -7,12 +7,15 @@ package wofieballdraftkit.data;
 
 
 import java.util.ArrayList;
+import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import static wofieballdraftkit.data.Hitter.DEFAULT_NUM;
 import wofieballdraftkit.gui.PositionComparator;
 
 /**
@@ -23,11 +26,23 @@ public class FantasyTeam{
     final StringProperty owner;
     final StringProperty teamName;
     ObservableList<Player> teamPlayer;
-    ArrayList<String> posTemplate;
-    
+
     final IntegerProperty moneyLeft;
     final IntegerProperty playerCount;
     final IntegerProperty PP;
+    
+    final IntegerProperty R;
+    final IntegerProperty HR;
+    final IntegerProperty RBI;
+    final IntegerProperty SB;
+    final IntegerProperty SV;
+    final IntegerProperty K;
+    final IntegerProperty PTS;
+    
+    final DoubleProperty BA;
+    final DoubleProperty W;
+    final DoubleProperty ERA;
+    final DoubleProperty WHIP;
     
     public static final String DEFAULT_STRING = "";
     
@@ -39,11 +54,21 @@ public class FantasyTeam{
         playerCount = new SimpleIntegerProperty(23);
         moneyLeft = new SimpleIntegerProperty(260);
         PP = new SimpleIntegerProperty(0);
+        
+        R = new SimpleIntegerProperty(0);
+        HR = new SimpleIntegerProperty(0);
+        RBI = new SimpleIntegerProperty(0);
+        SB = new SimpleIntegerProperty(0);
+        SV = new SimpleIntegerProperty(0);
+        K = new SimpleIntegerProperty(0);
+        PTS = new SimpleIntegerProperty(0);
+        
+        BA = new SimpleDoubleProperty(DEFAULT_NUM);   
+        W = new SimpleDoubleProperty(DEFAULT_NUM);   
+        ERA = new SimpleDoubleProperty(DEFAULT_NUM);   
+        WHIP = new SimpleDoubleProperty(DEFAULT_NUM);   
     }
-    public ArrayList<String> getTemplate(){
-    return posTemplate;
     
-    }
     
     public boolean positionCount(String Pos){
     
@@ -73,7 +98,133 @@ public class FantasyTeam{
     
     }
     
-    public int getPP() {
+        public double getBA() {
+        return BA.get();
+    }
+
+    public void setBA(double initBA) {
+        
+        BA.set(initBA);
+    }
+    
+    public DoubleProperty baProperty(){
+    return BA;
+    }
+        public double getW() {
+        return W.get();
+    }
+
+    public void setW(double initBA) {
+        
+        W.set(initBA);
+    }
+    
+    public DoubleProperty wProperty(){
+    return W;
+    }    public double getERA() {
+        return ERA.get();
+    }
+
+    public void setERA(double initBA) {
+        
+        ERA.set(initBA);
+    }
+    
+    public DoubleProperty eraProperty(){
+    return ERA;
+    }
+        public double getWHIP() {
+        return WHIP.get();
+    }
+
+    public void setWHIP(double initBA) {
+      
+        WHIP.set(initBA);
+    }
+    
+    public DoubleProperty whipProperty(){
+    return WHIP;
+    }
+        public int getPTS() {
+        return PTS.get();
+    }
+    
+    public void setPTS(int n) {
+        PTS.set(n);
+    }
+    
+    public IntegerProperty ptsProperty() {
+        return PTS;
+    }
+    
+    public int getR() {
+        return R.get();
+    }
+    
+    public void setR(int n) {
+        R.set(n);
+    }
+    
+    public IntegerProperty rProperty() {
+        return R;
+    }
+        public int getHR() {
+        return HR.get();
+    }
+    
+    public void setHR(int n) {
+        HR.set(n);
+    }
+    
+    public IntegerProperty hrProperty() {
+        return HR;
+    }
+        public int getRBI() {
+        return RBI.get();
+    }
+    
+    public void setRBI(int n) {
+        RBI.set(n);
+    }
+    
+    public IntegerProperty rbiProperty() {
+        return RBI;
+    }
+        public int getSB() {
+        return SB.get();
+    }
+    
+    public void setSB(int n) {
+        SB.set(n);
+    }
+    
+    public IntegerProperty sbProperty() {
+        return SB;
+    }
+        public int getSV() {
+        return SV.get();
+    }
+    
+    public void setSV(int n) {
+        SV.set(n);
+    }
+    
+    public IntegerProperty svProperty() {
+        return SV;
+    }
+        public int getK() {
+        return K.get();
+    }
+    
+    public void setK(int n) {
+        K.set(n);
+    }
+    
+    public IntegerProperty kProperty() {
+        return K;
+    }
+    
+    public int getPP() {        
         return PP.get();
     }
     
