@@ -66,7 +66,8 @@ public class FantasyTeam{
         BA = new SimpleDoubleProperty(DEFAULT_NUM);   
         W = new SimpleDoubleProperty(DEFAULT_NUM);   
         ERA = new SimpleDoubleProperty(DEFAULT_NUM);   
-        WHIP = new SimpleDoubleProperty(DEFAULT_NUM);   
+        WHIP = new SimpleDoubleProperty(DEFAULT_NUM);  
+    
     }
     
     
@@ -249,11 +250,11 @@ public class FantasyTeam{
     }
     
     
-    public int getMoneyleft() {
+    public int getMoneyLeft() {
         return moneyLeft.get();
     }
     
-    public void setMoneyleft(int n) {
+    public void setMoneyLeft(int n) {
         moneyLeft.set(n);
     }
     
@@ -261,13 +262,7 @@ public class FantasyTeam{
         return moneyLeft;
     }
     
-    public void changeMoneyLeft(int i ){
-    moneyLeft.add(i);
-    }
-    
-    public void changePlayerCount(int i ){
-    playerCount.add(i);
-    }
+
     
     public ObservableList<Player> getTeamPlayer() {
         return teamPlayer;
@@ -313,6 +308,76 @@ public class FantasyTeam{
         }       
         
         setPP(sum/count);
+        setPlayerCount(playerCount.get()-count);
     }
     
+    public void updateMoney(){
+    int i = moneyLeft.get();
+   
+    for(Player p: teamPlayer){
+        
+        i =i - p.getSalary();
+    
+    }
+     setMoneyLeft(i);
+    
+    }
+    public void updateStats(){
+        
+    int playerNum = playerCount.get();
+        
+    int r = R.get();
+    int hr = HR.get();
+    int rbi = RBI.get();
+    int sb = SB.get();
+    double ba = BA.get();
+    double w = W.get();
+    int sv = SV.get();
+    int k = K.get();
+    double era = ERA.get();
+    double whip = WHIP.get();
+   
+    for(Player p: teamPlayer){
+     if(p.getPosition().equalsIgnoreCase("P")){   
+     
+    w = w+p.getRW();
+    sv = sv+ p.getHRSV();
+    k = k + p.getRBIK();
+    era = era+ p.getSBERA();
+    whip = whip + p.getBAWHIP();
+    
+     }     
+     else
+     {
+     r =r+p.getRW();
+     hr = hr+ p.getHRSV();
+     rbi = rbi + p.getRBIK();
+     sb = (int) (sb+ p.getSBERA());
+     ba = ba + p.getBAWHIP();
+          
+     }     
+     
+     setW(((double)((int)(w*100)))/100);
+     setSV(sv/playerNum);
+     setK(k/playerNum);
+     
+     setERA(((double)((int)(era/playerNum*100)))/100);
+     setWHIP(((double)((int)(whip/playerNum*100)))/100);
+     
+     setR(r);
+     setHR(hr);
+     setRBI(rbi);
+     setSB(sb);
+     setBA(((double)((int)(ba*100)))/100);
+    }    
+    }
+    
+    
+    public void changeMoneyLeft(int i ){
+    moneyLeft.add(i);
+    }
+    
+    public void changePlayerCount(int i ){
+    playerCount.add(i);
+    }
 }

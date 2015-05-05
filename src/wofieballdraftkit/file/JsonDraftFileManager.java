@@ -161,32 +161,7 @@ public class JsonDraftFileManager implements DraftFileManager {
             
         }
         
-//        
-//        JsonArray jsonExtraPlayersArray = json.getJsonArray(JSON_EXTRAPLAYERS);
-//        for (int i = 0; i < jsonExtraPlayersArray.size(); i++){
-//            JsonObject jso = jsonExtraPlayersArray.getJsonObject(i);
-//            Player p = new Player();
-//            p.setFantasyTeam(jso.getString(JSON_FANTASYTEAM));
-//            p.setPosition(jso.getString(JSON_POSITION));
-//            p.setFirstName(jso.getString(JSON_FIRSTNAME));
-//            p.setLastName(jso.getString(JSON_LASTNAME));
-//            p.setProTeam(jso.getString(JSON_PROTEAM));
-//            p.setQualifyPosition(jso.getString(JSON_POSITIONS));
-//            
-//            p.setRW(Integer.valueOf(jso.getString(JSON_RW)));
-//            p.setHRSV(Integer.valueOf(jso.getString(JSON_HRSV)));
-//            p.setRBIK(Integer.valueOf(jso.getString(JSON_RBIK)));
-//            p.setSBERA(Double.valueOf(jso.getString(JSON_SBERA)));
-//            p.setBAWHIP(Double.valueOf(jso.getString(JSON_BAWHIP)));
-//            
-//            
-//            p.setEstimated(jso.getString(JSON_LASTNAME));
-//            p.setContract(jso.getString(JSON_CONTRACT));
-//            p.setSalary(jso.getInt(JSON_SALARY));
-//        
-//            draftToload.getGuiPool().add(p);
-//        } 
-//        
+
         
         
     }
@@ -246,8 +221,8 @@ public class JsonDraftFileManager implements DraftFileManager {
         double ERA = 9*(Double.valueOf(jsonArray.getJsonObject(i).getString(JSON_ER)) / 
                          Double.valueOf(jsonArray.getJsonObject(i).getString(JSON_IP)));
         double WHIP = (
-                        Double.valueOf(jsonArray.getJsonObject(i).getString(JSON_BB))+ 
-                        Double.valueOf(jsonArray.getJsonObject(i).getString(JSON_H))/
+                        (Double.valueOf(jsonArray.getJsonObject(i).getString(JSON_BB))+ 
+                        Double.valueOf(jsonArray.getJsonObject(i).getString(JSON_H)))/
                         Double.valueOf(jsonArray.getJsonObject(i).getString(JSON_IP))
                 );
         a.setERA(      ((double)((int)(ERA*100)))/100  );

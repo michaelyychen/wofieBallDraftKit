@@ -1057,6 +1057,13 @@ public class WBDK_GUI implements DraftDataView{
             
         });
         standingButton.setOnAction(e -> {
+            List<FantasyTeam> list = dataManager.getDraft().getTeamList();
+            for(FantasyTeam p : list){
+                
+            p.updatePP();
+            p.updateMoney();
+            p.updateStats();
+            }
             workspacePane.setCenter(standingPane);
             
         });

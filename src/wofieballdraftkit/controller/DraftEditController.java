@@ -105,8 +105,8 @@ public class DraftEditController {
             //put the player back in the pool
             if("Free Agent".equals(si.getFantasyTeam())){
             int money = si.getSalary();
-            
-            draft.getTeamByName(player.getFantasyTeam()).changeMoneyLeft(money);
+//            int i = draft.getTeamByName(player.getFantasyTeam()).getMoneyLeft();
+//            draft.getTeamByName(player.getFantasyTeam()).setMoneyLeft(i+money);
          
             draft.getTeamByName(player.getFantasyTeam()).getTeamPlayer().remove(player);
             draft.getDataPool().add(player);
@@ -125,8 +125,12 @@ public class DraftEditController {
             player.setFantasyTeam(si.getFantasyTeam());
             player.setContract(si.getContract());
             player.setSalary(si.getSalary());
-            int n = player.getSalary();
-            draft.getTeamByName(player.getFantasyTeam()).changeMoneyLeft(-n);
+            
+//            int money = player.getSalary();
+//            int i = draft.getTeamByName(player.getFantasyTeam()).getMoneyLeft();
+//            draft.getTeamByName(player.getFantasyTeam()).setMoneyLeft(i-money);
+            
+            
             draft.getTeamByName(player.getFantasyTeam()).changePlayerCount(-1);
             if(player.getPosition().isEmpty()||player.getContract().isEmpty()){
             PropertiesManager props = PropertiesManager.getPropertiesManager();

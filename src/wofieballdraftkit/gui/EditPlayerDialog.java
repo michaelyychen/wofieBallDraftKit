@@ -258,7 +258,7 @@ public class EditPlayerDialog extends Stage{
         
         loadFTComboBox();
         contractComboBox.getItems().addAll("S2","S1","X");
-        Image img = new Image("file:./images/players/"+player.getFirstName()+player.getLastName()+".jpg");
+        Image img = new Image("file:./images/players/"+player.getLastName()+player.getFirstName()+".jpg");
         if(img.isError())
             {
                 img = new Image("file:./images/players/AAA_PhotoMissing.jpg");
