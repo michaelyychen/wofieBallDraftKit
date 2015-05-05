@@ -7,6 +7,8 @@ package wofieballdraftkit.data;
 
 
 import java.util.ArrayList;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
@@ -23,14 +25,20 @@ public class FantasyTeam{
     ObservableList<Player> teamPlayer;
     ArrayList<String> posTemplate;
     
+    final IntegerProperty moneyLeft;
+    final IntegerProperty playerCount;
+    final IntegerProperty PP;
+    
     public static final String DEFAULT_STRING = "";
     
     public FantasyTeam(){
         owner = new SimpleStringProperty(DEFAULT_STRING);
         teamName = new SimpleStringProperty(DEFAULT_STRING);
         teamPlayer = FXCollections.observableArrayList();
-
         
+        playerCount = new SimpleIntegerProperty(23);
+        moneyLeft = new SimpleIntegerProperty(260);
+        PP = new SimpleIntegerProperty(0);
     }
     public ArrayList<String> getTemplate(){
     return posTemplate;
@@ -64,8 +72,51 @@ public class FantasyTeam{
     teamPlayer.sort(new PositionComparator());
     
     }
-
     
+    public int getPP() {
+        return PP.get();
+    }
+    
+    public void setPP(int n) {
+        PP.set(n);
+    }
+    
+    public IntegerProperty ppProperty() {
+        return PP;
+    }
+        
+    public int getPlayerCount() {
+        return playerCount.get();
+    }
+    
+    public void setPlayerCount(int n) {
+        playerCount.set(n);
+    }
+    
+    public IntegerProperty playercountProperty() {
+        return playerCount;
+    }
+    
+    
+    public int getMoneyleft() {
+        return moneyLeft.get();
+    }
+    
+    public void setMoneyleft(int n) {
+        moneyLeft.set(n);
+    }
+    
+    public IntegerProperty moneyleftProperty() {
+        return moneyLeft;
+    }
+    
+    public void changeMoneyLeft(int i ){
+    moneyLeft.add(i);
+    }
+    
+    public void changePlayerCount(int i ){
+    playerCount.add(i);
+    }
     
     public ObservableList<Player> getTeamPlayer() {
         return teamPlayer;
@@ -99,6 +150,18 @@ public class FantasyTeam{
         return teamName;
     }
     
-
+    public void updatePP(){
+        
+        int sum = 0;
+        int count = 0;
+        
+        for(Player p : teamPlayer){
+        
+        sum = sum + p.getSalary();
+        count ++;
+        }       
+        
+        setPP(sum/count);
+    }
     
 }

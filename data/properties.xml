@@ -49,7 +49,7 @@
         <!-- GUI LABELS -->
         <property name="FANTASY_TEAMS_LABEL"             value="Fantasy Teams"></property>
         <property name="PLAYERS_LABEL"                   value="Avaliable Players"></property>
-        <property name="STANDING_LABEL"                  value="Fantasy Standing"></property>
+        <property name="STANDING_LABEL"                  value="Fantasy Standings Estimate"></property>
         <property name="DRAFT_LABEL"                     value="Draft Summary"></property>
         <property name="DRAFT_NAME_LABEL"                     value="Draft Name: "></property>        
         <property name="MLB_LABEL"                       value="MLB Teams"></property>

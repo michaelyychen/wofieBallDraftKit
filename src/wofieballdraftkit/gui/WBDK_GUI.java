@@ -109,7 +109,7 @@ public class WBDK_GUI implements DraftDataView{
     // THIS IS THE STAGE'S SCENE GRAPH
     VBox fantasyPane;
     VBox playerPane;
-    BorderPane standingPane;
+    VBox standingPane;
     BorderPane draftPane;
     GridPane MLBPane;
     
@@ -194,6 +194,8 @@ public class WBDK_GUI implements DraftDataView{
     TextField searchTF;
     TextField searchTFF;
     FantasyTeam currentTeam;
+    
+    TableView standingTable;
     final ToggleGroup group = new ToggleGroup();
     ComboBox fantasyTeamComboBox;
     
@@ -767,13 +769,36 @@ public class WBDK_GUI implements DraftDataView{
     
     private void initStandingPane() {
         // HERE'S THE SPLIT PANE, ADD THE TWO GROUPS OF CONTROLS
-        standingPane = new BorderPane();
-        GridPane a = new GridPane();
-             
-        a.add(initLabel(WBDK_PropertyType.STANDING_LABEL, CLASS_HEADING_LABEL), 0, 0);
-        a.setStyle("-fx-background-color: GhostWhite");
+        standingPane = new VBox();
+        standingTable = new TableView();
+        
+        TableColumn teamColumn = new TableColumn("Team Name");
+        TableColumn playersColumn = new TableColumn("Players Needed");
+        TableColumn moneyColumn = new TableColumn("$ Left");
+        TableColumn moneyPPColumn = new TableColumn("$ PP");
+        TableColumn  R = new TableColumn("R");
+        TableColumn  HR = new TableColumn("HR");
+        TableColumn RBI = new TableColumn("RBI");
+        TableColumn SB = new TableColumn("SB");
+        TableColumn BA = new TableColumn("BA");
+        TableColumn W = new TableColumn("W");
+        TableColumn SV = new TableColumn("SV");
+        TableColumn K = new TableColumn("K");
+        TableColumn ERA = new TableColumn("ERA");
+        TableColumn  WHIP = new TableColumn("WHIP");
+        TableColumn PtsColumn = new TableColumn("Total Points");
+        
+        playersColumn.setPrefWidth(100);
+        
+        standingTable.getColumns().addAll(teamColumn,playersColumn,moneyColumn
+                    ,moneyPPColumn,R,HR,RBI,SB,BA,W,SV,K,ERA,WHIP,PtsColumn);
+        
+        standingTable.setMinHeight(700);
+        standingPane.getChildren().add(initLabel(WBDK_PropertyType.STANDING_LABEL, CLASS_HEADING_LABEL));
+        standingPane.setStyle("-fx-background-color: GhostWhite");
+        standingPane.getChildren().add(standingTable);
            
-        standingPane.setCenter(a);
+        
       //  standingPane.setBottom(switcherPane);
          
     }

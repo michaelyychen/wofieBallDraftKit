@@ -104,21 +104,30 @@ public class DraftEditController {
             
             //put the player back in the pool
             if("Free Agent".equals(si.getFantasyTeam())){
-               
+            int money = si.getSalary();
+            
+            draft.getTeamByName(player.getFantasyTeam()).changeMoneyLeft(money);
+         
             draft.getTeamByName(player.getFantasyTeam()).getTeamPlayer().remove(player);
             draft.getDataPool().add(player);
             draft.getGuiPool().add(player);
             draft.getSearchPool().add(player);
             }           
+            
+            
             else{
             player.setPosition(si.getPosition());
+            
             if(!player.getFantasyTeam().isEmpty()){
             draft.getTeamByName(player.getFantasyTeam()).getTeamPlayer().remove(player);
             }
+                        
             player.setFantasyTeam(si.getFantasyTeam());
             player.setContract(si.getContract());
             player.setSalary(si.getSalary());
-            
+            int n = player.getSalary();
+            draft.getTeamByName(player.getFantasyTeam()).changeMoneyLeft(-n);
+            draft.getTeamByName(player.getFantasyTeam()).changePlayerCount(-1);
             if(player.getPosition().isEmpty()||player.getContract().isEmpty()){
             PropertiesManager props = PropertiesManager.getPropertiesManager();
             messageDialog.show(props.getProperty(WBDK_PropertyType.ILLEGAL_SELECTION));
