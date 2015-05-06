@@ -320,15 +320,17 @@ public class FantasyTeam{
     }
     
     public void updateMoney(){
-    int i = moneyLeft.get();
+    int i = 260;
    
     for(Player p: teamPlayer){
         
         i =i - p.getSalary();
     
     }
+   
      setMoneyLeft(i);
-    
+    System.out.println(i);
+    System.out.println("");
     }
     public void updateStats(){
         

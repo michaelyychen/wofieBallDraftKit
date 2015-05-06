@@ -149,7 +149,7 @@ public class DraftEditController {
             }
             
             draft.getTeamByName(player.getFantasyTeam()).updateMoney();
-            System.out.println(draft.getTeamByName(player.getFantasyTeam()).getMoneyLeft());
+        
             //check money before adding
             if(player.getSalary()>draft.getTeamByName(player.getFantasyTeam()).getMoneyLeft()
                             -draft.getTeamByName(player.getFantasyTeam()).getPlayerCount()+1){

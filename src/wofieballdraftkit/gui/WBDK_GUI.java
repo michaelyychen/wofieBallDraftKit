@@ -190,6 +190,34 @@ public class WBDK_GUI implements DraftDataView{
     TableColumn notesColumn;
     TableColumn contractColumn; 
     TableColumn salaryColumn; 
+    
+    
+         TableColumn teamColumn;
+        TableColumn playersColumn;
+        TableColumn moneyColumn;
+        TableColumn moneyPPColumn;
+        TableColumn  R ;
+        TableColumn  HR ;
+        TableColumn RBI ;
+        TableColumn SB ;
+        TableColumn BA ;
+        TableColumn W ;
+        TableColumn SV;
+        TableColumn K ;
+        TableColumn ERA ;
+        TableColumn  WHIP ;
+        TableColumn PtsColumn ;
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     ComboBox proTeamComboBox;
     TextField searchTF;
     TextField searchTFF;
@@ -790,21 +818,21 @@ public class WBDK_GUI implements DraftDataView{
         standingPane = new VBox();
         standingTable = new TableView();
         
-        TableColumn teamColumn = new TableColumn("Team Name");
-        TableColumn playersColumn = new TableColumn("Players Needed");
-        TableColumn moneyColumn = new TableColumn("$ Left");
-        TableColumn moneyPPColumn = new TableColumn("$ PP");
-        TableColumn  R = new TableColumn("R");
-        TableColumn  HR = new TableColumn("HR");
-        TableColumn RBI = new TableColumn("RBI");
-        TableColumn SB = new TableColumn("SB");
-        TableColumn BA = new TableColumn("BA");
-        TableColumn W = new TableColumn("W");
-        TableColumn SV = new TableColumn("SV");
-        TableColumn K = new TableColumn("K");
-        TableColumn ERA = new TableColumn("ERA");
-        TableColumn  WHIP = new TableColumn("WHIP");
-        TableColumn PtsColumn = new TableColumn("Total Points");
+         teamColumn = new TableColumn("Team Name");
+         playersColumn = new TableColumn("Players Needed");
+         moneyColumn = new TableColumn("$ Left");
+         moneyPPColumn = new TableColumn("$ PP");
+          R = new TableColumn("R");
+          HR = new TableColumn("HR");
+         RBI = new TableColumn("RBI");
+         SB = new TableColumn("SB");
+         BA = new TableColumn("BA");
+         W = new TableColumn("W");
+         SV = new TableColumn("SV");
+         K = new TableColumn("K");
+         ERA = new TableColumn("ERA");
+          WHIP = new TableColumn("WHIP");
+         PtsColumn = new TableColumn("Total Points");
         
         playersColumn.setPrefWidth(100);
         
@@ -828,8 +856,9 @@ public class WBDK_GUI implements DraftDataView{
                     ,moneyPPColumn,R,HR,RBI,SB,BA,W,SV,K,ERA,WHIP,PtsColumn);
         
        
-        
+         
         standingTable.setItems(dataManager.getDraft().getTeamList());
+        
         standingTable.setMinHeight(700);
         standingPane.getChildren().add(initLabel(WBDK_PropertyType.STANDING_LABEL, CLASS_HEADING_LABEL));
         standingPane.setStyle("-fx-background-color: GhostWhite");
@@ -1099,14 +1128,19 @@ public class WBDK_GUI implements DraftDataView{
             
         });
         standingButton.setOnAction(e -> {
-            List<FantasyTeam> list = dataManager.getDraft().getTeamList();
+            
+           
+            ObservableList<FantasyTeam> list = dataManager.getDraft().getTeamList();
             for(FantasyTeam p : list){
-                
             p.updatePP();
             p.updateMoney();
             p.updateStats();
             }
             dataManager.getDraft().calculatePts();
+
+            
+           
+            
             workspacePane.setCenter(standingPane);
             
         });
