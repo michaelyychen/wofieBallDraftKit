@@ -873,7 +873,7 @@ public class WBDK_GUI implements DraftDataView{
            }
            FXCollections.sort(temp, new NameComparator());
         });
-        
+        proTeamComboBox.getSelectionModel().selectFirst();
         
         TableView proTeamTable = new TableView();
         
