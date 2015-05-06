@@ -726,7 +726,7 @@ public class WBDK_GUI implements DraftDataView{
         proTeamColumn.setCellValueFactory(new PropertyValueFactory<String, String>("proTeam"));
         positionsColumn.setCellValueFactory(new PropertyValueFactory<String, String>("qualifyPosition"));
         yearOfBirthColumn.setCellValueFactory(new PropertyValueFactory<String, String>("birth"));
-        estimatedColumn.setCellValueFactory(new PropertyValueFactory<String, String>(""));  
+        estimatedColumn.setCellValueFactory(new PropertyValueFactory<Integer, String>("estimated"));  
         notesColumn.setCellValueFactory(new PropertyValueFactory<String, String>("notes"));
         notesColumn.setCellFactory(TextFieldTableCell.forTableColumn());
         notesColumn.setOnEditCommit(new EventHandler<CellEditEvent<Player, String>>() {
@@ -1053,6 +1053,7 @@ public class WBDK_GUI implements DraftDataView{
 
         });
         playerButton.setOnAction(e -> {
+            dataManager.getDraft().calculateEstimate();
             workspacePane.setCenter(playerPane);
             
         });

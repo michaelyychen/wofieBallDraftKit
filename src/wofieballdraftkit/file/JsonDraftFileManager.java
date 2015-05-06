@@ -149,7 +149,7 @@ public class JsonDraftFileManager implements DraftFileManager {
             p.setBAWHIP(Double.valueOf(jso.getString(JSON_BAWHIP)));
             
             
-            p.setEstimated(jso.getString(JSON_LASTNAME));
+            //p.setEstimated(jso.getString(JSON_LASTNAME));
             p.setContract(jso.getString(JSON_CONTRACT));
             p.setSalary(jso.getInt(JSON_SALARY));
             

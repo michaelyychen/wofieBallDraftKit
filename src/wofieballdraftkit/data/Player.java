@@ -37,7 +37,7 @@ public class Player {
     final DoubleProperty sbera;
     final DoubleProperty bawhip;    
     
-    final StringProperty estimated;
+    final IntegerProperty estimated;
     
    
   
@@ -46,7 +46,7 @@ public class Player {
     public static final int DEFAULT_NUM = 0 ;
     
     public Player(){
-        estimated = new SimpleStringProperty(DEFAULT_NAME);
+        estimated = new SimpleIntegerProperty(DEFAULT_NUM);
         firstname = new SimpleStringProperty(DEFAULT_NAME);
         lastname = new SimpleStringProperty(DEFAULT_NAME);
         proTeam = new SimpleStringProperty(DEFAULT_NAME);
@@ -87,18 +87,18 @@ public class Player {
        setSBERA(DEFAULT_NUM);
        setBAWHIP(DEFAULT_NUM);
        setSalary(DEFAULT_NUM);
-       setEstimated(DEFAULT_NAME);
+       setEstimated(DEFAULT_NUM);
     
     }
-    public String getEstimated() {
+    public Integer getEstimated() {
         return estimated.get();
     }
 
-    public void setEstimated(String s) {
+    public void setEstimated(int s) {
         estimated.set(s);
     }
     
-    public StringProperty estimatedProperty(){
+    public IntegerProperty estimatedProperty(){
     return estimated;
     }        
     

@@ -137,25 +137,102 @@ public class Draft {
     
     
     public void calculateEstimate(){
+        int rank =1;
+        int rank1 =1;
+        int rank2 =1;
+        int rank3 =1;
+        int rank4 =1;
+        int rankAvg=0;
+        int medianSal=0;
+        int numP =pitcherLeft();
+        int numH =hitterLeft();
         
+
+        int remaining = calculateMoneyLeft();
         for(int i =0; i<dataPool.size();i++){
             Player p = dataPool.get(i);
-            if(p.getPosition().equalsIgnoreCase("P")){
             
-                
-                
-                
-                
-                
-                
-                
+            if(p.getQualifyPosition().contains("P")){
             
-            
-            
-            
+                for(int k =0; k<dataPool.size();k++){
+                if(!dataPool.get(k).equals(p)
+                        &&dataPool.get(k).getQualifyPosition().contains("P")){
+                    if(dataPool.get(k).getRW()>=p.getRW()){
+                        rank++;
+                        }   
+                       
+                    }
+                }
+                for(int k =0; k<dataPool.size();k++){
+                if(!dataPool.get(k).equals(p)
+                       &&dataPool.get(k).getQualifyPosition().contains("P")){
+                    if(dataPool.get(k).getHRSV()>=p.getHRSV()){
+                        rank1++;
+                        }   
+                    }
+                }                
+                for(int k =0; k<dataPool.size();k++){
+                if(!dataPool.get(k).equals(p)
+                      &&dataPool.get(k).getQualifyPosition().contains("P")){
+                    if(dataPool.get(k).getRBIK()>=p.getRBIK()){
+                        rank2++;
+                        }   
+                    }
+                }                
+                 for(int k =0; k<dataPool.size();k++){
+                if(!dataPool.get(k).equals(p)
+                      &&dataPool.get(k).getQualifyPosition().contains("P")){
+                    if(dataPool.get(k).getSBERA()>=p.getSBERA()){
+                        rank3++;
+                        }   
+                    }
+                }     
+                for(int k =0; k<dataPool.size();k++){
+                if(!dataPool.get(k).equals(p)
+                      &&dataPool.get(k).getQualifyPosition().contains("P")){
+                    if(dataPool.get(k).getBAWHIP()>=p.getBAWHIP()){
+                        rank4++;
+                        }   
+                    }
+                }                 
             }
             else{
-            
+                for(int k =0; k<dataPool.size();k++){
+                if(!dataPool.get(k).equals(p)){
+                    if(dataPool.get(k).getRW()>=p.getRW()){
+                        rank++;
+                        }   
+                  
+                    }
+                }
+                for(int k =0; k<dataPool.size();k++){
+                if(!dataPool.get(k).equals(p)){
+                    if(dataPool.get(k).getHRSV()>=p.getHRSV()){
+                        rank1++;
+                        }   
+                    }
+                }                
+                for(int k =0; k<dataPool.size();k++){
+               if(!dataPool.get(k).equals(p)){
+                    if(dataPool.get(k).getRBIK()>=p.getRBIK()){
+                        rank2++;
+                        }   
+                    }
+                }                
+                 for(int k =0; k<dataPool.size();k++){
+                if(!dataPool.get(k).equals(p)){
+                    if(dataPool.get(k).getSBERA()>=p.getSBERA()){
+                        rank3++;
+                        }   
+                    }
+                }     
+                for(int k =0; k<dataPool.size();k++){
+                if(!dataPool.get(k).equals(p)){
+                    if(dataPool.get(k).getBAWHIP()>=p.getBAWHIP()){
+                        rank4++;
+                        }   
+                    }
+                }             
             
             
             } 
@@ -164,18 +241,67 @@ public class Draft {
         
         
             
-            
-            
-        
+          rankAvg = (rank+rank1+rank2+rank3+rank4)/5;
+          if(p.getQualifyPosition().contains("P")){
+          medianSal = remaining/(2*numP); 
+          p.setEstimated(medianSal*(numP*2/rankAvg));
+                   }
+          else{
+          medianSal = remaining/(2*numH); 
+          p.setEstimated((medianSal*(numH*2/rankAvg)));
+          }
+         
         }
+    }
+    
+    public int pitcherLeft(){
+    int sum=0;
+    for(FantasyTeam t: teamList){
+        
+       for(int i =0; i < t.getTeamPlayer().size();i++){
+       
+       if(t.getTeamPlayer().get(i).getPosition().equalsIgnoreCase("P")){
+        
+           sum++;
+       
+       }
+       }
+    
+    }  
+    return teamList.size()*9 - sum;
+    }
+    
+    
+    public int hitterLeft(){
+    int sum=0;
+        for(FantasyTeam t: teamList){
+        
+       for(int i =0; i < t.getTeamPlayer().size();i++){
+       
+       if(!t.getTeamPlayer().get(i).getPosition().equalsIgnoreCase("P")){
+        
+           sum++;
+       
+       }
+       }
+    
+    }  
+    return teamList.size()*14 - sum;
     }
     
     
     
     
-    
-    
-    
+    public int calculateMoneyLeft(){
+    int sum= 0;
+    for(FantasyTeam t:teamList){
+
+    sum = sum + t.getMoneyLeft();
+
+    }
+    return sum;
+    } 
+
     
     public void calculatePts(){
         int count = 1;
