@@ -310,13 +310,18 @@ public class FantasyTeam{
         
         sum = sum + p.getSalary();
         count ++;
-        }       
+        }   
+        
         if(count == 0){
         setPP(-1);
         }else{
         setPP(sum/count);
         }
-        setPlayerCount(playerCount.get()-count);
+        
+        
+        setPlayerCount(teamPlayer.size()-count);
+        count = 0;
+        sum =0;
     }
     
     public void updateMoney(){
@@ -329,8 +334,6 @@ public class FantasyTeam{
     }
    
      setMoneyLeft(i);
-    System.out.println(i);
-    System.out.println("");
     }
     public void updateStats(){
         

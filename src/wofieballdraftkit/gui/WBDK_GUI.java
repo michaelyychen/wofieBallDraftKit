@@ -859,7 +859,7 @@ public class WBDK_GUI implements DraftDataView{
          
         standingTable.setItems(dataManager.getDraft().getTeamList());
         
-        standingTable.setMinHeight(700);
+        //standingTable.setMinHeight(700);
         standingPane.getChildren().add(initLabel(WBDK_PropertyType.STANDING_LABEL, CLASS_HEADING_LABEL));
         standingPane.setStyle("-fx-background-color: GhostWhite");
         standingPane.getChildren().add(standingTable);
@@ -934,8 +934,8 @@ public class WBDK_GUI implements DraftDataView{
         
         proTeamTable.getColumns().addAll(firstNameColumn,lastNameColumn,positionsColumn);
         proTeamTable.setItems(temp);
-        proTeamTable.setMinHeight(700);
-       
+        //proTeamTable.setMinHeight(700);
+        
         
         
         
@@ -1136,13 +1136,19 @@ public class WBDK_GUI implements DraftDataView{
             p.updateMoney();
             p.updateStats();
             }
+            
+            
+            
             dataManager.getDraft().calculatePts();
 
             
            
+            standingTable.setItems(null);
+            standingTable.layout();
+            standingTable.setItems(list);
             
             workspacePane.setCenter(standingPane);
-            
+           
         });
         draftButton.setOnAction(e -> {
             workspacePane.setCenter(draftPane);
