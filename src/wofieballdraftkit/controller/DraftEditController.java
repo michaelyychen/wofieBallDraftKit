@@ -104,42 +104,61 @@ public class DraftEditController {
             
             //put the player back in the pool
             if("Free Agent".equals(si.getFantasyTeam())){
-            int money = si.getSalary();
-//            int i = draft.getTeamByName(player.getFantasyTeam()).getMoneyLeft();
-//            draft.getTeamByName(player.getFantasyTeam()).setMoneyLeft(i+money);
-         
+
             draft.getTeamByName(player.getFantasyTeam()).getTeamPlayer().remove(player);
             draft.getDataPool().add(player);
             draft.getGuiPool().add(player);
             draft.getSearchPool().add(player);
-            }           
+            }
             
+            //Moving a player from starting lineup to taxi squad
+            else if(si.getContract().equalsIgnoreCase("X")){
             
+             draft.getTeamByName(player.getFantasyTeam()).getTeamPlayer().remove(player);
+             draft.getTeamByName(player.getFantasyTeam()).changeMoneyLeft(player.getSalary());
+             player.setSalary(1);
+             player.setContract("X");
+             draft.getTeamByName(player.getFantasyTeam()).getTaxiSquad().add(player);
+            
+            }     
             else{
             player.setPosition(si.getPosition());
             
+            //delete player from previous team
             if(!player.getFantasyTeam().isEmpty()){
             draft.getTeamByName(player.getFantasyTeam()).getTeamPlayer().remove(player);
+            }
+            
+            //if player is switching from taxi squad
+            if(player.getContract().equalsIgnoreCase("X")){
+             draft.getTeamByName(player.getFantasyTeam()).getTaxiSquad().remove(player);            
             }
                         
             player.setFantasyTeam(si.getFantasyTeam());
             player.setContract(si.getContract());
             player.setSalary(si.getSalary());
-            
-//            int money = player.getSalary();
-//            int i = draft.getTeamByName(player.getFantasyTeam()).getMoneyLeft();
-//            draft.getTeamByName(player.getFantasyTeam()).setMoneyLeft(i-money);
-            
-            
             draft.getTeamByName(player.getFantasyTeam()).changePlayerCount(-1);
+          
+            
+            
             if(player.getPosition().isEmpty()||player.getContract().isEmpty()){
             PropertiesManager props = PropertiesManager.getPropertiesManager();
             messageDialog.show(props.getProperty(WBDK_PropertyType.ILLEGAL_SELECTION));
             }
             
+            draft.getTeamByName(player.getFantasyTeam()).updateMoney();
+            //check money before adding
+            if(player.getSalary()>draft.getTeamByName(player.getFantasyTeam()).getMoneyLeft()
+                            -draft.getTeamByName(player.getFantasyTeam()).getPlayerCount()+1){
+            PropertiesManager props = PropertiesManager.getPropertiesManager();
+            messageDialog.show(props.getProperty(WBDK_PropertyType.NOT_EVENMONEY_ERROR));
+            }
+            
             else{
             
             draft.getTeamByName(player.getFantasyTeam()).addByPos(player);
+            
+            
             draft.getDataPool().remove(player);
             draft.getGuiPool().remove(player);
             draft.getSearchPool().remove(player);

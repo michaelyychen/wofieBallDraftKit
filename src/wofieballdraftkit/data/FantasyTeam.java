@@ -26,7 +26,7 @@ public class FantasyTeam{
     final StringProperty owner;
     final StringProperty teamName;
     ObservableList<Player> teamPlayer;
-
+    ObservableList<Player> taxiSquad;
     final IntegerProperty moneyLeft;
     final IntegerProperty playerCount;
     final IntegerProperty PP;
@@ -50,7 +50,7 @@ public class FantasyTeam{
         owner = new SimpleStringProperty(DEFAULT_STRING);
         teamName = new SimpleStringProperty(DEFAULT_STRING);
         teamPlayer = FXCollections.observableArrayList();
-        
+        taxiSquad  = FXCollections.observableArrayList();
         playerCount = new SimpleIntegerProperty(23);
         moneyLeft = new SimpleIntegerProperty(260);
         PP = new SimpleIntegerProperty(0);
@@ -262,7 +262,12 @@ public class FantasyTeam{
         return moneyLeft;
     }
     
-
+    public ObservableList<Player> getTaxiSquad() {
+        return taxiSquad;
+    }
+    public void setTaxiSquad(ObservableList<Player> pool) {
+        this.taxiSquad = pool;
+    }        
     
     public ObservableList<Player> getTeamPlayer() {
         return teamPlayer;
@@ -306,8 +311,11 @@ public class FantasyTeam{
         sum = sum + p.getSalary();
         count ++;
         }       
-        
+        if(count == 0){
+        setPP(-1);
+        }else{
         setPP(sum/count);
+        }
         setPlayerCount(playerCount.get()-count);
     }
     

@@ -63,6 +63,7 @@
         <property name="ILLEGAL_SELECTION"                       value="Player input incorrect"></property>
         <property name="ILLEGAL_SALARY"                       value="Please re-enter salary with numbers"></property>
         <property name="CLOSE_BUTTON_TEXT"                          value="Close"></property>
+        <property name="NOT_EVENMONEY_ERROR"                          value="Unfortunately, you won't have enough money to form a team. Please try again"></property>
 
         <!-- VERIFICATION MESSAGES -->
         <property name="NEW_DRAFT_CREATED_MESSAGE"     value="New Draft Created but not yet Saved"></property>

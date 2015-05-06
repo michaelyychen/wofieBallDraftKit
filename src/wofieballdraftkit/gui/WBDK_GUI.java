@@ -566,6 +566,7 @@ public class WBDK_GUI implements DraftDataView{
                    // FXCollections.sort(dataManager.getDraft().getTeamByName(newValue.toString()).getTeamPlayer(), new PositionComparator());
                     currentTeam = dataManager.getDraft().getTeamByName(newValue.toString());
                     startingLineUpTable.setItems(dataManager.getDraft().getTeamByName(newValue.toString()).getTeamPlayer());
+                    taxiDraftTable.setItems(dataManager.getDraft().getTeamByName(newValue.toString()).getTaxiSquad());
                     dataManager.getDraft().getTeamByName(newValue.toString()).getTeamPlayer().sort(new  PositionComparator());
                 }
               
@@ -615,11 +616,12 @@ public class WBDK_GUI implements DraftDataView{
       
         taxiDraftTable = new TableView();
         Label taxiDraftLabel = initLabel(WBDK_PropertyType.TAXISQUAD_LABEL, CLASS_SUBHEADING_LABEL);
-        positionColumn = new TableColumn(COL_POSITION);
+        
+        positionsColumn = new TableColumn(COL_POSITIONS);
         firstNameColumn = new TableColumn(COL_FIRST);
         lastNameColumn = new TableColumn(COL_LAST);
         proTeamColumn = new TableColumn(COL_PROTEAM);
-        positionsColumn = new TableColumn(COL_POSITIONS);
+        
         RWColumn = new TableColumn(COL_RW);
         HRSVColumn = new TableColumn(COL_HRSV);
         RBIKColumn = new TableColumn(COL_RBIK);
@@ -628,11 +630,27 @@ public class WBDK_GUI implements DraftDataView{
         estimatedColumn = new TableColumn(COL_ESTIMATED);
         contractColumn = new TableColumn(COL_CONTRACT);
         salaryColumn = new TableColumn(COL_SALARY);
+                
+        positionsColumn.setCellValueFactory(new PropertyValueFactory<String, String>("qualifyPosition"));
+        firstNameColumn.setCellValueFactory(new PropertyValueFactory<String, String>("firstname"));
+        lastNameColumn.setCellValueFactory(new PropertyValueFactory<String, String>("lastname"));
+        proTeamColumn.setCellValueFactory(new PropertyValueFactory<String, String>("proTeam"));
+       
+        estimatedColumn.setCellValueFactory(new PropertyValueFactory<String, String>(""));       
+        RWColumn.setCellValueFactory(new PropertyValueFactory<Integer, String>("rw"));
+        HRSVColumn.setCellValueFactory(new PropertyValueFactory<Integer, String>("hrsv"));
+        RBIKColumn.setCellValueFactory(new PropertyValueFactory<Double, String>("rbik"));
+        SBERAColumn.setCellValueFactory(new PropertyValueFactory<Double, String>("sbera"));
+        BAWHIPColumn.setCellValueFactory(new PropertyValueFactory<Double, String>("bawhip"));
+        contractColumn.setCellValueFactory(new PropertyValueFactory<String, String>("contract"));        
+        salaryColumn.setCellValueFactory(new PropertyValueFactory<String, Integer>("salary"));  
         
-        taxiDraftTable.getColumns().addAll(positionColumn,firstNameColumn,lastNameColumn,proTeamColumn, positionsColumn
-        , RWColumn, HRSVColumn, RBIKColumn, SBERAColumn, BAWHIPColumn, estimatedColumn, contractColumn,salaryColumn);  
+        
+        
+        taxiDraftTable.getColumns().addAll(positionsColumn,firstNameColumn,lastNameColumn,proTeamColumn, 
+         RWColumn, HRSVColumn, RBIKColumn, SBERAColumn, BAWHIPColumn, estimatedColumn, contractColumn,salaryColumn);  
         taxiDraftTable.setPrefHeight(500);
-        
+       
         temp.setSpacing(5);
         temp.setPadding(new Insets(10,20,20,20));
         temp.setStyle("-fx-background-color: #FFB6C1; -fx-border-color: #FF69B4;");
@@ -1046,6 +1064,27 @@ public class WBDK_GUI implements DraftDataView{
             }
         });
         
+        taxiDraftTable.setOnMouseClicked(e -> {
+            
+         if (e.getClickCount() == 2) {
+               // OPEN UP THE LECTURE EDITOR
+            
+         Player l = taxiDraftTable.getSelectionModel().getSelectedItem();
+            
+         if(l==null){
+          int i = taxiDraftTable.getSelectionModel().getSelectedIndex()+1;
+          l = taxiDraftTable.getItems().get(i);
+         }
+         
+         draftController.handleEditPlayerRequest(this, l,true);
+        
+          
+            }
+        });
+        
+        
+        
+        
         //switch pane mechanism
         fantasyButton.setOnAction(e -> {
            
@@ -1053,7 +1092,9 @@ public class WBDK_GUI implements DraftDataView{
 
         });
         playerButton.setOnAction(e -> {
+            if(dataManager.getDraft().getTeamList().size()>0){
             dataManager.getDraft().calculateEstimate();
+            }
             workspacePane.setCenter(playerPane);
             
         });

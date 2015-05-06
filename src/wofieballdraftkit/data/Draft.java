@@ -194,15 +194,27 @@ public class Draft {
                         rank4++;
                         }   
                     }
-                }                 
+                } 
+                
+                rankAvg = (rank+rank1+rank2+rank3+rank4)/5;
+                medianSal = remaining/(2*numP);
+                int temp = medianSal*2*numP/rankAvg;
+                p.setEstimated(temp);                            
+                
+                rank =1;
+                rank1 =1;
+                rank2 =1;
+                rank3 =1;
+                rank4 =1;
+
             }
-            else{
+            else
+            {
                 for(int k =0; k<dataPool.size();k++){
                 if(!dataPool.get(k).equals(p)){
                     if(dataPool.get(k).getRW()>=p.getRW()){
                         rank++;
                         }   
-                  
                     }
                 }
                 for(int k =0; k<dataPool.size();k++){
@@ -232,25 +244,45 @@ public class Draft {
                         rank4++;
                         }   
                     }
-                }             
+                }            
+                
+            rankAvg = (rank+rank1+rank2+rank3+rank4)/5;
+            medianSal = remaining/(2*numH); 
+            int temp = medianSal*2*numP/rankAvg;
+            p.setEstimated(temp);  
             
             
+            rank =1;
+            rank1 =1;
+            rank2 =1;
+            rank3 =1;
+            rank4 =1;
+
             } 
             
         
         
         
             
-          rankAvg = (rank+rank1+rank2+rank3+rank4)/5;
-          if(p.getQualifyPosition().contains("P")){
-          medianSal = remaining/(2*numP); 
-          p.setEstimated(medianSal*(numP*2/rankAvg));
-                   }
-          else{
-          medianSal = remaining/(2*numH); 
-          p.setEstimated((medianSal*(numH*2/rankAvg)));
-          }
-         
+//          rankAvg = (rank+rank1+rank2+rank3+rank4)/5;
+//           System.out.println(rankAvg);
+//          
+//          if(p.getQualifyPosition().contains("P")){
+//          medianSal = remaining/(2*numP);
+//          p.setEstimated(medianSal*(numP*2/rankAvg));
+//         System.out.println(medianSal*(2*numP/rankAvg));
+//                   }
+//          else{
+//          medianSal = remaining/(2*numH); 
+//          p.setEstimated((medianSal*(numH*2/rankAvg)));
+//          }
+//          
+//         rank =1;
+//         rank1 =1;
+//         rank2 =1;
+//         rank3 =1;
+//         rank4 =1;
+//         
         }
     }
     

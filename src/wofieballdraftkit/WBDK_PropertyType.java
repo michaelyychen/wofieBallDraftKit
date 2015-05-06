@@ -75,6 +75,7 @@ public enum WBDK_PropertyType {
         CLOSE_BUTTON_TEXT,
         ILLEGAL_SELECTION,
         ILLEGAL_SALARY,
+        NOT_EVENMONEY_ERROR,
         
         // AND VERIFICATION MESSAGES
         NEW_DRAFT_CREATED_MESSAGE,
