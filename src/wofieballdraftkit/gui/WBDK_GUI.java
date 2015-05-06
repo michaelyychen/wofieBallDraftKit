@@ -14,6 +14,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -110,7 +111,7 @@ public class WBDK_GUI implements DraftDataView{
     VBox fantasyPane;
     VBox playerPane;
     VBox standingPane;
-    BorderPane draftPane;
+    VBox draftPane;
     GridPane MLBPane;
     
 
@@ -139,6 +140,12 @@ public class WBDK_GUI implements DraftDataView{
     Button addButton;
     Button minusButton;
     Button editButton;
+    
+    Button starButton;
+    Button playButton;
+    Button pauseButton;
+    
+    TableView draftTable;
     
     ArrayList<String> teamArray = new ArrayList(
                     Arrays.asList("ATL", "AZ", "CHC", "CIN", "COL", "LAD", "MIA", "MIL",
@@ -870,14 +877,45 @@ public class WBDK_GUI implements DraftDataView{
     }
     private void initDraftPane() {
         // HERE'S THE SPLIT PANE, ADD THE TWO GROUPS OF CONTROLS
-        draftPane = new BorderPane();
-        GridPane a = new GridPane();
-             
-        a.add(initLabel(WBDK_PropertyType.DRAFT_LABEL, CLASS_HEADING_LABEL), 0, 0);
-        a.setStyle("-fx-background-color: GhostWhite");
+        draftPane = new VBox();
+        
+        FlowPane pane = new FlowPane();
+        
+        starButton = initChildButton(pane, WBDK_PropertyType.STAR_ICON, WBDK_PropertyType.STAR_TOOLTIP, false);
+        playButton = initChildButton(pane, WBDK_PropertyType.PLAY_ICON, WBDK_PropertyType.PLAY_TOOLTIP, false); 
+        pauseButton = initChildButton(pane, WBDK_PropertyType.PAUSE_ICON, WBDK_PropertyType.PAUSE_TOOLTIP, false); 
+        
+        draftTable = new TableView();
+        
+        TableColumn  picks = new TableColumn("Pick#");
+        TableColumn firstColumn = new TableColumn(COL_FIRST);
+        TableColumn lastColumn = new TableColumn(COL_LAST);
+        TableColumn fantasyTeamColumn = new TableColumn("Team");
+        TableColumn contractColumn = new TableColumn("Contract");
+        TableColumn salaryColumn = new TableColumn("Salary($)");
+        
+        
+        draftTable.autosize();        
+        
+        picks.setCellValueFactory(new PropertyValueFactory<String, String>("teamName"));
+        firstColumn.setCellValueFactory(new PropertyValueFactory<Integer, String>("playerCount"));
+        lastColumn.setCellValueFactory(new PropertyValueFactory<Integer, String>("moneyLeft"));
+        fantasyTeamColumn.setCellValueFactory(new PropertyValueFactory<Integer, String>("teamName"));
+        contractColumn.setCellValueFactory(new PropertyValueFactory<Integer, String>("contract"));
+        salaryColumn.setCellValueFactory(new PropertyValueFactory<Integer, String>("salary"));
+        
+        picks.setCellValueFactory(column-> new ReadOnlyObjectWrapper<Number>(draftTable.getItems().indexOf(column.toString())));
+        draftTable.getColumns().addAll(picks,firstColumn,lastColumn,contractColumn,salaryColumn);
+        
+        draftPane.getChildren().add(initLabel(WBDK_PropertyType.DRAFT_LABEL, CLASS_HEADING_LABEL));
+        draftPane.setStyle("-fx-background-color: GhostWhite");
            
-        draftPane.setCenter(a);
-     //   draftPane.setBottom(switcherPane);
+        draftPane.getChildren().addAll(pane,draftTable);
+        
+        
+        
+        
+        
          
     }    
     private void initMLBPane() {

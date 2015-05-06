@@ -319,7 +319,7 @@ public class FantasyTeam{
         }
         
         
-        setPlayerCount(teamPlayer.size()-count);
+        setPlayerCount(23-teamPlayer.size());
         count = 0;
         sum =0;
     }
@@ -337,7 +337,7 @@ public class FantasyTeam{
     }
     public void updateStats(){
         
-    int playerNum = playerCount.get();
+    int playerNum = teamPlayer.size();
         
     int r = R.get();
     int hr = HR.get();
@@ -371,6 +371,7 @@ public class FantasyTeam{
      }     
      
      setW(((double)((int)(w*100)))/100);
+    
      setSV(sv/playerNum);
      setK(k/playerNum);
      

@@ -138,35 +138,20 @@ public class DraftEditController {
             player.setFantasyTeam(si.getFantasyTeam());
             player.setContract(si.getContract());
             player.setSalary(si.getSalary());
-            draft.getTeamByName(player.getFantasyTeam()).changePlayerCount(-1);
-            
-
-            
-            
-            if(player.getPosition().isEmpty()||player.getContract().isEmpty()){
-            PropertiesManager props = PropertiesManager.getPropertiesManager();
-            messageDialog.show(props.getProperty(WBDK_PropertyType.ILLEGAL_SELECTION));
-            }
-            
+                     
+            draft.getTeamByName(player.getFantasyTeam()).updatePP();
             draft.getTeamByName(player.getFantasyTeam()).updateMoney();
-        
-            //check money before adding
-            if(player.getSalary()>draft.getTeamByName(player.getFantasyTeam()).getMoneyLeft()
-                            -draft.getTeamByName(player.getFantasyTeam()).getPlayerCount()+1){
-            PropertiesManager props = PropertiesManager.getPropertiesManager();
-            messageDialog.show(props.getProperty(WBDK_PropertyType.NOT_EVENMONEY_ERROR));
-            }
             
-            else{
-            
-                
+            //first check if user is adding a player into taxi squad
             if((si.getContract().equalsIgnoreCase("X")||si.getContract().equalsIgnoreCase("S1"))&& s==false){
              
              if(draft.getTeamByName(player.getFantasyTeam()).getPlayerCount()!=0){
              PropertiesManager props = PropertiesManager.getPropertiesManager();
-             messageDialog.show(props.getProperty(WBDK_PropertyType.ILLEGAL_SELECTION));
+             messageDialog.show(props.getProperty(WBDK_PropertyType.NOT_FILLED_ERROR));
                }
              else{
+     
+             player.setSalary(1);  
              draft.getTeamByName(player.getFantasyTeam()).getTaxiSquad().add(player);
              draft.getDataPool().remove(player);
              draft.getGuiPool().remove(player);
@@ -175,13 +160,28 @@ public class DraftEditController {
                 }             
             }
             
-            draft.getTeamByName(player.getFantasyTeam()).addByPos(player);
+            //
+            else{
+            //check money before adding
+            if(player.getSalary()>draft.getTeamByName(player.getFantasyTeam()).getMoneyLeft()
+                            -draft.getTeamByName(player.getFantasyTeam()).getPlayerCount()+1){
+            PropertiesManager props = PropertiesManager.getPropertiesManager();
+            messageDialog.show(props.getProperty(WBDK_PropertyType.NOT_EVENMONEY_ERROR));
+            }          
+           
+                
+            else if((player.getPosition().isEmpty()||player.getContract().isEmpty())){
+            PropertiesManager props = PropertiesManager.getPropertiesManager();
+            messageDialog.show(props.getProperty(WBDK_PropertyType.ILLEGAL_SELECTION));
             
-            draft.getDataPool().remove(player);
-            draft.getGuiPool().remove(player);
-            draft.getSearchPool().remove(player);
-            }
-            
+            }else{
+                draft.getTeamByName(player.getFantasyTeam()).addByPos(player);
+                draft.getDataPool().remove(player);
+                draft.getGuiPool().remove(player);
+                draft.getSearchPool().remove(player);
+                    }
+                    
+                }
             }
             
             

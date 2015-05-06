@@ -30,6 +30,9 @@ public enum WBDK_PropertyType {
         DRAFT_ICON,
         MLB_ICON,
         PEN_ICON,
+        STAR_ICON,
+        PLAY_ICON,
+        PAUSE_ICON,
         
         
         
@@ -52,6 +55,9 @@ public enum WBDK_PropertyType {
         MOVE_DOWN_TOOLTIP,
         ADD_FANTASYTEAM_TOOLTIP,
         REMOVE_FANTASYTEAM_TOOLTIP,
+        STAR_TOOLTIP,
+        PAUSE_TOOLTIP,
+        PLAY_TOOLTIP,
         
     
 
@@ -76,6 +82,7 @@ public enum WBDK_PropertyType {
         ILLEGAL_SELECTION,
         ILLEGAL_SALARY,
         NOT_EVENMONEY_ERROR,
+        NOT_FILLED_ERROR,
         
         // AND VERIFICATION MESSAGES
         NEW_DRAFT_CREATED_MESSAGE,

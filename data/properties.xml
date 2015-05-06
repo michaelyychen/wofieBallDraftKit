@@ -25,6 +25,9 @@
         <property name="DRAFT_ICON"         value="Draft.png"></property>
         <property name="MLB_ICON"           value="MLB.png"></property>
         <property name="PEN_ICON"           value="Pen.png"></property>
+        <property name="STAR_ICON"           value="Star.png"></property>
+        <property name="PLAY_ICON"           value="Play.png"></property>
+        <property name="PAUSE_ICON"           value="Pause.png"></property>
         <!-- TOOLTIPS FOR BUTTONS -->
         <property name="NEW_TOOLTIP"                value="Create a New Draft"></property>
         <property name="LOAD_TOOLTIP"               value="Load and Existing Draft"></property>
@@ -41,9 +44,12 @@
         <property name="ADD_PLAYER_TOOLTIP"           value="Add Player "></property>
         <property name="REMOVE_PLAYER_TOOLTIP"        value="Remove Player "></property>
         <property name="ADD_FANTASYTEAM_TOOLTIP"           value="Add Fantasy Team"></property>
-        <property name="REMOVE_FANTASYTEAM_TOOLTIP"        value="Remove Fantasy Team"></property>        
+        <property name="REMOVE_FANTASYTEAM_TOOLTIP"        value="Remove Fantasy Team"></property>
         <property name="MOVE_UP_TOOLTIP"            value="Move Up Lecture"></property>
         <property name="MOVE_DOWN_TOOLTIP"          value="Move Down Lecture"></property>
+        <property name="STAR_TOOLTIP"        value="Draft 1 player at a time"></property>        
+        <property name="PAUSE_TOOLTIP"            value="Pause Drafting"></property>
+        <property name="PLAY_TOOLTIP"          value="Start Auto Draft"></property>
 
         
         <!-- GUI LABELS -->
@@ -64,7 +70,7 @@
         <property name="ILLEGAL_SALARY"                       value="Please re-enter salary with numbers"></property>
         <property name="CLOSE_BUTTON_TEXT"                          value="Close"></property>
         <property name="NOT_EVENMONEY_ERROR"                          value="Unfortunately, you won't have enough money to form a team. Please try again"></property>
-
+        <property name="NOT_FILLED_ERROR"                          value="Starting Lineup is not filled"></property>       
         <!-- VERIFICATION MESSAGES -->
         <property name="NEW_DRAFT_CREATED_MESSAGE"     value="New Draft Created but not yet Saved"></property>
         <property name="DRAFT_LOADED_MESSAGE"          value="The Draft has been Loaded"></property>
