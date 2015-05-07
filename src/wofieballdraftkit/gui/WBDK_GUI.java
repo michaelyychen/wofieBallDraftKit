@@ -1215,6 +1215,7 @@ public class WBDK_GUI implements DraftDataView{
            
         });
         draftButton.setOnAction(e -> {
+            
             workspacePane.setCenter(draftPane);
             
         });

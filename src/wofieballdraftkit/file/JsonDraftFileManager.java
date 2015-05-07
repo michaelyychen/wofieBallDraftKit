@@ -75,7 +75,8 @@ public class JsonDraftFileManager implements DraftFileManager {
     String JSON_SBERA = "SBERA";
     String JSON_BAWHIP = "BAWHIP";
     String JSON_ESTIMATED = "ESTIMATED";
-    String JSON_EXTRAPLAYERS = "EXTRA PLAYERS";
+    String JSON_TAXISQUAD = "TAXI_SQUAD";
+    String JSON_TRANSCATION = "TRANSCATIONS";
     /**
      * This method saves all the data associated with a course to
      * a JSON file.
@@ -98,13 +99,15 @@ public class JsonDraftFileManager implements DraftFileManager {
         // MAKE A JSON ARRAY FOR THE PAGES ARRAY
         JsonArray teamsJsonArray = makeTeamsJsonArray(draftToSave.getTeamList());
         JsonArray playerJsonArray = makesFantasyPlayerArray(draftToSave.getTeamList());
-        JsonArray extraPlayerArray = makesExtraPlayerArray(draftToSave.getExtraPlayerList());
+        JsonArray transcationArray = makesTranscationArray(draftToSave.getTrascation());
+        JsonArray taxiSquadArray = makesTaxiSquadArray(draftToSave.getTeamList());
         // NOW BUILD THE COURSE USING EVERYTHING WE'VE ALREADY MADE
         JsonObject courseJsonObject = Json.createObjectBuilder()
                                     .add(JSON_DRAFT, draftToSave.getDraftName())
                                     .add(JSON_FANTASYTEAMS, teamsJsonArray)
                                     .add(JSON_PLAYERS ,playerJsonArray )
-                                   // .add(JSON_EXTRAPLAYERS, extraPlayerArray)
+                                    .add(JSON_TAXISQUAD, taxiSquadArray )
+                                    .add(JSON_TRANSCATION, transcationArray)
                                         
                 .build();
         
@@ -149,10 +152,9 @@ public class JsonDraftFileManager implements DraftFileManager {
             p.setBAWHIP(Double.valueOf(jso.getString(JSON_BAWHIP)));
             
             
-            //p.setEstimated(jso.getString(JSON_LASTNAME));
+            
             p.setContract(jso.getString(JSON_CONTRACT));
             p.setSalary(jso.getInt(JSON_SALARY));
-            
             p.setNotes(jso.getString(JSON_NOTES));
             p.setBirth(jso.getString(JSON_BIRTH));
             p.setNation(jso.getString(JSON_NATION));
@@ -160,10 +162,49 @@ public class JsonDraftFileManager implements DraftFileManager {
             draftToload.getTeamByName(p.getFantasyTeam()).getTeamPlayer().add(p);
             
         }
+            JsonArray jsonTaxiArray = json.getJsonArray(JSON_TAXISQUAD);
+        for (int i = 0; i < jsonTaxiArray.size(); i++){
+            JsonObject jso = jsonTaxiArray.getJsonObject(i);
+            Player p = new Player();
+            p.setFantasyTeam(jso.getString(JSON_FANTASYTEAM));
+           
+            p.setFirstName(jso.getString(JSON_FIRSTNAME));
+            p.setLastName(jso.getString(JSON_LASTNAME));
+            
+            p.setQualifyPosition(jso.getString(JSON_POSITIONS));
+            p.setProTeam(jso.getString(JSON_PROTEAM));
+            p.setRW(Integer.valueOf(jso.getString(JSON_RW)));
+            p.setHRSV(Integer.valueOf(jso.getString(JSON_HRSV)));
+            p.setRBIK(Integer.valueOf(jso.getString(JSON_RBIK)));
+            p.setSBERA(Double.valueOf(jso.getString(JSON_SBERA)));
+            p.setBAWHIP(Double.valueOf(jso.getString(JSON_BAWHIP)));
+            
+            
+            
+            p.setContract(jso.getString(JSON_CONTRACT));
+            p.setSalary(jso.getInt(JSON_SALARY));
+           
+            
+            draftToload.getTeamByName(p.getFantasyTeam()).getTaxiSquad().add(p);
+            
+        }
         
-
         
         
+         JsonArray jsonTranscationArray = json.getJsonArray(JSON_TRANSCATION);
+         for (int i = 0; i < jsonTranscationArray.size(); i++){
+            JsonObject jso = jsonTranscationArray.getJsonObject(i);
+            Player p = new Player();
+            
+            p.setFantasyTeam(jso.getString(JSON_FANTASYTEAM));
+            p.setFirstName(jso.getString(JSON_FIRSTNAME));
+            p.setLastName(jso.getString(JSON_LASTNAME));
+            p.setContract(jso.getString(JSON_CONTRACT));
+            p.setSalary(jso.getInt(JSON_SALARY));
+            
+            draftToload.getTrascation().add(p);
+            
+         }
     }
         
     @Override
@@ -324,7 +365,42 @@ public class JsonDraftFileManager implements DraftFileManager {
                                             .add(JSON_SALARY,p.getSalary()).build();
                                             
                 return jso;
+    }    
+    private JsonObject makesTaxiPlayer(Player p) {
+  
+        JsonObject jso = Json.createObjectBuilder().add(JSON_FANTASYTEAM,p.getFantasyTeam())
+                                               
+                                            .add(JSON_FIRSTNAME,p.getFirstName())
+                                            .add(JSON_LASTNAME,p.getLastName())
+                                            .add(JSON_POSITIONS, p.getQualifyPosition())
+                                            .add(JSON_PROTEAM, p.getProTeam())
+                                            .add(JSON_RW, Integer.toString(p.getRW()))
+                                            .add(JSON_HRSV, Integer.toString(p.getHRSV()))
+                                            .add(JSON_RBIK, Integer.toString(p.getRBIK()))
+                                            .add(JSON_SBERA, Double.toString(p.getSBERA()))
+                                            .add(JSON_BAWHIP, Double.toString(p.getBAWHIP()))
+                                            .add(JSON_ESTIMATED, p.getEstimated())
+                                            .add(JSON_CONTRACT,p.getContract())
+                                            .add(JSON_BIRTH, p.getBirth())
+                                            .add(JSON_SALARY,p.getSalary()).build();
+                                            
+                return jso;
     }
+    
+        private JsonObject makesTranscation(Player p) {
+  
+        JsonObject jso = Json.createObjectBuilder()
+                                            .add(JSON_FANTASYTEAM,p.getFantasyTeam())
+                                            .add(JSON_FIRSTNAME,p.getFirstName())
+                                            .add(JSON_LASTNAME,p.getLastName())
+                                            .add(JSON_CONTRACT,p.getContract())
+                                            .add(JSON_SALARY,p.getSalary()).build();
+                                            
+                return jso;
+    }
+    
+    
+    
     private JsonArray makesFantasyPlayerArray(ObservableList<FantasyTeam> teamList) {
      JsonArrayBuilder jsb = Json.createArrayBuilder();
      
@@ -340,20 +416,36 @@ public class JsonDraftFileManager implements DraftFileManager {
         return jA;        
     }
     
-        private JsonArray makesExtraPlayerArray(ArrayList<Player> teamList) {
+        private JsonArray makesTranscationArray(ObservableList<Player> transcation) {
      JsonArrayBuilder jsb = Json.createArrayBuilder();
      
         
-            for(int i = 0; i < teamList.size(); i++){
-             Player p = teamList.get(i);
+            for(int i = 0; i < transcation.size(); i++){
+             Player p = transcation.get(i);
              
-                jsb.add(makePlayerObejct(p));  
+                jsb.add(makesTranscation(p));  
            
             }
         
         JsonArray jA = jsb.build();
         return jA;        
     }
+            private JsonArray makesTaxiSquadArray(ObservableList<FantasyTeam> taxiPlayer) {
+     JsonArrayBuilder jsb = Json.createArrayBuilder();
+     
+            for(FantasyTeam t : taxiPlayer){
+            for(int i = 0; i < t.getTaxiSquad().size(); i++){
+             Player p = t.getTaxiSquad().get(i);
+             
+                jsb.add(makesTaxiPlayer(p));  
+           
+                }
+           }
+        JsonArray jA = jsb.build();
+        return jA;        
+    }    
+        
+        
 
 
     

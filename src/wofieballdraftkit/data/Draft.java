@@ -31,7 +31,7 @@ public class Draft {
     ObservableList<Player> guiPool;
     ObservableList<Player> searchPool;
     
-   
+    ArrayList<Player> temp;
     
     public Draft(List<Player> initPool){
     
@@ -39,6 +39,7 @@ public class Draft {
     dataPool = FXCollections.observableArrayList(initPool); 
     teamList =  FXCollections.observableArrayList(); 
     extraPlayerList = new ArrayList();
+    temp = new ArrayList();
     searchPool =FXCollections.observableArrayList(initPool); 
     guiPool =FXCollections.observableArrayList(initPool); 
     draftName = new SimpleStringProperty("");
@@ -510,7 +511,33 @@ public class Draft {
         }  
     
     
-    } 
+    }
+    
+    public void checkContract(){
+    
+    for(Player p : transcation){
+    
+    if(p.getContract().equalsIgnoreCase("S1")){
+        temp.add(p);
+        transcation.remove(p);
+        }
+    }
+    
+    for(Player p : temp){
+        if(p.getContract().equalsIgnoreCase("S2")){
+        
+        transcation.add(p);
+        temp.remove(p);
+        }
+    }
+    
+    
+    
+    
+    
+    
+    }
+    
     
     }
         
