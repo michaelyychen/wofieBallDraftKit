@@ -70,6 +70,66 @@ public class FantasyTeam{
     
     }
     
+    public ArrayList<String> positionEmpty(){
+
+     int countC=0;   
+     int countOF=0;
+     int countP=0;
+     ArrayList<String> pos = new ArrayList();
+     ArrayList<String> result = new ArrayList();
+     
+     for(int i =0; i<teamPlayer.size();i++){
+         pos.add(teamPlayer.get(i).getPosition());
+     }
+     
+     for(int i =0; i<pos.size();i++){
+         if(pos.get(i).equalsIgnoreCase("OF")){
+         countOF++;
+         }
+         if(pos.get(i).equalsIgnoreCase("P")){
+         countP++;
+         }
+         
+         if(pos.get(i).equalsIgnoreCase("C")){
+         countC++;
+         }
+     }   
+          
+     if(countC<2){
+         result.add("C");
+     }
+     if(countP<9){
+         result.add("P");
+     }
+     if(countOF<5){
+         result.add("OF");
+     }
+     if(!pos.contains("1B")){
+         result.add("1B");
+     } 
+     if(!pos.contains("CI")){
+         result.add("CI");
+     } 
+     if(!pos.contains("3B")){
+         result.add("3B");
+     } 
+     if(!pos.contains("2B")){
+         result.add("2B");
+     } 
+     if(!pos.contains("MI")){
+         result.add("MI");
+     } 
+     if(!pos.contains("SS")){
+         result.add("SS");
+     } 
+     if(!pos.contains("U")){
+         result.add("U");
+     }  
+     
+     return result;
+     }    
+
+    
     
     public boolean positionCount(String Pos){
     

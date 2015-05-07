@@ -5,6 +5,10 @@
  */
 package wofieballdraftkit.controller;
 
+import java.util.ArrayList;
+import javafx.application.Platform;
+import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 import javafx.stage.Stage;
 import properties_manager.PropertiesManager;
 import wofieballdraftkit.WBDK_PropertyType;
@@ -354,16 +358,65 @@ public class DraftEditController {
             gui.getFileController().markAsEdited(gui);
         }
     }     
-    
-    
-    
-    
-    
-    
-    
-    
-    
+    public void handleAutoDraft(WBDK_GUI gui, String option){
+      
+        
+            ObservableList<FantasyTeam> team = gui.getDataManager().getDraft().getTeamList();
+            ObservableList<Player> data = gui.getDataManager().getDraft().getDataPool();
+            ObservableList<Player> guiPool = gui.getDataManager().getDraft().getGuiPool();
+            ObservableList<Player> searchPool = gui.getDataManager().getDraft().getSearchPool();
+            
+            Task<Void> task = new Task<Void>() {
+            @Override
+            protected Void call() throws Exception {
 
+
+                for (FantasyTeam t: team) {
+                    
+                    //If team player has less than 23 player
+                    //this means there's an empty spot
+                    if(t.getTeamPlayer().size()<23){
+                        
+                    ArrayList<String>  posOpen = t.positionEmpty();
+                        for(String s: posOpen){
+                            Player p = gui.getDataManager().getDraft().pickPlayer(s);
+                            
+                            t.addByPos(p);
+                            
+                            data.remove(p);
+                            guiPool.remove(p);
+                            searchPool.remove(p);
+                            
+                            Thread.sleep(1000);
+                            
+                                                    
+                        // UPDATE ANY PROGRESS DISPLAY
+                          Platform.runLater(new Runnable() {
+             
+                            public void run() {
+                                gui.getDataManager().getDraft().getTrascation().add(p);
+                                System.out.println("RUN!!!");
+                                
+                            }
+                        });
+                            
+                            
+                        }
+                        
+                        
+
+                    }
+                }
+                return null;
+            }
+        };
+    
+    
+    
+    
+        Thread thread = new Thread(task);
+        thread.start();
+    }
    
     
 }

@@ -24,6 +24,7 @@ public class Draft {
     List<Hitter> hitterList;
     List<Pitcher> pitcherList;
     ObservableList<FantasyTeam> teamList;
+    ObservableList<Player> transcation;
     
     ArrayList<Player> extraPlayerList;
     ObservableList<Player> dataPool;
@@ -34,7 +35,7 @@ public class Draft {
     
     public Draft(List<Player> initPool){
     
-
+    transcation = FXCollections.observableArrayList(); 
     dataPool = FXCollections.observableArrayList(initPool); 
     teamList =  FXCollections.observableArrayList(); 
     extraPlayerList = new ArrayList();
@@ -56,6 +57,9 @@ public class Draft {
     }     
     public ObservableList<FantasyTeam> getTeamList(){
         return teamList;
+    } 
+    public ObservableList<Player> getTrascation(){
+        return transcation;
     } 
     public ArrayList<Player> getExtraPlayerList(){
         return extraPlayerList;
@@ -117,6 +121,44 @@ public class Draft {
                     }
         }
     }
+    
+    public Player pickPlayer(String pos){
+    
+        for(int i = 0;i<dataPool.size();i++)
+        {
+            if("MI".equals(pos)){
+                
+                if(dataPool.get(i).getQualifyPosition().contains("SS")
+                    ||  dataPool.get(i).getQualifyPosition().contains("2B")) 
+                {
+                 return dataPool.get(i);    
+                }
+            }
+            else if("CI".equals(pos)){
+                
+                if(dataPool.get(i).getQualifyPosition().contains("1B")
+                    ||  dataPool.get(i).getQualifyPosition().contains("3B")) 
+                {
+                 return dataPool.get(i);    
+                }
+            }    
+            else if("U".equals(pos)){
+                
+                if(!dataPool.get(i).getQualifyPosition().contains("P"))
+                {
+                 return dataPool.get(i);  
+                }
+            } 
+            else{ 
+                if(!dataPool.get(i).getQualifyPosition().contains(pos))
+                return dataPool.get(i);
+            }
+        }
+    
+    return null; 
+    }    
+    
+    
     
     public void clearTeamList(){
      teamList.clear();

@@ -887,7 +887,7 @@ public class WBDK_GUI implements DraftDataView{
         
         draftTable = new TableView();
         
-        TableColumn  picks = new TableColumn("Pick#");
+        TableColumn<Player, Number>  picks = new TableColumn("Pick#");
         TableColumn firstColumn = new TableColumn(COL_FIRST);
         TableColumn lastColumn = new TableColumn(COL_LAST);
         TableColumn fantasyTeamColumn = new TableColumn("Team");
@@ -897,15 +897,19 @@ public class WBDK_GUI implements DraftDataView{
         
         draftTable.autosize();        
         
-        picks.setCellValueFactory(new PropertyValueFactory<String, String>("teamName"));
-        firstColumn.setCellValueFactory(new PropertyValueFactory<Integer, String>("playerCount"));
-        lastColumn.setCellValueFactory(new PropertyValueFactory<Integer, String>("moneyLeft"));
-        fantasyTeamColumn.setCellValueFactory(new PropertyValueFactory<Integer, String>("teamName"));
-        contractColumn.setCellValueFactory(new PropertyValueFactory<Integer, String>("contract"));
+        //picks.setCellValueFactory(new PropertyValueFactory<String, String>("teamName"));
+        firstColumn.setCellValueFactory(new PropertyValueFactory<String, String>("firstname"));
+        lastColumn.setCellValueFactory(new PropertyValueFactory<String, String>("lastname"));
+        fantasyTeamColumn.setCellValueFactory(new PropertyValueFactory<String, String>("teamName"));
+        contractColumn.setCellValueFactory(new PropertyValueFactory<String, String>("contract"));
         salaryColumn.setCellValueFactory(new PropertyValueFactory<Integer, String>("salary"));
         
-        picks.setCellValueFactory(column-> new ReadOnlyObjectWrapper<Number>(draftTable.getItems().indexOf(column.toString())));
+        picks.setSortable(false);
+        picks.setCellValueFactory(column-> new ReadOnlyObjectWrapper<Number>(draftTable.getItems().indexOf(column.getValue())+1));
+
         draftTable.getColumns().addAll(picks,firstColumn,lastColumn,contractColumn,salaryColumn);
+        
+        draftTable.setItems(dataManager.getDraft().getTrascation());
         
         draftPane.getChildren().add(initLabel(WBDK_PropertyType.DRAFT_LABEL, CLASS_HEADING_LABEL));
         draftPane.setStyle("-fx-background-color: GhostWhite");
@@ -1098,7 +1102,23 @@ public class WBDK_GUI implements DraftDataView{
                 
         });    
         
+        starButton.setOnAction(e -> {
         
+        draftController.handleAutoDraft(this,"star");
+                
+        }); 
+        
+        playButton.setOnAction(e -> {
+        
+       draftController.handleAutoDraft(this,"play");
+                
+        }); 
+        
+        pauseButton.setOnAction(e -> {
+        
+        draftController.handleAutoDraft(this,"pause");
+                
+        }); 
         
         playerTable.setOnMouseClicked(e -> {
          if (e.getClickCount() == 2) {
