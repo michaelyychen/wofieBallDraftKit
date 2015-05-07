@@ -126,7 +126,12 @@ public class Draft {
     
         for(int i = 0;i<dataPool.size();i++)
         {
-            if("MI".equals(pos)){
+            if("X".equals(pos)){
+                
+                 return dataPool.get(i);    
+              
+            }
+            else if("MI".equals(pos)){
                 
                 if(dataPool.get(i).getQualifyPosition().contains("SS")
                     ||  dataPool.get(i).getQualifyPosition().contains("2B")) 
@@ -150,7 +155,7 @@ public class Draft {
                 }
             } 
             else{ 
-                if(!dataPool.get(i).getQualifyPosition().contains(pos))
+                if(dataPool.get(i).getQualifyPosition().contains(pos))
                 return dataPool.get(i);
             }
         }
@@ -239,8 +244,15 @@ public class Draft {
                 } 
                 
                 rankAvg = (rank+rank1+rank2+rank3+rank4)/5;
+                int temp =0;
+                if(numP==0||rankAvg==0){
+                medianSal =0;
+                temp=0 ;
+                }
+                else{
                 medianSal = remaining/(2*numP);
-                int temp = medianSal*2*numP/rankAvg;
+                temp = medianSal*2*numP/rankAvg;
+                }
                 p.setEstimated(temp);                            
                 
                 rank =1;
@@ -289,8 +301,15 @@ public class Draft {
                 }            
                 
             rankAvg = (rank+rank1+rank2+rank3+rank4)/5;
-            medianSal = remaining/(2*numH); 
-            int temp = medianSal*2*numP/rankAvg;
+                int temp =0;
+                if(numH==0||rankAvg==0){
+                medianSal =0;
+                temp=0 ;
+                }
+                else{
+                medianSal = remaining/(2*numH);
+                temp = medianSal*2*numH/rankAvg;
+                }
             p.setEstimated(temp);  
             
             
@@ -497,25 +516,7 @@ public class Draft {
         
     
 
-    
-//    public ObservableList<Player> handleSearchTF(String s) {
-//        ObservableList<Player> temp =FXCollections.observableArrayList(searchPool);
-//        guiPool.clear();
-//        
-//        String lowFirst; 
-//        String lowLast;
-//        for(int i = 0;  i<temp.size(); i ++){
-//          
-//            lowFirst =  temp.get(i).getFirstName().toLowerCase();
-//            lowLast =  temp.get(i).getLastName().toLowerCase();
-//        if(lowFirst.contains(s.toLowerCase()) ||lowLast.contains(s.toLowerCase())){
-//        
-//            guiPool.add(temp.get(i));
-//        }
-//        
-//    }    
-//  return guiPool;
-//    }
+
     
 
 

@@ -75,12 +75,30 @@ public class FantasyTeam{
      int countC=0;   
      int countOF=0;
      int countP=0;
+     int countX =0;
      ArrayList<String> pos = new ArrayList();
      ArrayList<String> result = new ArrayList();
      
+     if(teamPlayer.size()==23){
+          if(taxiSquad.size()<8){
+         int loop = 8 - taxiSquad.size();
+         for(int i =0; i < loop; i++){
+         result.add("X");
+         }
+     }
+     
+     
+     }
+     
+     else{
      for(int i =0; i<teamPlayer.size();i++){
          pos.add(teamPlayer.get(i).getPosition());
      }
+     
+     //if standingLine up is filled, check if taxi squad is as well
+
+     
+     
      
      for(int i =0; i<pos.size();i++){
          if(pos.get(i).equalsIgnoreCase("OF")){
@@ -96,14 +114,26 @@ public class FantasyTeam{
      }   
           
      if(countC<2){
+         int loop = 2 - countC;
+         for(int i =0; i < loop; i++){
          result.add("C");
+         }
      }
      if(countP<9){
+         int loop = 9 - countP;
+         for(int i =0; i < loop; i++){
          result.add("P");
+         }
      }
      if(countOF<5){
+         int loop = 5 - countOF;
+         for(int i =0; i < loop; i++){
          result.add("OF");
+         }
      }
+     
+     
+     
      if(!pos.contains("1B")){
          result.add("1B");
      } 
@@ -124,7 +154,16 @@ public class FantasyTeam{
      } 
      if(!pos.contains("U")){
          result.add("U");
-     }  
+     }
+     
+    if(taxiSquad.size()<8){
+         int loop = 8 - taxiSquad.size();
+         for(int i =0; i < loop; i++){
+         result.add("X");
+         }
+     }
+     
+     }
      
      return result;
      }    

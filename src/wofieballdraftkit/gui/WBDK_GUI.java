@@ -13,6 +13,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.value.ChangeListener;
@@ -900,14 +902,14 @@ public class WBDK_GUI implements DraftDataView{
         //picks.setCellValueFactory(new PropertyValueFactory<String, String>("teamName"));
         firstColumn.setCellValueFactory(new PropertyValueFactory<String, String>("firstname"));
         lastColumn.setCellValueFactory(new PropertyValueFactory<String, String>("lastname"));
-        fantasyTeamColumn.setCellValueFactory(new PropertyValueFactory<String, String>("teamName"));
+        fantasyTeamColumn.setCellValueFactory(new PropertyValueFactory<String, String>("fantasyTeam"));
         contractColumn.setCellValueFactory(new PropertyValueFactory<String, String>("contract"));
         salaryColumn.setCellValueFactory(new PropertyValueFactory<Integer, String>("salary"));
         
         picks.setSortable(false);
         picks.setCellValueFactory(column-> new ReadOnlyObjectWrapper<Number>(draftTable.getItems().indexOf(column.getValue())+1));
 
-        draftTable.getColumns().addAll(picks,firstColumn,lastColumn,contractColumn,salaryColumn);
+        draftTable.getColumns().addAll(picks,firstColumn,lastColumn,fantasyTeamColumn,contractColumn,salaryColumn);
         
         draftTable.setItems(dataManager.getDraft().getTrascation());
         
@@ -1110,13 +1112,17 @@ public class WBDK_GUI implements DraftDataView{
         
         playButton.setOnAction(e -> {
         
-       draftController.handleAutoDraft(this,"play");
-                
+        draftController.handleAutoDraft(this,"play");
+        draftController.resumeThread();
         }); 
         
         pauseButton.setOnAction(e -> {
         
-        draftController.handleAutoDraft(this,"pause");
+            try {
+                draftController.pauseThread();
+            } catch (InterruptedException ex) {
+                Logger.getLogger(WBDK_GUI.class.getName()).log(Level.SEVERE, null, ex);
+            }
                 
         }); 
         

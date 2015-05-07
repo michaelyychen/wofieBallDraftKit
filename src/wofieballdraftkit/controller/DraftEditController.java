@@ -6,6 +6,8 @@
 package wofieballdraftkit.controller;
 
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
@@ -34,14 +36,14 @@ public class DraftEditController {
 
      // WE USE THIS TO MAKE SURE OUR PROGRAMMED UPDATES OF UI
     // VALUES DON'T THEMSELVES TRIGGER EVENTS
-    
+    boolean pause;
     private boolean enabled;
     AddNewPlayerDialog anpd;
     EditPlayerDialog epd;
     FantasyTeamDialog ftd;
     MessageDialog messageDialog;
     YesNoCancelDialog yesNoCancelDialog;
-
+    final Object Monitor = new Object();
     /**
      * Constructor that gets this controller ready, not much to
      * initialize as the methods for this function are sent all
@@ -366,41 +368,59 @@ public class DraftEditController {
             ObservableList<Player> guiPool = gui.getDataManager().getDraft().getGuiPool();
             ObservableList<Player> searchPool = gui.getDataManager().getDraft().getSearchPool();
             
+            
             Task<Void> task = new Task<Void>() {
             @Override
             protected Void call() throws Exception {
 
-
+                
                 for (FantasyTeam t: team) {
                     
                     //If team player has less than 23 player
                     //this means there's an empty spot
-                    if(t.getTeamPlayer().size()<23){
+                    if(t.getTeamPlayer().size()<=23){
                         
                     ArrayList<String>  posOpen = t.positionEmpty();
                         for(String s: posOpen){
+                       
                             Player p = gui.getDataManager().getDraft().pickPlayer(s);
+                            if(s.equalsIgnoreCase("X")){
+                            p.setSalary(1);
+                            p.setContract("X");
+                            p.setFantasyTeam(t.getTeamName());
+                            t.getTaxiSquad().add(p);
+                            }else{
+                            p.setPosition(s);
+                            p.setSalary(1);
+                            p.setContract("S2");
+                            p.setFantasyTeam(t.getTeamName());
                             
                             t.addByPos(p);
+                            }
                             
+                            
+                                   
                             data.remove(p);
                             guiPool.remove(p);
                             searchPool.remove(p);
                             
-                            Thread.sleep(1000);
                             
+                            
+                            Thread.sleep(300);
                                                     
                         // UPDATE ANY PROGRESS DISPLAY
                           Platform.runLater(new Runnable() {
              
                             public void run() {
                                 gui.getDataManager().getDraft().getTrascation().add(p);
-                                System.out.println("RUN!!!");
-                                
+                                                      
                             }
                         });
-                            
-                            
+                                              
+                            checkFlag();
+                            if(option.equalsIgnoreCase("star")){
+                            break;
+                            }
                         }
                         
                         
@@ -412,10 +432,35 @@ public class DraftEditController {
         };
     
     
-    
-    
         Thread thread = new Thread(task);
         thread.start();
+
+        
+    }
+    
+    
+    
+    public void checkFlag(){
+        
+         synchronized (Monitor) {
+            while (pause) {
+                try {
+                    Monitor.wait();
+                } catch (Exception e) {}
+            }
+         }
+    
+    }
+    
+    public void pauseThread() throws InterruptedException {
+        pause = true;
+    }
+    public void resumeThread()  {
+        
+           synchronized(Monitor) {
+            pause = false;
+            Monitor.notify();
+        }
     }
    
     
