@@ -530,7 +530,8 @@ public class Draft {
         transcation.add(temp.get(i));
         temp.remove(i);
         }
-    }
+    }  
+    
     
     
     
