@@ -515,19 +515,20 @@ public class Draft {
     
     public void checkContract(){
     
-    for(Player p : transcation){
+    for(int i =0; i<transcation.size();i++){
     
-    if(p.getContract().equalsIgnoreCase("S1")){
-        temp.add(p);
-        transcation.remove(p);
+    if(transcation.get(i).getContract().equalsIgnoreCase("S1")){
+        temp.add(transcation.get(i));
+        transcation.remove(i);
         }
+    
     }
     
-    for(Player p : temp){
-        if(p.getContract().equalsIgnoreCase("S2")){
+    for(int i =0; i<temp.size();i++){
+        if(temp.get(i).getContract().equalsIgnoreCase("S2")){
         
-        transcation.add(p);
-        temp.remove(p);
+        transcation.add(temp.get(i));
+        temp.remove(i);
         }
     }
     

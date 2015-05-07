@@ -1215,7 +1215,7 @@ public class WBDK_GUI implements DraftDataView{
            
         });
         draftButton.setOnAction(e -> {
-            
+            dataManager.getDraft().checkContract();
             workspacePane.setCenter(draftPane);
             
         });

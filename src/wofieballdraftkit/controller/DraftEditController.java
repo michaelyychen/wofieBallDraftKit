@@ -181,6 +181,7 @@ public class DraftEditController {
             messageDialog.show(props.getProperty(WBDK_PropertyType.ILLEGAL_SELECTION));
             
             }else{
+                draft.getTrascation().add(player);
                 draft.getTeamByName(player.getFantasyTeam()).addByPos(player);
                 draft.getDataPool().remove(player);
                 draft.getGuiPool().remove(player);
