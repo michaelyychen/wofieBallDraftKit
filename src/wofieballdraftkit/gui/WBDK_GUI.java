@@ -1105,7 +1105,7 @@ public class WBDK_GUI implements DraftDataView{
         });    
         
         starButton.setOnAction(e -> {
-        
+            
         draftController.handleAutoDraft(this,"star");
                 
         }); 

@@ -43,7 +43,8 @@ public class DraftEditController {
     FantasyTeamDialog ftd;
     MessageDialog messageDialog;
     YesNoCancelDialog yesNoCancelDialog;
-    final Object Monitor = new Object();
+    Thread thread;
+  
     /**
      * Constructor that gets this controller ready, not much to
      * initialize as the methods for this function are sent all
@@ -362,7 +363,8 @@ public class DraftEditController {
         }
     }     
     public void handleAutoDraft(WBDK_GUI gui, String option){
-      
+        
+            
         
             ObservableList<FantasyTeam> team = gui.getDataManager().getDraft().getTeamList();
             ObservableList<Player> data = gui.getDataManager().getDraft().getDataPool();
@@ -374,7 +376,7 @@ public class DraftEditController {
             @Override
             protected Void call() throws Exception {
 
-                
+             
                 for (FantasyTeam t: team) {
                     
                     //If team player has less than 23 player
@@ -382,21 +384,22 @@ public class DraftEditController {
                     if(t.getTeamPlayer().size()<=23){
                         
                     ArrayList<String>  posOpen = t.positionEmpty();
-                        for(String s: posOpen){
-                       
+                    
+                    
+                        for (String s : posOpen) {
                             Player p = gui.getDataManager().getDraft().pickPlayer(s);
                             if(s.equalsIgnoreCase("X")){
-                            p.setSalary(1);
-                            p.setContract("X");
-                            p.setFantasyTeam(t.getTeamName());
-                            t.getTaxiSquad().add(p);
+                                p.setSalary(1);
+                                p.setContract("X");
+                                p.setFantasyTeam(t.getTeamName());
+                                t.getTaxiSquad().add(p);
                             }else{
-                            p.setPosition(s);
-                            p.setSalary(1);
-                            p.setContract("S2");
-                            p.setFantasyTeam(t.getTeamName());
-                            
-                            t.addByPos(p);
+                                p.setPosition(s);
+                                p.setSalary(1);
+                                p.setContract("S2");
+                                p.setFantasyTeam(t.getTeamName());
+                                
+                                t.addByPos(p);
                             }
                             
                             
@@ -408,46 +411,49 @@ public class DraftEditController {
                             
                             
                             Thread.sleep(300);
-                                                    
-                        // UPDATE ANY PROGRESS DISPLAY
-                          Platform.runLater(new Runnable() {
-             
-                            public void run() {
-                                gui.getDataManager().getDraft().getTrascation().add(p);
-                                                      
-                            }
-                        });
-                                              
-                            checkFlag();
-                            if(option.equalsIgnoreCase("star")){
-                            break;
-                            }
+                            
+                            // UPDATE ANY PROGRESS DISPLAY
+                            Platform.runLater(new Runnable() {
+                                
+                                public void run() {
+                                    gui.getDataManager().getDraft().getTrascation().add(p);
+                                    
+                                }
+                            });
+                            
+                          checkFlag();  
+                          if(option.equalsIgnoreCase("star")){
+                          break;
+                          }
                         }
                         
                         
 
                     }
                 }
-                return null;
+             
+               return null;
             }
-        };
+           
+       }; 
     
     
-        Thread thread = new Thread(task);
+        thread = new Thread(task);
+        
         thread.start();
 
         
     }
-    
+  
     
     
     public void checkFlag(){
         
-         synchronized (Monitor) {
+         synchronized (thread) {
             while (pause) {
                 try {
-                    Monitor.wait();
-                } catch (Exception e) {}
+                    thread.wait();
+                } catch (Exception e) {e.printStackTrace();}
             }
          }
     
@@ -458,9 +464,9 @@ public class DraftEditController {
     }
     public void resumeThread()  {
         
-           synchronized(Monitor) {
+           synchronized(thread) {
             pause = false;
-            Monitor.notify();
+            thread.notifyAll();
         }
     }
    
