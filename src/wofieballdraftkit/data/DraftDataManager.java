@@ -72,8 +72,7 @@ public class DraftDataManager {
     
       public void reset() {
         // CLEAR ALL THE COURSE VALUES
-       
-        
+
         // AND THEN FORCE THE UI TO RELOAD THE UPDATED COURSE
         view.reloadDraft(draft);
     }

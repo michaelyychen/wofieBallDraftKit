@@ -438,16 +438,16 @@ public class FantasyTeam{
         
     int playerNum = teamPlayer.size();
         
-    int r = R.get();
-    int hr = HR.get();
-    int rbi = RBI.get();
-    int sb = SB.get();
-    double ba = BA.get();
-    double w = W.get();
-    int sv = SV.get();
-    int k = K.get();
-    double era = ERA.get();
-    double whip = WHIP.get();
+    int r = 0;
+    int hr = 0;
+    int rbi = 0;
+    int sb = 0;
+    double ba = 0;
+    double w = 0;
+    int sv = 0;
+    int k = 0;
+    double era = 0;
+    double whip = 0;
    
     for(Player p: teamPlayer){
      if(p.getPosition().equalsIgnoreCase("P")){   
@@ -482,7 +482,10 @@ public class FantasyTeam{
      setRBI(rbi);
      setSB(sb);
      setBA(((double)((int)(ba*1000)))/1000);
-    }    
+    }
+
+    
+    
     }
     
     

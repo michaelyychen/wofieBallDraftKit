@@ -524,14 +524,7 @@ public class Draft {
     
     }
     
-    for(int i =0; i<temp.size();i++){
-        if(temp.get(i).getContract().equalsIgnoreCase("S2")){
-        
-        transcation.add(temp.get(i));
-        temp.remove(i);
-        }
-    }  
-    
+  
     
     
     

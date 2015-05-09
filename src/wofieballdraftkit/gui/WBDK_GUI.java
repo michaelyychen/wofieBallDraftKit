@@ -421,7 +421,7 @@ public class WBDK_GUI implements DraftDataView{
 
         searchTFF.setText(draftToReload.getDraftName());
         
-        draftTable.getItems().clear();
+       
         for(FantasyTeam t : draftToReload.getTeamList()){
             for(Player p : t.getTeamPlayer()){
             draftToReload.getDataPool().add(p);
@@ -442,14 +442,34 @@ public class WBDK_GUI implements DraftDataView{
         startingLineUpTable.getItems().clear();
         taxiDraftTable.getItems().clear();
         standingTable.getItems().clear();
-        
+        draftTable.getItems().clear();
 
         // NOW WE DO WANT TO RESPOND WHEN THE USER INTERACTS WITH OUR CONTROLS
         draftController.enable(true);
     }    
     
     
-    
+     public void reloadDraftL(Draft draftToReload) {
+        // FIRST ACTIVATE THE WORKSPACE IF NECESSARY
+        if (!workspaceActivated) {
+            activateWorkspace();
+        }
+
+        // WE DON'T WANT TO RESPOND TO EVENTS FORCED BY
+        // OUR INITIALIZATION SELECTIONS
+        draftController.enable(false);
+
+        // FIRST LOAD ALL THE BASIC COURSE INFO
+            
+        searchTF.setText("" );
+        group.selectToggle(all);
+       // fantasyTeamComboBox.getItems().clear();
+        searchTFF.setText(draftToReload.getDraftName());
+        
+       
+        // NOW WE DO WANT TO RESPOND WHEN THE USER INTERACTS WITH OUR CONTROLS
+        draftController.enable(true);
+    }    
     
     
     
@@ -1040,7 +1060,6 @@ public class WBDK_GUI implements DraftDataView{
         loadButton.setOnAction(e -> {
             fileController.handleLoadRequest(this);
             
-            
             fantasyTeamComboBox.getItems().clear();
             loadTeamComboBox(dataManager.getDraft().getTeamList());
             
@@ -1194,7 +1213,7 @@ public class WBDK_GUI implements DraftDataView{
         });
         standingButton.setOnAction(e -> {
             
-           
+           if(!workspacePane.getCenter().equals(standingPane)){
             ObservableList<FantasyTeam> list = dataManager.getDraft().getTeamList();
             for(FantasyTeam p : list){
             p.updatePP();
@@ -1211,7 +1230,7 @@ public class WBDK_GUI implements DraftDataView{
             standingTable.setItems(null);
             standingTable.layout();
             standingTable.setItems(list);
-            
+           }
             workspacePane.setCenter(standingPane);
            
         });

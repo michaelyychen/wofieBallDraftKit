@@ -319,7 +319,7 @@ public class FileController {
             try {
                 Draft draftToLoad = gui.getDataManager().getDraft();
                 draftIO.loadDraft(draftToLoad, selectedFile.getAbsolutePath());
-                gui.reloadDraft(draftToLoad);
+                gui.reloadDraftL(draftToLoad);
                 saved = true;
                 gui.updateToolbarControls(saved);
                 

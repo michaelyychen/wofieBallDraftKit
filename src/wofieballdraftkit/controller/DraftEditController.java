@@ -111,8 +111,11 @@ public class DraftEditController {
             
             //put the player back in the pool
             if("Free Agent".equals(si.getFantasyTeam())){
-
+            if(player.getContract().equalsIgnoreCase("X")||player.getContract().equalsIgnoreCase("S1")){
+              draft.getTeamByName(player.getFantasyTeam()).getTaxiSquad().remove(player);
+            }else{
             draft.getTeamByName(player.getFantasyTeam()).getTeamPlayer().remove(player);
+            }
             draft.getDataPool().add(player);
             draft.getGuiPool().add(player);
             draft.getSearchPool().add(player);
@@ -121,12 +124,11 @@ public class DraftEditController {
             //Moving a player from starting lineup to taxi squad
             else if((si.getContract().equalsIgnoreCase("X")||si.getContract().equalsIgnoreCase("S1"))&& s==true){
             
-             draft.getTeamByName(player.getFantasyTeam()).getTeamPlayer().remove(player);
-             draft.getTeamByName(player.getFantasyTeam()).changeMoneyLeft(player.getSalary());
              player.setSalary(1);
              player.setContract(si.getContract());
+             
              draft.getTeamByName(player.getFantasyTeam()).getTaxiSquad().add(player);
-            
+             draft.getTeamByName(player.getFantasyTeam()).getTeamPlayer().remove(player);
             }     
             else{
             player.setPosition(si.getPosition());
@@ -137,7 +139,7 @@ public class DraftEditController {
             }
             
             //if player is switching from taxi squad
-            if(player.getContract().equalsIgnoreCase("X")&& s==true){
+            if((player.getContract().equalsIgnoreCase("X")||player.getContract().equalsIgnoreCase("S1"))&& s==true){
              draft.getTeamByName(player.getFantasyTeam()).getTaxiSquad().remove(player);            
             }
             
