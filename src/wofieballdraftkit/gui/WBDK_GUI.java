@@ -418,30 +418,31 @@ public class WBDK_GUI implements DraftDataView{
         searchTFF.setText("" );
         group.selectToggle(all);
         fantasyTeamComboBox.getItems().clear();
-        startingLineUpTable.getItems().clear();
-        
-        searchTFF.setText(draftToReload.getDraftName());
-//        courseTitleTextField.setText(courseToReload.getTitle());
-//        instructorNameTextField.setText(courseToReload.getInstructor().getName());
-//        instructorURLTextField.setText(courseToReload.getInstructor().getHomepageURL());
-//        indexPageCheckBox.setSelected(courseToReload.hasCoursePage(CoursePage.INDEX));
-//        syllabusPageCheckBox.setSelected(courseToReload.hasCoursePage(CoursePage.SYLLABUS));
-//        schedulePageCheckBox.setSelected(courseToReload.hasCoursePage(CoursePage.SCHEDULE));
-//        hwsPageCheckBox.setSelected(courseToReload.hasCoursePage(CoursePage.HWS));
-//        projectsPageCheckBox.setSelected(courseToReload.hasCoursePage(CoursePage.PROJECTS));
 
-//        
-//        mondayCheckBox.setSelected(courseToReload.hasLectureDay(DayOfWeek.MONDAY));
-//        tuesdayCheckBox.setSelected(courseToReload.hasLectureDay(DayOfWeek.TUESDAY));
-//        wednesdayCheckBox.setSelected(courseToReload.hasLectureDay(DayOfWeek.WEDNESDAY));
-//        thursdayCheckBox.setSelected(courseToReload.hasLectureDay(DayOfWeek.THURSDAY));
-//        fridayCheckBox.setSelected(courseToReload.hasLectureDay(DayOfWeek.FRIDAY));
+        searchTFF.setText(draftToReload.getDraftName());
         
-        // THE SCHEDULE ITEMS TABLE
-       
-        // THE LECTURES TABLE
+        draftTable.getItems().clear();
+        for(FantasyTeam t : draftToReload.getTeamList()){
+            for(Player p : t.getTeamPlayer()){
+            draftToReload.getDataPool().add(p);
+            draftToReload.getSearchPool().add(p);
+            draftToReload.getGuiPool().add(p);
+            }
+            
+            
+             for(Player k : t.getTaxiSquad()){
+            draftToReload.getDataPool().add(k);
+            draftToReload.getSearchPool().add(k);
+            draftToReload.getGuiPool().add(k);
+             
+             }   
         
-        // THE HWS TABLE
+        }
+        
+        startingLineUpTable.getItems().clear();
+        taxiDraftTable.getItems().clear();
+        standingTable.getItems().clear();
+        
 
         // NOW WE DO WANT TO RESPOND WHEN THE USER INTERACTS WITH OUR CONTROLS
         draftController.enable(true);
