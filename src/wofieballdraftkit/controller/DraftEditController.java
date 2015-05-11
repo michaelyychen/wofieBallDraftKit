@@ -424,7 +424,7 @@ public class DraftEditController {
                             });
                             
                           checkFlag();  
-                          if(option.equalsIgnoreCase("star")){
+                              if(option.equalsIgnoreCase("star")){
                           break;
                           }
                         }
@@ -432,6 +432,10 @@ public class DraftEditController {
                         
 
                     }
+                        if(option.equalsIgnoreCase("star")){
+                          break;
+                          }
+                  
                 }
              
                return null;
