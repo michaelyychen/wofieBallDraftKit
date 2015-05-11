@@ -223,7 +223,7 @@ public class JsonDraftFileManager implements DraftFileManager {
         double BA = Double.valueOf(jsonArray.getJsonObject(i).getString(JSON_H)) / 
                             Double.valueOf(jsonArray.getJsonObject(i).getString(JSON_AB));
                
-        a.setBA(      ((double)((int)(BA*100)))/100  );
+        a.setBA(      ((double)((int)(BA*1000)))/1000  );
 
         a.setQualifyPosition(jsonArray.getJsonObject(i).getString(JSON_QP));
         a.setR(Integer.valueOf(jsonArray.getJsonObject(i).getString(JSON_R)));
