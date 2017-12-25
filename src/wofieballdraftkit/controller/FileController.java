@@ -288,7 +288,7 @@ public class FileController {
             saved = true;
             
             // AND THE INSTRUCTOR INFO
-       
+  
          
         } // IF THE USER SAID CANCEL, THEN WE'LL TELL WHOEVER
         // CALLED THIS THAT THE USER IS NOT INTERESTED ANYMORE
@@ -322,8 +322,7 @@ public class FileController {
                 gui.reloadDraftL(draftToLoad);
                 saved = true;
                 gui.updateToolbarControls(saved);
-                
-               
+                              
             } catch (Exception e) {
                 ErrorHandler eH = ErrorHandler.getErrorHandler();
                 eH.handleLoadCourseError();

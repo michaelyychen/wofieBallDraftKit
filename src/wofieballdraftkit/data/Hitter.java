@@ -12,12 +12,11 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-
 /**
  *
  * @author MiChAeL
  */
-public class Hitter extends Player{
+public class Hitter extends Player {
 
     final IntegerProperty r;
     final IntegerProperty hr;
@@ -26,30 +25,30 @@ public class Hitter extends Player{
 
     final IntegerProperty rbi;
     final DoubleProperty ba;
-    
+
     final StringProperty qp;
-    
+
     public static final String DEFAULT_NAME = "";
-    public static final int DEFAULT_NUM = 0 ;
-    
-    public Hitter(String initLastname, String initFirstname){
-   super();
-   
-   this.firstname.set(initFirstname);
-   this.lastname.set(initLastname);
-   
-   r = new SimpleIntegerProperty(DEFAULT_NUM);
-   hr = new SimpleIntegerProperty(DEFAULT_NUM);
-   h = new SimpleIntegerProperty(DEFAULT_NUM);
-   sb = new SimpleIntegerProperty(DEFAULT_NUM);
-   
-   rbi = new SimpleIntegerProperty(DEFAULT_NUM);
-   ba = new SimpleDoubleProperty(DEFAULT_NUM);   
-   
-   qp = new SimpleStringProperty(DEFAULT_NAME);
-   
-   
-   }
+    public static final int DEFAULT_NUM = 0;
+
+    public Hitter(String initLastname, String initFirstname) {
+        super();
+
+        this.firstname.set(initFirstname);
+        this.lastname.set(initLastname);
+
+        r = new SimpleIntegerProperty(DEFAULT_NUM);
+        hr = new SimpleIntegerProperty(DEFAULT_NUM);
+        h = new SimpleIntegerProperty(DEFAULT_NUM);
+        sb = new SimpleIntegerProperty(DEFAULT_NUM);
+
+        rbi = new SimpleIntegerProperty(DEFAULT_NUM);
+        ba = new SimpleDoubleProperty(DEFAULT_NUM);
+
+        qp = new SimpleStringProperty(DEFAULT_NAME);
+
+    }
+
     public String getQP() {
         return qp.get();
     }
@@ -57,10 +56,11 @@ public class Hitter extends Player{
     public void setQP(String initQP) {
         qp.set(initQP);
     }
-    
-    public StringProperty qpProperty(){
-    return qp;
-    } 
+
+    public StringProperty qpProperty() {
+        return qp;
+    }
+
     public int getRBI() {
         return rbi.get();
     }
@@ -69,10 +69,11 @@ public class Hitter extends Player{
         this.rbik.set(initRBI);
         rbi.set(initRBI);
     }
-    
-    public IntegerProperty rbiProperty(){
-    return rbi;
-    }     
+
+    public IntegerProperty rbiProperty() {
+        return rbi;
+    }
+
     public double getBA() {
         return ba.get();
     }
@@ -81,10 +82,11 @@ public class Hitter extends Player{
         this.bawhip.set(initBA);
         ba.set(initBA);
     }
-    
-    public DoubleProperty baProperty(){
-    return ba;
+
+    public DoubleProperty baProperty() {
+        return ba;
     }
+
     public int getR() {
         return r.get();
     }
@@ -93,10 +95,11 @@ public class Hitter extends Player{
         this.rw.set(initR);
         r.set(initR);
     }
-    
-    public IntegerProperty rProperty(){
-    return r;
+
+    public IntegerProperty rProperty() {
+        return r;
     }
+
     public int getHR() {
         return hr.get();
     }
@@ -105,10 +108,11 @@ public class Hitter extends Player{
         this.hrsv.set(initHR);
         hr.set(initHR);
     }
-    
-    public IntegerProperty hrProperty(){
-    return hr;
+
+    public IntegerProperty hrProperty() {
+        return hr;
     }
+
     public int getH() {
         return h.get();
     }
@@ -116,25 +120,22 @@ public class Hitter extends Player{
     public void setH(int initH) {
         h.set(initH);
     }
-    
-    public IntegerProperty hProperty(){
-    return h;
+
+    public IntegerProperty hProperty() {
+        return h;
     }
+
     public int getSB() {
         return sb.get();
     }
 
-    public void setSB(int initSB) 
-    {   
+    public void setSB(int initSB) {
         this.setSBERA(initSB);
         sb.set(initSB);
     }
-    
-    public IntegerProperty sbProperty(){
-    return sb;
-    }      
 
-
-    
+    public IntegerProperty sbProperty() {
+        return sb;
+    }
 
 }

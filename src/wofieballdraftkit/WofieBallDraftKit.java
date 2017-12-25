@@ -27,59 +27,48 @@ import xml_utilities.InvalidXMLFileFormatException;
  * @author MiChAeL
  */
 public class WofieBallDraftKit extends Application {
-    
+
     WBDK_GUI gui;
-    
+
     @Override
     public void start(Stage primaryStage) {
         // LET'S START BY GIVING THE PRIMARY STAGE TO OUR ERROR HANDLER
         ErrorHandler eH = ErrorHandler.getErrorHandler();
         eH.initMessageDialog(primaryStage);
-        
+
         // LOAD APP SETTINGS INTO THE GUI AND START IT UP
         boolean success = loadProperties();
         if (success) {
             try {
                 PropertiesManager props = PropertiesManager.getPropertiesManager();
                 String appTitle = props.getProperty(PROP_APP_TITLE);
-                
-                
-                
-                
+
                 JsonDraftFileManager jsonFileManager = new JsonDraftFileManager();
-                
-                ArrayList<Pitcher> pitchers = jsonFileManager.loadPitcherData(JSON_FILE_PATH_PITCHERS,"Pitchers");
-                ArrayList<Hitter> hitters = jsonFileManager.loadHitterData(JSON_FILE_PATH_HITTERS,"Hitters");
-                
-                
-                
-                
+
+                ArrayList<Pitcher> pitchers = jsonFileManager.loadPitcherData(JSON_FILE_PATH_PITCHERS, "Pitchers");
+                ArrayList<Hitter> hitters = jsonFileManager.loadHitterData(JSON_FILE_PATH_HITTERS, "Hitters");
+
                 gui = new WBDK_GUI(primaryStage);
                 gui.setDraftFileManager(jsonFileManager);
-                
-              
-             //   gui.setSiteExporter(exporter);
-                
+
                 // CONSTRUCT THE DATA MANAGER AND GIVE IT TO THE GUI
-                DraftDataManager dataManager = new DraftDataManager(gui,pitchers,hitters); 
+                DraftDataManager dataManager = new DraftDataManager(gui, pitchers, hitters);
                 gui.setDataManager(dataManager);
-                
                 gui.initGUI(appTitle);
-                
-                
-                
+
             } catch (IOException ex) {
                 Logger.getLogger(WofieBallDraftKit.class.getName()).log(Level.SEVERE, null, ex);
             }
-                
+
         }
     }
-    
+
     /**
      * Loads this application's properties file, which has a number of settings
      * for initializing the user interface.
-     * 
-     * @return true if the properties file was loaded successfully, false otherwise.
+     *
+     * @return true if the properties file was loaded successfully, false
+     * otherwise.
      */
     public boolean loadProperties() {
         try {
@@ -88,12 +77,12 @@ public class WofieBallDraftKit extends Application {
             props.addProperty(PropertiesManager.DATA_PATH_PROPERTY, PATH_DATA);
             props.loadProperties(PROPERTIES_FILE_NAME, PROPERTIES_SCHEMA_FILE_NAME);
             return true;
-       } catch (InvalidXMLFileFormatException ixmlffe) {
+        } catch (InvalidXMLFileFormatException ixmlffe) {
             // SOMETHING WENT WRONG INITIALIZING THE XML FILE
             ErrorHandler eH = ErrorHandler.getErrorHandler();
             eH.handlePropertiesFileError();
             return false;
-        }        
+        }
     }
 
     /**
@@ -102,5 +91,5 @@ public class WofieBallDraftKit extends Application {
     public static void main(String[] args) {
         launch(args);
     }
-    
+
 }
